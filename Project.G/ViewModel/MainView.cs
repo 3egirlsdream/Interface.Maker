@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using Job.Common;
+using Microsoft.Win32;
 using NPOI.XSSF.UserModel;
 using Project.G.Models;
 using System;
@@ -21,7 +22,6 @@ namespace Project.G.ViewModel
         public List<Key_Value> Constraints { get; set; }
         public MainView()
         {
-            SqlString = Common.SetConfig("SqlString");
             TableName = Common.SetConfig("DBName");
             ListButton = new List<Key_Value>();
             ListButton.Add(new Key_Value { label = "生成SQL", value = 0 });
@@ -67,20 +67,7 @@ namespace Project.G.ViewModel
             }
         }
 
-        private string _SqlString;
-        public string SqlString
-        {
-            get
-            {
-                return _SqlString;
-            }
-            set
-            {
-                _SqlString = value;
-                Common.SetConfig("SqlString", value);
-                NotifyPropertyChanged("SqlString");
-            }
-        }
+        
 
         private string _SqlText;
         public string SqlText
@@ -140,6 +127,21 @@ namespace Project.G.ViewModel
 
         }
 
+        private string _Json;
+        public string Json
+        {
+            get
+            {
+                return _Json;
+            }
+            set
+            {
+                _Json = value;
+                NotifyPropertyChanged("Json");
+            }
+
+        }
+
         #region Command
 
         public SimpleCommand CmdOpen => new SimpleCommand()
@@ -167,6 +169,19 @@ namespace Project.G.ViewModel
                 {
                     FormatJson();
                 }
+            }
+        };
+
+        public SimpleCommand CmdGenerate => new SimpleCommand()
+        {
+            ExecuteDelegate = x =>
+            {
+                try
+                {
+                    JobCommon job = new JobCommon();
+                    SqlText = Common.format(job.GetModel(Json, "MeiCloud_Access"));
+                }
+                catch (Exception ex) { }
             }
         };
 
@@ -321,6 +336,8 @@ namespace Project.G.ViewModel
 
         private void AddNotify_Click()
         {
+            if (String.IsNullOrEmpty(SqlText))
+                return;
             List<string> arrs = new List<string>(SqlText.Split(' '));
 
             string sr = "";
@@ -340,11 +357,14 @@ namespace Project.G.ViewModel
                     + arrs[0] + " " + arrs[1] + " " + arrs[2]
                     + "{get{return _" + arrs[2] + ";}set{_" + arrs[2] + " = value;NotifyPropertyChanged(\"" + arrs[2] + "\");}";
             }
-            SqlText = Xu.Common.Common.format(sr);
+            sr = System.Text.RegularExpressions.Regex.Replace(sr, "[\r\n\t]", "");
+            SqlText = Xu.Common.Common.format(sr + '}');
         }
 
         private void FormatJson()
         {
+            if (String.IsNullOrEmpty(SqlText))
+                return;
             string source = SqlText;
             ArrayList arr = new ArrayList();
             Stack<char> stack = new Stack<char>();

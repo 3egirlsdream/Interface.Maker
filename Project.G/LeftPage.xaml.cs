@@ -31,15 +31,24 @@ namespace Project.G
     {
         MainView vm;
         List<string> tables;
+
         public LeftPage()
         {
             InitializeComponent();
+        }
+
+        public LeftPage(int t)
+        {
+            InitializeComponent();
+
+            DbType db = t == 0 ? DbType.SqlServer : DbType.MySql;
+
             vm = new MainView();
             this.DataContext = vm;
             //this.Visibility = Visibility.Collapsed;
             //生成表列表
             tables = new List<string>();
-            tables = DB.GetName();
+            tables = DB.GetName(db);
             Thickness th = new Thickness();
             th.Bottom = 5;
             th.Left = 10;
@@ -144,7 +153,7 @@ namespace Project.G
         private void Save(object sender, RoutedEventArgs e)
         {
             //var ts = GetName("inv_bill_info");
-            var ts = DB.GetName();
+            //var ts = DB.GetName();
             
             //INV_BILL_INFO dt = new INV_BILL_INFO(Name = "aa");
             //dt.ID = "";

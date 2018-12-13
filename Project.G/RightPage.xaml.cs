@@ -30,35 +30,24 @@ namespace Project.G
     /// </summary>
     public partial class RightPage : Page
     {
-        MainView vm;
+        RightPageVM vm;
+        
         public RightPage()
         {
             InitializeComponent();
-            vm = new MainView();
+            vm = new RightPageVM();
             this.DataContext = vm;
             this.Visibility = Visibility.Hidden;
-        }
-
-        #region
-        MainWindow _ParentWindow;
-        public MainWindow ParentWindow
-        {
-            get
-            {
-                return _ParentWindow;
-            }
-            set
-            {
-                _ParentWindow = value;
-            }
 
         }
-        #endregion
+        public MainWindow ParentWindow { get; set; }
+
+        
 
         private void Save(object sender, RoutedEventArgs e)
         {
             //var ts = GetName("inv_bill_info");
-            var ts = DB.GetName();
+            //var ts = DB.GetName();
 
             //INV_BILL_INFO dt = new INV_BILL_INFO(Name = "aa");
             //dt.ID = "";
@@ -69,7 +58,7 @@ namespace Project.G
             //    string name = t.Name;
             //    MessageBox.Show(name);
             //}
-            this.ParentWindow.LoadLeftPage();
+            this.ParentWindow.LoadLeftPage(vm.FilterDb.value);
             this.Visibility = Visibility.Hidden;
         }
 

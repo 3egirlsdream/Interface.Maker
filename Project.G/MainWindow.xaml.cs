@@ -39,9 +39,9 @@ namespace Project.G
             this.DataContext = vm;
         }
 
-        public void LoadLeftPage()
+        public void LoadLeftPage(int t)
         {
-            left = new LeftPage();
+            left = new LeftPage(t);
             Left.Content = new Frame() { Content = left };
             Left.Visibility = Visibility.Visible;
         }

@@ -14,14 +14,16 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="40"/>
             </Grid.RowDefinitions>
-            <StackPanel Grid.Row="0" Margin="15,5,15,0">
-                <TextBlock Margin="0,0,0,5"  Text="数据库连接字符串" FontWeight="Bold"/>
-                <TextBox Height="50" Text="{Binding SqlString}" Background="#E6E6E6"/>
+            <StackPanel Grid.Row="0" Margin="15,5,15,10" Orientation="Horizontal">
+                <TextBlock Margin="0,0,10,5"  Text="数据库连接字符串" FontWeight="Bold"  VerticalAlignment="Center"/>
+                <ComboBox Width="100" ItemsSource="{Binding DbList}" SelectedItem="{Binding FilterDb, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
-            <Button Background="#B8B8B8" Grid.Row="2" Width="100" Content="保存" Click="Save" Margin="0,0,0,10" BorderThickness="0"/>
+            <TextBox Grid.Row="1" Margin="15,0,15,0" Height="50" Text="{Binding SqlString}" Background="#E6E6E6" TextWrapping="Wrap"/>
+            <Button Background="#B8B8B8" Grid.Row="3" Width="100" Content="保存" Click="Save" Margin="0,0,0,10" BorderThickness="0"/>
         </Grid>
     </Border>
 </Page>

@@ -53,6 +53,11 @@
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
                             <ContentControl Name="Left" Grid.Column="0"/>
+                            <StackPanel Grid.Column="1">
+                                <Button Content="生成" Command="{Binding CmdGenerate}" Width="100"  BorderThickness="0" Background="#C83C56"/>
+                                <TextBox Text="{Binding Json}" Height="370" TextWrapping="Wrap"/>
+                            </StackPanel>
+                            
                         </Grid>
                     </controls:MetroTabItem>
                     <controls:MetroTabItem Header="Model">
