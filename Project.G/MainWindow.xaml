@@ -53,10 +53,18 @@
                                 <ColumnDefinition/>
                             </Grid.ColumnDefinitions>
                             <ContentControl Name="Left" Grid.Column="0"/>
-                            <StackPanel Grid.Column="1">
+                            <!--<StackPanel Grid.Column="0" Orientation="Horizontal"  Height="auto" VerticalAlignment="Top">
+                                <Label Content="表名:"/>
+                                <TextBox Text="{Binding TableName}" Width="120"/>
+                                <CheckBox  Margin="10,0,0,0" IsChecked="{Binding MySql}">
+                                    MySql
+                                </CheckBox>
+                                <Button Content="生成模型" Command="{Binding CmdGenerateModel}" BorderThickness="0" Margin="10,0,0,0"/>
+                            </StackPanel>-->
+                            <!--<StackPanel Grid.Column="1">
                                 <Button Content="生成" Command="{Binding CmdGenerate}" Width="100"  BorderThickness="0" Background="#C83C56"/>
                                 <TextBox Text="{Binding Json}" Height="370" TextWrapping="Wrap"/>
-                            </StackPanel>
+                            </StackPanel>-->
                             
                         </Grid>
                     </controls:MetroTabItem>
@@ -75,7 +83,7 @@
                                     <ColumnDefinition Width="auto"/>
                                 </Grid.ColumnDefinitions>
                                 <TextBlock Grid.Column="0" Text="数据库名:" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,0,0,0"/>
-                                <TextBox Grid.Column="1" Width="200" Height="30" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,0,0,0" Text ="{Binding TableName}"/>
+                                <TextBox Grid.Column="1" Width="200" Height="30" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="10,0,0,0" Text ="{Binding DBName}"/>
                                 <ComboBox Grid.Column="2" ItemsSource="{Binding ListButton}" SelectedItem="{Binding Filter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100" Margin="10,0,0,0"/>
                                 <ComboBox Grid.Column="3" ItemsSource="{Binding Constraints}" SelectedItem="{Binding Constraint, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100" Margin="10,0,0,0"/>
                                 <!--<StackPanel Grid.Column="3">

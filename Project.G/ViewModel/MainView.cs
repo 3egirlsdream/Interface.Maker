@@ -1,5 +1,4 @@
-﻿using Job.Common;
-using Microsoft.Win32;
+﻿using Microsoft.Win32;
 using NPOI.XSSF.UserModel;
 using Project.G.Models;
 using System;
@@ -9,9 +8,8 @@ using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using Model.Helper;
 using System.Windows;
-using System.Windows.Input;
 using Xu.Common;
 
 namespace Project.G.ViewModel
@@ -22,13 +20,15 @@ namespace Project.G.ViewModel
         public List<Key_Value> Constraints { get; set; }
         public MainView()
         {
-            TableName = Common.SetConfig("DBName");
+            DBName = Common.SetConfig("DBName");
             ListButton = new List<Key_Value>();
             ListButton.Add(new Key_Value { label = "生成SQL", value = 0 });
             ListButton.Add(new Key_Value { label = "打开MODEL", value = 1 });
             ListButton.Add(new Key_Value { label = "导出", value = 2 });
             ListButton.Add(new Key_Value { label = "添加监视", value = 3 });
             ListButton.Add(new Key_Value { label = "格式化JSON", value = 4 });
+            ListButton.Add(new Key_Value { label = "添加Command", value = 5 });
+            ListButton.Add(new Key_Value { label = "生成模型", value = 6 });
             Filter = ListButton[3];
 
             ////
@@ -36,6 +36,7 @@ namespace Project.G.ViewModel
             Constraints.Add(new Key_Value { label = "", value = 0 });
             Constraints.Add(new Key_Value { label = "去掉小写", value = 1 });
             Constraints.Add(new Key_Value { label = "SqlServer", value = 2 });
+            Constraints.Add(new Key_Value { label = "MySql", value = 3 });
             Constraint = Constraints[0];
         }
 
@@ -83,18 +84,18 @@ namespace Project.G.ViewModel
             }
         }
 
-        private string _TableName;
-        public string TableName
+        private string _DBName;
+        public string DBName
         {
             get
             {
-                return _TableName;
+                return _DBName;
             }
             set
             {
-                _TableName = value;
+                _DBName = value;
                 Common.SetConfig("DBName", value);
-                NotifyPropertyChanged("TableName");
+                NotifyPropertyChanged("DBName");
             }
         }
 
@@ -142,6 +143,37 @@ namespace Project.G.ViewModel
 
         }
 
+        private string _TableName;
+        public string TableName
+        {
+            get
+            {
+                return _TableName;
+            }
+            set
+            {
+                _TableName = value;
+                NotifyPropertyChanged("TableName");
+            }
+        }
+
+        private bool _MySql = true;
+        public bool MySql
+        {
+            get
+            {
+                return _MySql;
+            }
+            set
+            {
+                _MySql = value;
+                NotifyPropertyChanged("MySql");
+            }
+        }
+
+
+
+
         #region Command
 
         public SimpleCommand CmdOpen => new SimpleCommand()
@@ -150,7 +182,7 @@ namespace Project.G.ViewModel
             {
                 if(Filter.value == 0)
                 {
-                    string str = OpenFile(TableName);
+                    string str = OpenFile(DBName);
                     SqlText = str;
                 }
                 else if(Filter.value == 1)
@@ -165,9 +197,17 @@ namespace Project.G.ViewModel
                 {
                     AddNotify_Click();
                 }
-                else
+                else if(Filter.value == 4)
                 {
                     FormatJson();
+                }
+                else if(Filter.value == 5)
+                {
+                    AddCommand();
+                }
+                else
+                {
+                    GenerateModel();
                 }
             }
         };
@@ -178,13 +218,14 @@ namespace Project.G.ViewModel
             {
                 try
                 {
-                    JobCommon job = new JobCommon();
-                    SqlText = Common.format(job.GetModel(Json, "MeiCloud_Access"));
+                    ModelHelper job = new ModelHelper();
+                    SqlText = job.GetTableJson(DBName, SqlSugar.DbType.SqlServer);
                 }
                 catch (Exception ex) { }
             }
         };
 
+        
         #endregion
 
         #region 方法
@@ -421,6 +462,42 @@ namespace Project.G.ViewModel
                 models.Add(model);
             }
             SqlText += "\t}\n}";
+        }
+
+        private void AddCommand()
+        {
+            if (String.IsNullOrEmpty(SqlText))
+            {
+                return;
+            }
+            StringBuilder str = new StringBuilder("");
+            str.Append("public SimpleCommand "+ SqlText.Replace("\n", "") + " => new SimpleCommand(){ExecuteDelegate = x =>{},CanExecuteDelegate = o =>{return true;}}");
+            SqlText = Common.format(str.ToString());
+        }
+
+        private void GenerateModel()
+        {
+            try
+            {
+                if (!String.IsNullOrEmpty(DBName))
+                {
+                    ModelHelper model = new ModelHelper();
+                    //DbType type = DbType.SqlServer;
+                    SqlSugar.DbType ty = SqlSugar.DbType.SqlServer;
+                    if (Constraint.value == 3)
+                    {
+                        //type = DbType.MySql;
+                        ty = SqlSugar.DbType.MySql;
+                    }
+                    string json = model.GetTableJson(DBName, ty);
+                    SqlText = Common.format(model.ModelCreate(json, "MeiCloud.DataAccess"));
+                }
+            }
+            catch (Exception ex)
+            {
+                Warning warning = new Warning(ex.Message);
+                warning.ShowDialog();
+            }
         }
         #endregion
     }
