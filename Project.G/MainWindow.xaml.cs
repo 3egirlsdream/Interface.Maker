@@ -63,5 +63,10 @@ namespace Project.G
         {
             page.Visibility = page.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
         }
+
+        private void MinWindow(object sender, MouseButtonEventArgs e)
+        {
+            this.WindowState = WindowState.Minimized;
+        }
     }
 }

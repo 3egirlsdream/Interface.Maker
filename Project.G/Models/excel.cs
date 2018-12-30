@@ -16,6 +16,17 @@ namespace Project.G.Models
         public string defaultContext { get; set; }
     }
 
+    public class Excel
+    {
+        public string GRID_CODE { get; set; }
+        public string GRID_NAME { get; set; }
+        public string CONTROL_CODE { get; set; }
+        public string SEARCH_CODE { get; set; }
+        public string SEARCH_NAME { get; set; }
+        public string BUTTON { get; set; }
+    }
+
+    
     public class SortByLength : IComparer
     {
         int IComparer.Compare(object x, object y)
@@ -36,5 +47,42 @@ namespace Project.G.Models
         {
             return label.ToString();
         }
+    }
+
+    public class MyModel
+    {
+        public MyModel()
+        {
+            Header = new List<Excel>();
+            Content = new List<Excel>();
+            Body = new List<Excel>();
+        }
+
+        public string BOX_CODE { get; set; }
+        public string BOX_NAME { get; set; }
+        public string SEARCH_CODE { get; set; }
+
+        public List<Excel> Header;
+        public List<Excel> Content;
+        public List<Excel> Body;
+    }
+
+    public class ImportClass
+    {
+        public ImportClass()
+        {
+            Body = new List<Im>();
+            EMPTY_CODE = new List<string>();
+            REPEAT_CODE = new List<string>();
+        }
+        public List<string> EMPTY_CODE { get; set; }
+        public List<string> REPEAT_CODE { get; set; }
+        public List<Im> Body { get; set; }
+    }
+
+    public class Im
+    {
+        public string GRID_CODE { get; set; }
+        public string GRID_NAME { get; set; }
     }
 }

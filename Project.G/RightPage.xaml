@@ -11,19 +11,40 @@
         <DropShadowEffect ShadowDepth="1" BlurRadius="30" Opacity="0.2"/>
     </Page.Effect>
     <Border Background="#E6E6E6" Opacity="0.9">
+        <ScrollViewer>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="40"/>
                 <RowDefinition Height="40"/>
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0" Margin="15,5,15,10" Orientation="Horizontal">
                 <TextBlock Margin="0,0,10,5"  Text="数据库连接字符串" FontWeight="Bold"  VerticalAlignment="Center"/>
                 <ComboBox Width="100" ItemsSource="{Binding DbList}" SelectedItem="{Binding FilterDb, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
-            <TextBox Grid.Row="1" Margin="15,0,15,0" Height="50" Text="{Binding SqlString}" Background="#E6E6E6" TextWrapping="Wrap"/>
-            <Button Background="#B8B8B8" Grid.Row="3" Width="100" Content="保存" Click="Save" Margin="0,0,0,10" BorderThickness="0"/>
+            <TextBox Grid.Row="1" Margin="15,0,25,0" Height="50" Text="{Binding SqlString}" Background="#E6E6E6" TextWrapping="Wrap"/>
+
+
+                <WrapPanel Grid.Row="2" Orientation="Horizontal" Margin="15,10,15,0">
+                    <TextBlock Text="录入连接属性" FontWeight="Bold" Width="200" Margin="0,0,0,10"/>
+                    <TextBox Width="110" Text="{Binding HeaderText,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox Margin="30,0,0,0" Width="110" Text="{Binding ItemText,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox Height="50" Background="#E6E6E6" Width="250" Margin="0,10,1,0" TextWrapping="Wrap" Text="{Binding ConnStr, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Button Width="80" Margin="170,10,0,0" Background="Aquamarine" FontFamily="幼圆"  Content="录  入" Command="{Binding CmdLuRu}" BorderThickness="0"/>
+                </WrapPanel>
+                <WrapPanel Grid.Row="3" Orientation="Horizontal" Margin="15,10,15,0">
+                    <TextBlock Text="查询连接关系" FontWeight="Bold" Width="200" Margin="0,0,0,10"/>
+                    <ComboBox Width="110" ItemsSource="{Binding HeaderMain, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding FilterHeader, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <ComboBox Margin="30,0,0,0" Width="110" ItemsSource="{Binding Item, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding FilterItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox Height="80" Background="#E6E6E6" IsReadOnly="True" Width="250" Margin="0,10,0,0" TextWrapping="Wrap" Text="{Binding SrchConnStr, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Button Width="80" Margin="170,10,0,0" FontFamily="幼圆"  Content="查  询" Command="{Binding CmdSearch}" BorderThickness="0"/>
+                </WrapPanel>
+
+                <Button Background="#B8B8B8" Grid.Row="5" Width="100" Content="保存" FontFamily="幼圆" Click="Save" Margin="0,0,0,10" BorderThickness="0"/>
         </Grid>
+        </ScrollViewer>
     </Border>
 </Page>
