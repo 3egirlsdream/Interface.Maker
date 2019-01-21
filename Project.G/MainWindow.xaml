@@ -22,12 +22,12 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="30"/>
-                <RowDefinition Height="50"/>
+                <RowDefinition Height="53"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
             <Border  Background="#C83C56" BorderThickness="0"
-                      Grid.Row="0" >
+                      Grid.Row="0" CornerRadius="3">
                 <Grid>
                     <Border x:Name="CLOSE" ToolTip="关闭" HorizontalAlignment="Right" Margin="0,10,15,0" Width="13" Height="13" Background="#FFB8B8B8" CornerRadius="13" MouseDown="CloseWindow" VerticalAlignment="Top"/>
                     <Border x:Name="MINN" ToolTip="最小化" HorizontalAlignment="Right" Margin="0,10,55,0" Width="13" Height="13" Background="#FFEFC000" CornerRadius="13" MouseDown="MinWindow" VerticalAlignment="Top"/>
@@ -41,8 +41,9 @@
                 Grid.Row="1"
                 Background="#C83C56"
                 BorderThickness="0"
+                Margin="0,-3,0,0"
                 >
-                
+
             </Border>
             <Grid Grid.Row="2" Grid.RowSpan="2">
                 <controls:MetroTabControl Background="Transparent" Grid.RowSpan="2" Margin="0,-35,0,0">
@@ -50,10 +51,12 @@
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="150"/>
                                 <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="2*"/>
                             </Grid.ColumnDefinitions>
-                            <ContentControl Name="Left" Grid.Column="2"/>
+                            <TextBlock Grid.Column="2" Name="tb3" Margin="0,40,0,0" />
+                            <!--<TextBlock Grid.Column="1" Name="tb1" Margin="0,40,0,0"/>-->
+                            <ContentControl Name="Left" Grid.Column="6"/>
                             <!--<StackPanel Grid.Column="0" Orientation="Horizontal"  Height="auto" VerticalAlignment="Top">
                                 <Label Content="表名:"/>
                                 <TextBox Text="{Binding TableName}" Width="120"/>
@@ -63,8 +66,8 @@
                                 <Button Content="生成模型" Command="{Binding CmdGenerateModel}" BorderThickness="0" Margin="10,0,0,0"/>
                             </StackPanel>-->
                             <WrapPanel Grid.Column="0">
-                                <TextBlock Margin="10" Text="项目名：" VerticalAlignment="Center" FontWeight="Bold"/>
-                                <TextBox Width="130" Height="30" Text="{Binding ProjectName}" Margin="10,0,10,0"/>
+                                <TextBlock Margin="10" Text="项目名：" VerticalAlignment="Center" FontWeight="Bold" Name="ProjName"/>
+                                <TextBox Width="130" Height="30" Text="{Binding ProjectName}" Margin="10,0,10,0" Name="ProjName1"/>
                                 <TextBlock Margin="10" Text="中文名：" VerticalAlignment="Center" FontWeight="Bold"/>
                                 <TextBox Width="130" Height="30" Text="{Binding ChineseName}" Margin="10,0,10,0"/>
                                 <CheckBox IsChecked="{Binding AddChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10,10,10,0">
@@ -76,23 +79,36 @@
                                 <CheckBox IsChecked="{Binding ImportChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10,10,10,0" Width="100">
                                     <TextBlock Text="导入"/>
                                 </CheckBox>
+                                <StackPanel>
+                                    <CheckBox IsChecked="{Binding ModelChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10,10,10,0" Width="100" Name="cm">
+                                        <TextBlock Text="生成模型"/>
+                                    </CheckBox>
+                                    <Label Content="需在右侧输入表名" Foreground="Gray" Margin="30,0,0,0" FontSize="10"/>
+                                </StackPanel>
+
                                 <TextBlock Margin="10" Text="弹出框数：" VerticalAlignment="Center" FontWeight="Bold"/>
                                 <TextBox Width="130" Height="30" Text="{Binding BoxNumber}" Margin="10,0,10,0"/>
-                                <Button Content="生  成" Command="{Binding CmdGenerate}" Width="100" Height="30"  FontSize="13"  BorderThickness="0" Background="#C83C56" Margin="25,5,0,0"/>
+                                <TextBlock Margin="10" Text="Share Model路径：" VerticalAlignment="Center" FontWeight="Bold"/>
+                                <TextBox Text="{Binding ShareModel}" Height="30" FontFamily="Consolas" FontSize="14" Margin="10" Width="130" ToolTip="{Binding ShareModel}"/>
+
                             </WrapPanel>
-                            <!--<StackPanel Grid.Column="2">
-                                --><!--<Button Content="生成" Command="{Binding CmdGenerate}" Width="100"  BorderThickness="0" Background="#C83C56"/>--><!--
-                                <TextBox Text="{Binding Json}" Height="370" TextWrapping="Wrap"/>
-                            </StackPanel>-->
+                            <WrapPanel Grid.Column="1">
+                                <!--<Button Content="生成" Command="{Binding CmdGenerate}" Width="100"  BorderThickness="0" Background="#C83C56"/>-->
+
+
+                                <TextBlock Margin="10" Text="表名：" VerticalAlignment="Center" FontWeight="Bold"/>
+                                <TextBox Text="{Binding Tables}" Height="280" TextWrapping="Wrap" AcceptsReturn="True" FontFamily="Consolas" FontSize="14" Width="130" Margin="10,0,10,0"/>
+                                <CheckBox IsChecked="{Binding IsExsitModel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10,10,10,0" Foreground="Gray">
+                                    <TextBlock Text="检查模型是否存在"/>
+                                </CheckBox>
+                                <Button Content="生  成" Command="{Binding CmdGenerate}" Width="100" Height="30"  FontSize="13"  BorderThickness="0" Background="#C83C56" Margin="25,10,10,0" />
+                            </WrapPanel>
 
                             <!--<WrapPanel Grid.Column="1">
                                 <ComboBox Width="100" Margin="10" VerticalAlignment="Center" ItemsSource="{Binding CreateBox}" SelectedItem="{Binding FilterBox}"/>
                                 <Button Content="执行" Width="100" HorizontalAlignment="Left" BorderThickness="0" Background="#119EDA" FontSize="13" VerticalAlignment="Center" Margin="0,0,0,0" Command="{Binding CmdCreate}"/>
-                                
-                            
                             </WrapPanel>-->
-                            
-                            
+
                         </Grid>
                     </controls:MetroTabItem>
                     <controls:MetroTabItem Header="Model">
@@ -125,8 +141,14 @@
                                 <Button Grid.Column="4" Width="100" HorizontalAlignment="Left" Content="执行" BorderThickness="0" Background="#119EDA" FontSize="13" VerticalAlignment="Center" Margin="10,0,0,0" Command="{Binding CmdOpen}"/>
                             </Grid>
                             <TextBox Grid.Row="1" BorderThickness="0" Text="{Binding SqlText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" FontFamily="Consolas" FontSize="14">
-                                
+
                             </TextBox>
+                        </Grid>
+                    </controls:MetroTabItem>
+
+                    <controls:MetroTabItem Header="Domain">
+                        <Grid>
+                            <TextBox Grid.Row="1" BorderThickness="0" Text="{Binding Domain}" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" FontFamily="Consolas" FontSize="14" IsReadOnly="True"/>
                         </Grid>
                     </controls:MetroTabItem>
                 </controls:MetroTabControl>
@@ -139,7 +161,7 @@
                 </Grid.ColumnDefinitions>
                 <ContentControl Name="right" Grid.Column="1" Background="Black"/>
             </Grid>
-           
+
         </Grid>
     </Border>
 

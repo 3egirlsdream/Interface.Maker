@@ -116,9 +116,9 @@
     </ApplicationDefinition>
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Models\Connection.cs" />
+    <Compile Include="Models\Domain.cs" />
     <Compile Include="Models\excel.cs" />
     <Compile Include="Models\ExModel.cs" />
-    <Compile Include="Models\inv_bill_info.cs" />
     <Compile Include="LeftPage.xaml.cs">
       <DependentUpon>LeftPage.xaml</DependentUpon>
     </Compile>
@@ -126,8 +126,14 @@
     <Compile Include="RightPage.xaml.cs">
       <DependentUpon>RightPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="JiHuo.xaml.cs">
+      <DependentUpon>JiHuo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\MainView.cs" />
     <Compile Include="ViewModel\RightPageVM.cs" />
+    <Compile Include="UpdateDesc.xaml.cs">
+      <DependentUpon>UpdateDesc.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -147,6 +153,14 @@
     <Page Include="RightPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="JiHuo.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="UpdateDesc.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
@@ -175,7 +189,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="img\setting.png" />
@@ -185,6 +201,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="img\bitbug_favicon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

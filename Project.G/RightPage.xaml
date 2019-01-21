@@ -25,7 +25,7 @@
                 <TextBlock Margin="0,0,10,5"  Text="数据库连接字符串" FontWeight="Bold"  VerticalAlignment="Center"/>
                 <ComboBox Width="100" ItemsSource="{Binding DbList}" SelectedItem="{Binding FilterDb, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
-            <TextBox Grid.Row="1" Margin="15,0,25,0" Height="50" Text="{Binding SqlString}" Background="#E6E6E6" TextWrapping="Wrap"/>
+                <TextBox Grid.Row="1" Margin="15,0,25,0" Height="50" Text="{Binding SqlString}" Background="#E6E6E6" TextWrapping="Wrap" ToolTip="{Binding SqlString}"/>
 
 
                 <WrapPanel Grid.Row="2" Orientation="Horizontal" Margin="15,10,15,0">

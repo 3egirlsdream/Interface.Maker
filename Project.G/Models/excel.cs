@@ -18,6 +18,7 @@ namespace Project.G.Models
 
     public class Excel
     {
+        public bool IsApi { get; set; }
         public string GRID_CODE { get; set; }
         public string GRID_NAME { get; set; }
         public string CONTROL_CODE { get; set; }
@@ -26,7 +27,9 @@ namespace Project.G.Models
         public string BUTTON { get; set; }
     }
 
-    
+    /// <summary>
+    /// 根据长度排序
+    /// </summary>
     public class SortByLength : IComparer
     {
         int IComparer.Compare(object x, object y)
@@ -78,6 +81,7 @@ namespace Project.G.Models
         public List<string> EMPTY_CODE { get; set; }
         public List<string> REPEAT_CODE { get; set; }
         public List<Im> Body { get; set; }
+        public string CheckTable { get; set; }
     }
 
     public class Im

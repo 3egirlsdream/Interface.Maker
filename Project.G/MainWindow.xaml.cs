@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Management;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -13,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Xu.Common;
 
 namespace Project.G
 {
@@ -28,13 +30,36 @@ namespace Project.G
         {
             InitializeComponent();
 
+            if(Common.Key() != Common.SetConfig("Password"))
+            {
+                JiHuo ji = new JiHuo();
+                ji.ShowDialog();
+                if (Common.Key() != Common.SetConfig("Password"))
+                    this.Close();
+            }
+
+            //if (Common.SetConfig("Date") == "0"){
+            //    this.Close();
+            //}
+            //else{
+            //    Common.SetConfig("Date", (Convert.ToInt32(Common.SetConfig("Date")) - 1).ToString());
+            //}
             left.ParentWindow = this;
             page.ParentWindow = this;
 
             right.Content = new Frame() { Content = page };
             right.Visibility = Visibility.Visible;
-
-            
+            if (Common.SetConfig("Update") == "0")
+            {
+                UpdateDesc u = new UpdateDesc();
+                u.ShowDialog();
+                if (u.IsChecked())
+                    Common.SetConfig("Update", "1");
+            }
+            ProjName.ToolTip = "项目名必须包含Plugin,否则不会生成服务端代码";
+            ProjName1.ToolTip = "项目名必须包含Plugin,否则不会生成服务端代码";
+            tb3.Text = " <— 在这里输入表名(要换行),服务端可以自动链接模型哦！\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n <— 勾选后不存在的模型不会链接。";
+            cm.ToolTip = "勾选后会生成在右侧文本框输入的表的模型";
             vm = new MainView();
             this.DataContext = vm;
         }
@@ -68,5 +93,7 @@ namespace Project.G
         {
             this.WindowState = WindowState.Minimized;
         }
+
+        
     }
 }

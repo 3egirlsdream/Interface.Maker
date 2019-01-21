@@ -20,6 +20,7 @@ namespace Project.G.ViewModel
         public MainView()
         {
             LoadCombox();
+            ShareModel = Common.SetConfig("ShareModel");
             BoxNumber = 0;
         }
 
@@ -117,6 +118,40 @@ namespace Project.G.ViewModel
                 NotifyPropertyChanged("IsChecked");
             }
         }
+
+        //是否生成模型
+        private bool _ModelChecked;
+        public bool ModelChecked
+        {
+            get
+            {
+                return _ModelChecked;
+            }
+            set
+            {
+                _ModelChecked = value;
+                NotifyPropertyChanged("ModelChecked");
+            }
+        }
+
+        //检测模型是否存在
+        private bool _IsExsitModel;
+        public bool IsExsitModel
+        {
+            get
+            {
+                return _IsExsitModel;
+            }
+            set
+            {
+                _IsExsitModel = value;
+                NotifyPropertyChanged("IsExsitModel");
+            }
+        }
+
+
+
+
 
         private bool _IsSqlServer;
         public bool IsSqlServer
@@ -585,6 +620,33 @@ namespace Project.G.ViewModel
             }
         }
 
+        private string GenerateModel(string DBName)
+        {
+            try
+            {
+                if (!String.IsNullOrEmpty(DBName))
+                {
+                    ModelHelper model = new ModelHelper();
+                    //DbType type = DbType.SqlServer;
+                    SqlSugar.DbType ty = SqlSugar.DbType.SqlServer;
+                    if (Constraint.value == 3)
+                    {
+                        //type = DbType.MySql;
+                        ty = SqlSugar.DbType.MySql;
+                    }
+                    string json = model.GetTableJson(DBName, ty);
+                    return Common.format(model.ModelCreate(json, "MeiCloud.DataAccess"));
+                }
+                return "";
+            }
+            catch (Exception ex)
+            {
+                Warning warning = new Warning(ex.Message);
+                warning.ShowDialog();
+                return "";
+            }
+        }
+
         /// <summary>
         /// 加载下拉框
         /// </summary>
@@ -696,6 +758,41 @@ namespace Project.G.ViewModel
             }
         }
 
+        private bool _EditChecked;
+        public bool EditChecked
+        {
+            get
+            {
+                return _EditChecked;
+            }
+            set
+            {
+                _EditChecked = value;
+                NotifyPropertyChanged("EditChecked");
+            }
+        }
+
+
+
+
+        /// <summary>
+        /// 表名
+        /// </summary>
+        private string _Tables;
+        public string Tables
+        {
+            get
+            {
+                return _Tables;
+            }
+            set
+            {
+                _Tables = value;
+                NotifyPropertyChanged("Tables");
+            }
+        }
+        
+
         private bool _ImportChecked;
         public bool ImportChecked
         {
@@ -770,6 +867,7 @@ namespace Project.G.ViewModel
         {
             try
             {
+                #region
                 if (String.IsNullOrEmpty(ProjectName))
                     return false;
                 string dir = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
@@ -785,6 +883,7 @@ namespace Project.G.ViewModel
                 Write(Strings.GetAssembly(ProjectName), dir + "\\" + csproj + "\\Properties\\AssemblyInfo.cs");
                 //Write(Strings.resx, dir + "\\" + csproj + "\\Properties\\Resources.resx");
                 Write(LoadModel(IndexBodies), dir + "\\" + csproj + "\\Models\\Model.cs");
+                Write(LoadModel(), dir + "\\" + csproj + "\\Models\\ComboxModel.cs");
                 Write(Strings.GetIndexPage(csproj, CreateButton(Buttones), CreateContents(IndexContents), CreateDataGrid(IndexBodies)), dir + "\\" + csproj + "\\Views\\IndexPage.xaml");//indexpage.xaml
                 Write(Strings.GetIndexXamlCs(csproj), dir + "\\" + csproj + "\\Views\\IndexPage.xaml.cs");//xaml.cs
                 Write(Strings.GetIndexVM(csproj, CreateWord(IndexContents) + CreateCommand(IndexContents, Buttones, boxes), Strings.CreateLoadData(IndexContents)), dir + "\\" + csproj + "\\ViewModels\\IndexPageVM.cs");//indexVM
@@ -797,18 +896,28 @@ namespace Project.G.ViewModel
                 {
                     Write(Strings.GetAddPageXaml(csproj, CreateAddContents(AddContents), "auto"), dir + "\\" + csproj + "\\Views\\Add.xaml");//Add.xaml
                     Write(Strings.GetAddPageXamlCs(csproj), dir + "\\" + csproj + "\\Views\\Add.xaml.cs");//xaml.cs
-                    Write(Strings.GetAddVM(csproj, CreateWord(AddContents), Strings.PostData(AddContents), Strings.IsLegal(AddContents)), dir + "\\" + csproj + "\\ViewModels\\AddVM.cs");//AddVM
+                    Write(Strings.GetAddVM(csproj, CreateWord(AddContents) + CreateCommand(AddContents, new List<MyModel>() { }), Strings.PostData(AddContents), Strings.IsLegal(AddContents)), dir + "\\" + csproj + "\\ViewModels\\AddVM.cs");//AddVM
                     res += Strings.CreateAddUrl(csproj);
-                    Include += GetInclude(boxes);
-                    Complie += GetComplie(boxes);
+                    Include += GetAddInclude;
+                    Complie += GetAddComplie;
                 }
 
+                if (EditChecked)
+                {
+                    Write(Strings.GetEditPageXaml(csproj, CreateAddContents(AddContents), "auto"), dir + "\\" + csproj + "\\Views\\Edit.xaml");//Edit.xaml
+                    Write(Strings.GetEditPageXamlCs(csproj), dir + "\\" + csproj + "\\Views\\Edit.xaml.cs");//xaml.cs
+                    Write(Strings.GetEditVM(csproj, CreateWord(AddContents) + CreateCommand(AddContents, new List<MyModel>() { }), Strings.PostData(AddContents), Strings.IsLegal(AddContents), Strings.CreateEditLoadData(AddContents)), dir + "\\" + csproj + "\\ViewModels\\EditVM.cs");//AddVM
+                    res += Strings.CreateEditUrl(csproj);
+                    Include += GetEditInclude;
+                    Complie += GetEditComplie;
+                }
+                
                 //Import
                 if (ImportChecked)
                 {
                     Write(Strings.GetImportXaml(csproj, CreateDataGrid(ImportBidies)), dir + "\\" + csproj + "\\Views\\ImportPage.xaml");//Import.xaml
                     Write(Strings.GetImportXamlCs(csproj), dir + "\\" + csproj + "\\Views\\ImportPage.xaml.cs");//xaml.cs
-                    Write(Strings.GetImprotVM(csproj, ImportBidies, Strings.CreateXss(ImportBidies), Strings.CreateNull(ImportBidies), Strings.CreateRepeat(ImportBidies), Strings.CreateRepeatFunction(ImportBidies)), dir + "\\" + csproj + "\\ViewModels\\ImportPageVM.cs");//ImportVM
+                    Write(Strings.GetImprotVM(csproj, ImportBidies, Strings.CreateXss(ImportBidies), Strings.CreateNull(ImportBidies), Strings.CreateRepeat(ImportBidies), Strings.CreateRepeatFunction(ImportBidies), Strings.CheckImportData(ImportBidies)), dir + "\\" + csproj + "\\ViewModels\\ImportPageVM.cs");//ImportVM
                     res += Strings.CreateImportUrl(csproj, ImportBidies);
                     Include += GetImportInclude;
                     Complie += GetImportComplie;
@@ -822,6 +931,8 @@ namespace Project.G.ViewModel
                         Write(Strings.GetBoxesXamlCs(csproj, ds.BOX_CODE), dir + "\\" + csproj + "\\Views\\" + ds.BOX_CODE + ".xaml.cs");//xaml.cs
                         Write(Strings.GetBoxesVM(csproj, ds.BOX_CODE, CreateWord(ds.Body), Strings.CreateBoxUrl(csproj, ds.BOX_CODE, ds.SEARCH_CODE)), dir + "\\" + csproj + "\\ViewModels\\" + ds.BOX_CODE + "VM.cs");//AddVM
                     }
+                    Include += GetInclude(boxes);
+                    Complie += GetComplie(boxes);
                 }
 
                 Write(Strings.GetResource(ChineseName, CreateResorce(AllRes())), dir + "\\" + csproj + "\\Resources\\Strings.zh-CN.xaml");//资源文件
@@ -829,9 +940,28 @@ namespace Project.G.ViewModel
 
 
                 Write(Strings.GetServices(csproj, res), dir + "\\" + csproj + "\\Services.cs");
+
+                Domain = Strings.CreateGetallUrl(csproj, IndexContents).Replace("\r\n\t\t", "") ;
+                #endregion
+
+                #region 生成后台
+                Directory.CreateDirectory(dir + "\\" + csproj.Replace("Plugin", "ServerPlugin"));
+                Directory.CreateDirectory(dir + "\\" + csproj.Replace("Plugin", "ServerPlugin") + "\\Models");
+                Directory.CreateDirectory(dir + "\\" + csproj.Replace("Plugin", "ServerPlugin") + "\\Properties");
+                Directory.CreateDirectory(dir + "\\" + csproj.Replace("Plugin", "ServerPlugin") + "\\Domains");
+                Directory.CreateDirectory(dir + "\\" + csproj.Replace("Plugin", "ServerPlugin") + "\\Services");
+
+                var ls = csproj.Split('.');
+                Write(Domains.GetAssembly(ProjectName, ChineseName), dir + "\\" + csproj.Replace("Plugin", "ServerPlugin") + "\\Properties\\AssemblyInfo.cs");
+                Write(Domains.GetCsproj(csproj, LoadTables()), dir + "\\" + csproj.Replace("Plugin", "ServerPlugin") + "\\" + csproj.Replace("Plugin", "ServerPlugin") + ".csproj");
+                Write(Domains.GetDomain(csproj, Domains.GetAllUrlBody(IndexContents, 1), Domains.GetHasWordUrl(ImportBidies, 1), Domains.GetHasWrodFunction(ImportBidies), Domains.GetAllFunction(Tables, IndexContents)), dir + "\\" + csproj.Replace("Plugin", "ServerPlugin") + "\\Domains\\" + ls.Last() + "Domain.cs");
+                Write(Domains.GetService(csproj, Domains.GetAllUrlHeader(csproj, IndexContents), Domains.GetAllUrlBody(IndexContents, 1), Domains.GetAllUrlBody(IndexContents, 0), ChineseName, Domains.GetHasWordUrl(ImportBidies, 0), Domains.GetHasWordUrl(ImportBidies, 1), Domains.GetHasWordUrl(ImportBidies, 2)), dir + "\\" + csproj.Replace("Plugin", "ServerPlugin") + "\\Services\\" + ls.Last() + "Service.cs");
+                if(ModelChecked)
+                    CreateDbModel();
+                #endregion
                 return true;
             }
-            catch
+            catch(Exception ex)
             {
                 return false;
             }
@@ -869,6 +999,21 @@ namespace Project.G.ViewModel
                 s += model;
             }
             s += "private bool _IsChecked;public bool IsChecked{get{return _IsChecked;}set{_IsChecked = value;NotifyPropertyChanged(\"IsChecked\");}}}}";
+            return Common.format(s);
+        }
+
+        private string LoadModel()
+        {
+            string s = "using DAF.Plugin.Common;using System;using System.Collections.Generic;using System.Linq;using System.Text;namespace " + ProjectName + "{public class ComboxModel : ValidationBase{";
+            s += "//下拉框模型\n\t#region models \n\t" +
+                "public string Label{get;set;}"+
+                "public string Value{get;set;}" +
+                "\t#endregion\n//重载ToString()以显示SelectedItem\n";
+            s += "public override string ToString()" +
+            "{" +
+            "    return Label?.ToString();" +
+            "}";
+            s += "}}";
             return Common.format(s);
         }
 
@@ -923,7 +1068,7 @@ namespace Project.G.ViewModel
                         //按钮
                         for (int i = 1; i <= cot; i++)
                         {
-                            string btn = sheet.GetRow(i).GetCell(5) == null ? "" : sheet.GetRow(i).GetCell(5).ToString();
+                            string btn = sheet.GetRow(i).GetCell(6) == null ? "" : sheet.GetRow(i).GetCell(6).ToString();
                             if (String.IsNullOrEmpty(btn))
                                 break;
                             Buttones.Add(btn);
@@ -936,7 +1081,8 @@ namespace Project.G.ViewModel
                             sFC.CONTROL_CODE = sheet.GetRow(i).GetCell(2) == null ? "" : sheet.GetRow(i).GetCell(2).ToString();
                             sFC.SEARCH_CODE = sheet.GetRow(i).GetCell(3) == null ? "" : sheet.GetRow(i).GetCell(3).ToString();
                             sFC.SEARCH_NAME = sheet.GetRow(i).GetCell(4) == null ? "" : sheet.GetRow(i).GetCell(4).ToString();
-
+                            string api = sheet.GetRow(i).GetCell(5) == null ? "" : sheet.GetRow(i).GetCell(5).ToString();
+                            sFC.IsApi = api == "YES" ? true : false;
                             if (string.IsNullOrEmpty(sFC.CONTROL_CODE))
                                 break;
                             IndexContents.Add(sFC);
@@ -1040,10 +1186,13 @@ namespace Project.G.ViewModel
             string s = "<WrapPanel>\r\n";
             foreach(var ds in btn)
             {
+                string style = ds == "刷新" ? "Style=\"{DynamicResource HighLightButtonStyle}\"" : "";
                 string tmp = "<Button Content=\"{DynamicResource " + command(ds, "") + "}\" " +
                     "Margin=\"{DynamicResource BtnMargin}\" " +
                     "Command=\"{Binding " + command(ds, "Cmd") + "}\" " +
-                    "controls:TextBoxHelper.ButtonContent=\"{DynamicResource " + command(ds, "Icon_") + "}\"/>\r\n";
+                    "controls:ButtonHelper.IconContent=\"{DynamicResource " + command(ds, "Icon_") + "}\" " +
+                    style +
+                    "/>\r\n";
                 s += tmp;
             }
             s += "</WrapPanel>";
@@ -1064,7 +1213,8 @@ namespace Project.G.ViewModel
                 case "删除": return pre + "Delete";
                 case "保存": return pre + "Save";
                 case "禁用": return pre + "Forbiden";
-                default:return "";
+                case "重置": return pre + "Reset";
+                default:return s;
             }
         }
 
@@ -1171,6 +1321,10 @@ namespace Project.G.ViewModel
             return s;
         }
 
+        /// <summary>
+        /// 取所有资源文件key的参数
+        /// </summary>
+        /// <returns></returns>
         private List<Excel> AllRes()
         {
             List<Excel> excels = new List<Excel>();
@@ -1215,6 +1369,18 @@ namespace Project.G.ViewModel
             return s;
         }
 
+        private string ReadonlyTextbox(string Binding)
+        {
+            string s = "\r\n<TextBox Text=\"{Binding " + Binding + ", Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}\" " +
+                "controls:TextBoxHelper.ClearTextButton = \"False\" " +
+                "controls:TextBoxHelper.SelectAllOnFocus = \"True\" " +
+                "IsReadOnly=\"True\" "+
+                "controls:TextBoxExHelper.IsUnderLine = \"True\" " +
+                "controls:TextBoxHelper.Watermark=\"{DynamicResource " + Binding + "_Watermark}\" " +
+                "Margin=\"0,0,50,0\" />\r\n";
+            return s;
+        }
+
         /// <summary>
         /// 生成带弹出框的TextBox
         /// </summary>
@@ -1244,8 +1410,8 @@ namespace Project.G.ViewModel
             Model.Helper.ModelHelper model = new ModelHelper();
             string s = "<ComboBox Margin=\"0,0,50,0\" " +
                 "controls:TextBoxHelper.Watermark=\"{DynamicResource Grid_"+DataSource+"}\" " +
-                "ItemsSource=\"{Binding Com"+model.Col(DataSource).Replace("Col", "")+"}\" " +
-                "SelectedItem=\"{Binding Filter"+ model.Col(DataSource).Replace("Col", "") + "}\"/>\r\n";
+                "ItemsSource=\"{Binding "+ DataSource +", Mode=TwoWay}\" " +
+                "SelectedItem=\"{Binding Filter_"+ DataSource + ", Mode=TwoWay}\"/>\r\n";
             return s;
         }
 
@@ -1262,7 +1428,13 @@ namespace Project.G.ViewModel
 
         private string CreateTextBlock(string name)
         {
-            string s = "<TextBlock Text=\"{DynamicResource Grid_" + name + "}\" Margin=\"0,0,5,0\" VerticalAlignment=\"Center\" Width=\"60\"/>\r\n";
+            string s = "";
+            if (string.IsNullOrEmpty(name))
+            {
+                s += "<TextBlock VerticalAlignment=\"Center\" Width=\"60\" TextWrapping=\"Wrap\"/>\r\n";
+            }
+            else
+                s += "<TextBlock Text=\"{DynamicResource Grid_" + name + "}\" VerticalAlignment=\"Center\" Width=\"60\"  TextWrapping=\"Wrap\"/>\r\n";
             return s;
         }
 
@@ -1279,27 +1451,27 @@ namespace Project.G.ViewModel
         /// <returns></returns>
         private string CreateContents(List<Excel> Contents)
         {
-            string s = "";
+            string s = "<WrapPanel Grid.Row=\"0\">\r\n";
             int t = Contents.Count % 3 == 0 ? Contents.Count / 3 : (Contents.Count / 3) + 1;
-            for (int i = 0; i < t; i ++)
+
+            for (int j = 0; j < Contents.Count; j++)
             {
-                s += "<WrapPanel Grid.Row=\"" + i + "\" Margin=\"0,0,0,10\">\r\n";
-                for (int j = i * 3; j < Contents.Count && j < (i + 1) * 3; j++)
+                s += "<WrapPanel  Margin=\"10,10,0,0\">";
+                s += CreateTextBlock(Contents[j].SEARCH_CODE);
+                switch (Contents[j].CONTROL_CODE)
                 {
-                    s += CreateTextBlock(Contents[j].SEARCH_CODE);
-                    switch (Contents[j].CONTROL_CODE)
-                    {
-                        case "TextBox": s += CreateTextBox(Contents[j].SEARCH_CODE); break;
-                        case "TextBox带弹出框": s += CreateTextBoxWithCommand(Contents[j].SEARCH_CODE); break;
-                        case "Combox": s += CreateCombox(Contents[j].SEARCH_CODE); break;
-                        case "DatePicker": s += CreateDatePicker(Contents[j].SEARCH_CODE); break;
-                        case "占位控件": s += EmptyControl(); break;
-                        default: break;
-                    }
-                    
+                    case "TextBox": s += CreateTextBox(Contents[j].SEARCH_CODE); break;
+                    case "TextBox带弹出框": s += CreateTextBoxWithCommand(Contents[j].SEARCH_CODE); break;
+                    case "Combox": s += CreateCombox(Contents[j].SEARCH_CODE); break;
+                    case "DatePicker": s += CreateDatePicker(Contents[j].SEARCH_CODE); break;
+                    case "占位控件": s += EmptyControl(); break;
+                    case "只读TextBox": s += ReadonlyTextbox(Contents[j].SEARCH_CODE); break;
+                    default: break;
                 }
-                s += "\r\n</WrapPanel>";
+                s += "</WrapPanel>";
             }
+
+            s += "\r\n</WrapPanel>";
             return s;
         }
 
@@ -1345,7 +1517,10 @@ namespace Project.G.ViewModel
             {
                 if (Contents[i].CONTROL_CODE == "TextBox带弹出框")
                 {
-                    s += "\t" + AddCommand(model.GetCmd(Contents[i].SEARCH_CODE), models[t++], Contents[i]) + "\r\n";
+                    if(models.Count > 0)
+                        s += "\t" + AddCommand(model.GetCmd(Contents[i].SEARCH_CODE), models[t++], Contents[i]) + "\r\n";
+                    else
+                        s += "\t" + AddCommand(model.GetCmd(Contents[i].SEARCH_CODE), null, Contents[i]) + "\r\n";
                 }
             }
 
@@ -1356,6 +1531,28 @@ namespace Project.G.ViewModel
             return s + "#endregion\r\n";
         }
 
+        /// <summary>
+        /// 生成新增编辑的Command
+        /// </summary>
+        /// <returns></returns>
+        private string CreateCommand(List<Excel> Contents, List<MyModel> models)
+        {
+            string s = "#region Command\r\n\t";
+            int t = 0;
+            Model.Helper.ModelHelper model = new ModelHelper();
+            for (int i = 0; i < Contents.Count; i++)
+            {
+                if (Contents[i].CONTROL_CODE == "TextBox带弹出框")
+                {
+                    if (models.Count > 0)
+                        s += "\t" + AddCommand(model.GetCmd(Contents[i].SEARCH_CODE), models[t++], Contents[i]) + "\r\n";
+                    else
+                        s += "\t" + AddCommand(model.GetCmd(Contents[i].SEARCH_CODE), null, Contents[i]) + "\r\n";
+                }
+            }
+
+            return s + "#endregion\r\n";
+        }
 
         /// <summary>
         /// 生成绑定字段
@@ -1376,8 +1573,8 @@ namespace Project.G.ViewModel
                 if(ds.CONTROL_CODE == "Combox")
                 {
                     s += "\t//" + ds.SEARCH_NAME + "\r\n\t";
-                    s += AddNotify_Click("List<Model> " + ds.SEARCH_CODE) + "\r\n";
-                    s += AddNotify_Click("Model " + "Filter_" + ds.SEARCH_CODE) + "\r\n";
+                    s += AddNotify_Click("ObservableCollection<ComboxModel> " + ds.SEARCH_CODE) + "\r\n";
+                    s += AddNotify_Click("ComboxModel " + "Filter_" + ds.SEARCH_CODE) + "\r\n";
                 }
             }
             s += "#endregion\r\n";
@@ -1438,6 +1635,109 @@ namespace Project.G.ViewModel
             "</Page>\r\n";
         #endregion
 
+        #region 新增
         #endregion
+        /// <summary>
+        /// 生成项目文件内容
+        /// </summary>
+        /// <param name="BoxName"></param>
+        /// <returns></returns>
+        private const string GetAddComplie =
+            "<Compile Include=\"Views\\Add.xaml.cs\">\r\n" +
+            "<DependentUpon>Add.xaml</DependentUpon>\r\n" +
+            "<SubType>Code</SubType>" +
+            "</Compile>\r\n" +
+            "<Compile Include=\"ViewModels\\AddVM.cs\" />\r\n";
+
+
+        private const string GetAddInclude =
+            "<Page Include=\"Views\\Add.xaml\">\r\n" +
+            "<SubType>Designer</SubType>\r\n" +
+            "<Generator>MSBuild:Compile</Generator>\r\n" +
+            "</Page>\r\n";
+
+        private const string GetEditComplie =
+            "<Compile Include=\"Views\\Edit.xaml.cs\">\r\n" +
+            "<DependentUpon>Edit.xaml</DependentUpon>\r\n" +
+            "<SubType>Code</SubType>" +
+            "</Compile>\r\n" +
+            "<Compile Include=\"ViewModels\\EditVM.cs\" />\r\n";
+
+
+        private const string GetEditInclude =
+            "<Page Include=\"Views\\Edit.xaml\">\r\n" +
+            "<SubType>Designer</SubType>\r\n" +
+            "<Generator>MSBuild:Compile</Generator>\r\n" +
+            "</Page>\r\n";
+
+        /// <summary>
+        /// 添加模型链接
+        /// </summary>
+        /// <returns></returns>
+        private string LoadTables()
+        {
+            if (String.IsNullOrEmpty(Tables))
+                return "";
+            else 
+            {
+                var ds = Tables.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+                return Strings.ModelLink(ShareModel, ds.ToList(), IsExsitModel);
+            }           
+        }
+        #endregion
+
+        #region  Domain
+
+        private string _Domain;
+        public string Domain
+        {
+            get
+            {
+                return _Domain;
+            }
+            set
+            {
+                _Domain = value;
+                NotifyPropertyChanged("Domain");
+            }
+        }
+
+        private string _ShareModel;
+        public string ShareModel
+        {
+            get
+            {
+                return _ShareModel;
+            }
+            set
+            {
+                _ShareModel = value;
+                Common.SetConfig("ShareModel", value);
+                NotifyPropertyChanged("ShareModel");
+            }
+        }
+
+
+
+
+        #endregion
+
+        /// <summary>
+        /// 生成没有的模型
+        /// </summary>
+        private void CreateDbModel()
+        {
+            var tables = Tables.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
+            string dir = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
+            string s = "已生成(Models文件夹)：\r\n";
+            foreach (var ds in tables)
+            {
+                if (!File.Exists(ShareModel + "\\" + ds.ToUpper() + ".cs"))
+                {
+                    Write(GenerateModel(ds), dir + "\\" + ProjectName.Replace("Plugin", "ServerPlugin") + "\\Models\\" + ds.ToUpper() + ".cs");
+                    s += ds.ToUpper() + "\r\n";
+                }
+            }
+        }
     }
 }

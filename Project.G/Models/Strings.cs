@@ -30,7 +30,7 @@ namespace Project.G.Models
         }
 
 
-        public static string GetCsproj(string ProjectName, string Complier = "", string Page = "", string Extend = "")
+        public static string GetCsproj(string ProjectName, string Complier = "", string Page = "", string Extend = "", string Link = "")
         {
             string csproject = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n" +
                 "<Project ToolsVersion=\"15.0\" xmlns=\"http://schemas.microsoft.com/developer/msbuild/2003\">\r\n  " +
@@ -90,7 +90,8 @@ namespace Project.G.Models
                 "<SpecificVersion>False</SpecificVersion>\r\n      " +
                 "<HintPath>..\\..\\Reference Assemblies\\NPOI.OpenXml4Net.dll</HintPath>\r\n    " +
                 "</Reference>\r\n    <Reference Include=\"NPOI.OpenXmlFormats, Version=2.2.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL\">\r\n      " +
-                "<SpecificVersion>False</SpecificVersion>\r\n      <HintPath>..\\..\\Reference Assemblies\\NPOI.OpenXmlFormats.dll</HintPath>\r\n    " +
+                "<SpecificVersion>False</SpecificVersion>\r\n      " +
+                "<HintPath>..\\..\\Reference Assemblies\\NPOI.OpenXmlFormats.dll</HintPath>\r\n    " +
                 "</Reference>"+
 
                 "<Reference Include=\"System\" />\r\n    " +
@@ -116,10 +117,7 @@ namespace Project.G.Models
                 "<Generator>MSBuild:Compile</Generator>\r\n      " +
                 "<SubType>Designer</SubType>\r\n    " +
                 "</Page>\r\n    " +
-                "<Page Include=\"Views\\Add.xaml\">\r\n" +
-                "<SubType>Designer</SubType>\r\n" +
-                "<Generator>MSBuild:Compile</Generator>\r\n" +
-                "</Page>\r\n" +
+                
                 
                 "<Page Include=\"Resources\\Strings.zh-CN.xaml\">\r\n      " +
                 "<Generator>MSBuild:Compile</Generator>\r\n      " +
@@ -129,21 +127,18 @@ namespace Project.G.Models
 
 
                 "<ItemGroup>\r\n " +
-                " <Compile Include=\"..\\..\\Reference Assemblies\\Release\\GlobalAssemblyInfo.cs\">\r\n      " +
+                "<Compile Include=\"..\\..\\Reference Assemblies\\Release\\GlobalAssemblyInfo.cs\">\r\n      " +
                 "<Link>Properties\\GlobalAssemblyInfo.cs</Link>\r\n    " +
                 "</Compile>\r\n\r\n    " +
+                Link +
                 "<Compile Include=\"Services.cs\" />" +
                 "<Compile Include=\"ViewModels\\IndexPageVM.cs\" />\r\n    " +
                 "<Compile Include=\"Models\\Model.cs\" />\r\n\r\n    " +
+                "<Compile Include=\"Models\\ComboxModel.cs\" />\r\n\r\n    " +
                 "<Compile Include=\"Views\\IndexPage.xaml.cs\">\r\n      " +
                 "<DependentUpon>IndexPage.xaml</DependentUpon>\r\n      " +
                 "<SubType>Code</SubType>\r\n    " +
                 "</Compile>\r\n    " +
-                "<Compile Include=\"Views\\Add.xaml.cs\">\r\n" +
-                "<DependentUpon>Add.xaml</DependentUpon>\r\n" +
-                "<SubType>Code</SubType>" +
-                "</Compile>\r\n" +
-                "<Compile Include=\"ViewModels\\AddVM.cs\" />\r\n" +
                 Complier + 
                 "<Compile Include=\"Properties\\AssemblyInfo.cs\">\r\n      " +
                 "<SubType>Code</SubType>\r\n    " +
@@ -155,6 +150,30 @@ namespace Project.G.Models
                 "<Import Project=\"$(MSBuildToolsPath)\\Microsoft.CSharp.targets\" />\r\n"+Extend+"\r\n" +
                 "</Project>";
             return csproject;
+        }
+
+
+        public static string ModelLink(string ShareModel, List<string> names, bool flag = false)
+        {
+            string s = "";
+            foreach (var name in names)
+            {
+                if (!flag)
+                {
+                    string tmp = "<Compile Include=\"..\\..\\SharedModels\\" + name.ToUpper() + ".cs\" >\r\n      " +
+                                "<Link>Models\\" + name.ToUpper() + ".cs</Link>\r\n    " +
+                                "</Compile>\r\n\r\n    ";
+                    s += tmp;
+                }
+                else if (flag && File.Exists(ShareModel + "\\" + name.ToUpper() + ".cs"))
+                {
+                    string tmp = "<Compile Include=\"..\\..\\SharedModels\\" + name.ToUpper() + ".cs\" >\r\n      " +
+                                "<Link>Models\\" + name.ToUpper() + ".cs</Link>\r\n    " +
+                                "</Compile>\r\n\r\n    ";
+                    s += tmp;
+                } 
+            }
+            return s;
         }
 
         /// <summary>
@@ -237,22 +256,20 @@ namespace Project.G.Models
                 Button +
                 "</Grid>\r\n        " +
                 "</Border>\r\n       " +
-                " <Border\r\n            Grid.Row=\"1\"\r\n            Margin=\"0,10,0,0\"\r\n            " +
+                " <Border\r\n            Grid.Row=\"1\"\r\n            Margin=\"0,0,0,0\"\r\n            " +
                 "Background=\"{DynamicResource PanelBrush}\">\r\n            " +
-                "<Grid Margin=\"{DynamicResource ContainerPadding}\">\r\n                " +
+                "<Border BorderBrush=\"#D8D8D9\" BorderThickness=\"1\" Margin=\"{DynamicResource ContainerPadding}\" Padding=\"5\">" +
+                "<Grid>\r\n                " +
+                
                 "<Grid.RowDefinitions>\r\n                    " +
                 "<RowDefinition Height=\"Auto\" />\r\n                    " +
                 "<RowDefinition Height=\"Auto\" />\r\n                    " +
-                "<RowDefinition Height=\"Auto\" />\r\n                    " +
-                "<RowDefinition Height=\"Auto\" />\r\n                    " +
-                "<RowDefinition Height=\"Auto\" />\r\n                    " +
-                "<RowDefinition Height=\"Auto\"/>\r\n                    " +
-                "<RowDefinition Height=\"Auto\" />\r\n                " +
                 "</Grid.RowDefinitions>\r\n                \r\n            " +
                 SearchContent +
                 "</Grid>\r\n        " +
+                "</Border>\r\n" +
                 "</Border>\r\n        " +
-                "<Border Grid.Row=\"6\" Margin=\"0,10,0,0\" Background=\"{DynamicResource PanelBrush}\">\r\n            " +
+                "<Border Grid.Row=\"6\" Margin=\"0,0,0,0\" Background=\"{DynamicResource PanelBrush}\">\r\n            " +
                 "<Grid Margin=\"{DynamicResource ContainerPadding}\">\r\n                " +
                 "<DataGrid  ItemsSource=\"{Binding DataSource}\" SelectedItem=\"{Binding SelectedRow}\">\r\n                    " +
                 "<DataGrid.Columns>\r\n\r\n                    " +
@@ -271,7 +288,11 @@ namespace Project.G.Models
 
         public static string GetIndexXamlCs(string ProjectName)
         {
-            string cs = "using System;\r\nusing System.Globalization;\r\nusing DAF.Plugin.Common;\r\nusing System.Windows;\r\n\r\nnamespace " + ProjectName + "\r\n{\r\n    /// <summary>\r\n    /// IndexPage.xaml 的交互逻辑\r\n    /// </summary>\r\n    public partial class IndexPage : PagePlugin\r\n    {\r\n\r\n        #region 基类方法\r\n        IndexPageVM vm;\r\n        public IndexPage()\r\n        {\r\n            InitializeComponent();\r\n        }\r\n\r\n        public override void PluginLoadCompleted()\r\n        {\r\n            vm = new IndexPageVM(this);\r\n            this.DataContext = vm;\r\n        }\r\n\r\n        public override void SetFocus()\r\n        {\r\n\r\n        }\r\n\r\n        /// <summary>\r\n        /// 程序中多语言实现代码放在此事件中。\r\n        /// </summary>\r\n        /// <param name=\"culture\"></param>\r\n        public override void OnCultureUpdated(CultureInfo culture)\r\n        {\r\n            base.OnCultureUpdated(culture);\r\n            //切换本地化语言资源文件。\r\n            string strResourceName = string.Format(@\"pack://application:,,,/" + ProjectName+";component/Resources/Strings.zh-CN.xaml\", culture.Name);\r\n            ResourceDictionary languageResDic = new ResourceDictionary();\r\n            languageResDic.Source = new Uri(strResourceName, UriKind.RelativeOrAbsolute);\r\n            this.Resources.MergedDictionaries.Add(languageResDic);\r\n\r\n            PageContainer.OnPluginUpdated(new PluginUpdatedEventArg { category = PluginUpdateCategory.Title, value = this[\"Title\"] });\r\n        }\r\n        #endregion\r\n    }\r\n}\r\n\r\n";
+            string cs = "using System;\r\nusing System.Globalization;\r\nusing DAF.Plugin.Common;\r\nusing System.Windows;\r\n\r\nnamespace " + ProjectName + "\r\n{\r\n    /// <summary>\r\n    /// IndexPage.xaml 的交互逻辑\r\n    /// </summary>\r\n    public partial class IndexPage : PagePlugin\r\n    {\r\n\r\n        #region 基类方法\r\n        IndexPageVM vm;\r\n        public IndexPage()\r\n        {\r\n            InitializeComponent();\r\n        }\r\n\r\n        " +
+                "public override void PluginLoadCompleted()\r\n        " +
+                "{\r\n      try{ \r\n     vm = new IndexPageVM(this);\r\n            " +
+                "this.DataContext = vm;\r\n  }\r\n\t\t\t catch(Exception ex)\r\n\t\t\t{\r\n\t\t\t\t throw ex;\r\n\t\t\t}\r\n     " +
+                "}\r\n\r\n        public override void SetFocus()\r\n        {\r\n\r\n        }\r\n\r\n        /// <summary>\r\n        /// 程序中多语言实现代码放在此事件中。\r\n        /// </summary>\r\n        /// <param name=\"culture\"></param>\r\n        public override void OnCultureUpdated(CultureInfo culture)\r\n        {\r\n            base.OnCultureUpdated(culture);\r\n            //切换本地化语言资源文件。\r\n            string strResourceName = string.Format(@\"pack://application:,,,/" + ProjectName+";component/Resources/Strings.zh-CN.xaml\", culture.Name);\r\n            ResourceDictionary languageResDic = new ResourceDictionary();\r\n            languageResDic.Source = new Uri(strResourceName, UriKind.RelativeOrAbsolute);\r\n            this.Resources.MergedDictionaries.Add(languageResDic);\r\n\r\n            PageContainer.OnPluginUpdated(new PluginUpdatedEventArg { category = PluginUpdateCategory.Title, value = this[\"Title\"] });\r\n        }\r\n        #endregion\r\n    }\r\n}\r\n\r\n";
             return cs;
         }
     
@@ -290,7 +311,7 @@ namespace Project.G.Models
                 "{\r\n            LoadData();\r\n        }\r\n\r\n        " +
                 "#region 分页\r\n\r\n        private int _pageIndex = 1;\r\n       " +
                 " public int PageIndex\r\n        {\r\n            get { return _pageIndex; }\r\n            set\r\n            {\r\n                if (_pageIndex != value)\r\n                {\r\n                    _pageIndex = value;\r\n                    NotifyPropertyChanged(\"PageIndex\");\r\n                    LoadData();\r\n                }\r\n            }\r\n        }\r\n\r\n        " +
-                "private int _pageSize;\r\n        public int PageSize\r\n        {\r\n            get { return _pageSize; }\r\n            set\r\n            {\r\n                _pageSize = value;\r\n                NotifyPropertyChanged(\"PageSize\");\r\n                LoadData();\r\n            }\r\n        }\r\n\r\n\r\n        private int _totalCount;\r\n        public int TotalCount\r\n        {\r\n            get { return _totalCount; }\r\n            set\r\n            {\r\n                if (_totalCount != value)\r\n                {\r\n                    _totalCount = value;\r\n                    NotifyPropertyChanged(\"TotalCount\");\r\n                }\r\n            }\r\n        }\r\n\r\n        #endregion\r\n\r\n\r\n        private bool _isSelectedAll;\r\n        /// <summary>\r\n        /// 是否全部勾选\r\n        /// </summary>\r\n        public bool IsSelectedAll\r\n        {\r\n            get { return _isSelectedAll; }\r\n            set\r\n            {\r\n                _isSelectedAll = value;\r\n                foreach(var ds in DataSource)\r\n                {\r\n                    ds.IsChecked = value;\r\n                }\r\n                NotifyPropertyChanged(\"IsSelectedAll\");\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 主数据\r\n        /// </summary>\r\n        private List<Model> _DataSource;\r\n        public List<Model> DataSource\r\n        {\r\n            get\r\n            {\r\n                return _DataSource;\r\n            }\r\n            set\r\n            {\r\n                _DataSource = value;\r\n                NotifyPropertyChanged(\"DataSource\");\r\n            }\r\n        }\r\n\r\n\r\n\r\n\r\n\r\n \tprivate Model _SelectedRow;\r\n        public Model SelectedRow\r\n        {\r\n            get\r\n            {\r\n                return _SelectedRow;\r\n            }\r\n            set\r\n            {\r\n                _SelectedRow = value;\r\n                NotifyPropertyChanged(\"SelectedRow\");\r\n            }\r\n \t}\r\n " + Extend+"      #region 方法\r\n        " +
+                "private int _pageSize = 20;\r\n        public int PageSize\r\n        {\r\n            get { return _pageSize; }\r\n            set\r\n            {\r\n                _pageSize = value;\r\n                NotifyPropertyChanged(\"PageSize\");\r\n                LoadData();\r\n            }\r\n        }\r\n\r\n\r\n        private int _totalCount;\r\n        public int TotalCount\r\n        {\r\n            get { return _totalCount; }\r\n            set\r\n            {\r\n                if (_totalCount != value)\r\n                {\r\n                    _totalCount = value;\r\n                    NotifyPropertyChanged(\"TotalCount\");\r\n                }\r\n            }\r\n        }\r\n\r\n        #endregion\r\n\r\n\r\n        private bool _isSelectedAll;\r\n        /// <summary>\r\n        /// 是否全部勾选\r\n        /// </summary>\r\n        public bool IsSelectedAll\r\n        {\r\n            get { return _isSelectedAll; }\r\n            set\r\n            {\r\n                _isSelectedAll = value;\r\n                foreach(var ds in DataSource)\r\n                {\r\n                    ds.IsChecked = value;\r\n                }\r\n                NotifyPropertyChanged(\"IsSelectedAll\");\r\n            }\r\n        }\r\n\r\n        /// <summary>\r\n        /// 主数据\r\n        /// </summary>\r\n        private List<Model> _DataSource;\r\n        public List<Model> DataSource\r\n        {\r\n            get\r\n            {\r\n                return _DataSource;\r\n            }\r\n            set\r\n            {\r\n                _DataSource = value;\r\n                NotifyPropertyChanged(\"DataSource\");\r\n            }\r\n        }\r\n\r\n\r\n\r\n\r\n\r\n \tprivate Model _SelectedRow;\r\n        public Model SelectedRow\r\n        {\r\n            get\r\n            {\r\n                return _SelectedRow;\r\n            }\r\n            set\r\n            {\r\n                _SelectedRow = value;\r\n                NotifyPropertyChanged(\"SelectedRow\");\r\n            }\r\n \t}\r\n " + Extend+"      #region 方法\r\n        " +
                 "public void LoadData()\r\n        " +
                 "{\r\n\r\n        " +
                 LoadData +
@@ -378,6 +399,7 @@ namespace Project.G.Models
         public static string GetAddVM(string ProjectName, string Extend, string PostData = "", string IsLegal = "true")
         {
             string s = "using DAF.Plugin.Common;\r\n" +
+                "using System.Collections.ObjectModel;\r\n" +
                 "using System.Collections.Generic;\r\n" +
                 "namespace " + ProjectName + ".ViewModels\r\n{\r\n    " +
                 "class AddVM : WindowViewModelBase\r\n    {\r\n        \r\n        " +
@@ -435,6 +457,149 @@ namespace Project.G.Models
                 "private bool IsLegal()\r\n        " +
                 "{\r\n            " +
                 "return "+
+                IsLegal +
+                ";\r\n        " +
+                "}\r\n        " +
+                "#endregion\r\n\r\n    }\r\n}\r\n";
+            return s;
+        }
+
+        public static string GetEditPageXaml(string ProjectName, string Extend, string Height)
+        {
+            return "<common:WindowPlugin\r\n    " +
+                "x:Class=\"" + ProjectName + ".Edit\"\r\n    " +
+                "xmlns=\"http://schemas.microsoft.com/winfx/2006/xaml/presentation\"\r\n    " +
+                "xmlns:x=\"http://schemas.microsoft.com/winfx/2006/xaml\"\r\n    " +
+                "xmlns:common=\"http://schemas.creative.com/plugin\"\r\n    " +
+                "xmlns:controls=\"http://schemas.creative.com/controls\"\r\n    " +
+                "xmlns:d=\"http://schemas.microsoft.com/expression/blend/2008\"\r\n    " +
+                "xmlns:local=\"clr-namespace:" + ProjectName + "\"\r\n    " +
+                "xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibility/2006\"\r\n    " +
+                "Title=\"{DynamicResource Title_Edit}\"\r\n    Width=\"440\"\r\n    Height=\"500\"\r\n    " +
+                "mc:Ignorable=\"d\">\r\n    " +
+                "<Window.Resources>\r\n        " +
+                "<ResourceDictionary>\r\n            " +
+                "<ResourceDictionary.MergedDictionaries>\r\n                " +
+                "<ResourceDictionary Source=\"/Creative.Plugin.Common;component/Themes/Generic.xaml\" />\r\n                " +
+                "<ResourceDictionary Source=\"/" + ProjectName + ";component/Resources/Strings.zh-CN.xaml\" />\r\n            " +
+                "</ResourceDictionary.MergedDictionaries>\r\n        </ResourceDictionary>\r\n    " +
+                "</Window.Resources>\r\n    " +
+                "<Grid>\r\n        " +
+                "<Grid.RowDefinitions>\r\n            " +
+                "<RowDefinition Height=\"" + Height + "\" />\r\n            " +
+                "<RowDefinition Height=\"" + Height + "\" />\r\n            " +
+                "<RowDefinition Height=\"" + Height + "\" />\r\n            " +
+                "<RowDefinition Height=\"" + Height + "\" />\r\n            " +
+                "<RowDefinition Height=\"" + Height + "\" />\r\n            " +
+                "<RowDefinition Height=\"" + Height + "\" />\r\n            " +
+                "<RowDefinition Height=\"" + Height + "\" />\r\n            " +
+                "<RowDefinition Height=\"" + Height + "\" />\r\n            " +
+                "<RowDefinition Height=\"" + Height + "\" />\r\n            " +
+                "<RowDefinition Height=\"*\" />\r\n        " +
+                "</Grid.RowDefinitions>\r\n        \r\n        " +
+                Extend +
+                "<Border\r\n            " +
+                "Grid.Row=\"10\"\r\n            " +
+                "Grid.Column=\"0\"\r\n            " +
+                "Grid.ColumnSpan=\"3\"\r\n            " +
+                "Style=\"{DynamicResource BottomControlPanelStyle}\">\r\n            " +
+                "<StackPanel\r\n                Height=\"auto\"\r\n                HorizontalAlignment=\"Right\"\r\n                Orientation=\"Horizontal\">\r\n                " +
+                "<Button\r\n                    Command=\"{Binding CmdSave}\"\r\n                    Content=\"{DynamicResource Submit}\"\r\n                    Style=\"{DynamicResource HighLightButtonStyle}\" />\r\n                " +
+                "<Button\r\n                    Margin=\"{StaticResource BtnMargin}\"\r\n                    Content=\"{DynamicResource Cancel}\"\r\n                    IsCancel=\"True\" />\r\n            " +
+                "</StackPanel>\r\n        " +
+                "</Border>\r\n    " +
+                "</Grid>\r\n" +
+                "</common:WindowPlugin>\r\n";
+        }
+
+        public static string GetEditPageXamlCs(string ProjectName)
+        {
+            return "using DAF.Plugin.Common;\r\n" +
+                "using " + ProjectName + ".ViewModels;\r\n" +
+                "using System;\r\nusing System.Windows;\r\n\r\n" +
+                "namespace " + ProjectName + "\r\n" +
+                "{\r\n    /// <summary>\r\n    /// Edit.xaml 的交互逻辑\r\n    /// </summary>\r\n    " +
+                "public partial class Edit : WindowPlugin\r\n    {\r\n\r\n        string json;\r\n" +
+                "public Edit(string parameters) : base(parameters)\r\n        " +
+                "{\r\n            json = parameters;\r\n" +
+                "InitializeComponent();\r\n            " +
+                "this.DataContext = this;\r\n        }\r\n        " +
+                "EditVM vm;\r\n\r\n        " +
+                "public override void PluginLoadCompleted()\r\n        {\r\n            " +
+                "base.PluginLoadCompleted();\r\n            try\r\n            " +
+                "{\r\n                vm = new EditVM(this, json);\r\n                " +
+                "this.DataContext = vm;\r\n            }\r\n            " +
+                "catch (Exception ex)\r\n            {\r\n                " +
+                "MessageBox.Show(ex.Message);\r\n            " +
+                "}\r\n\r\n        }\r\n        \r\n    " +
+                "}\r\n}\r\n";
+        }
+
+        public static string GetEditVM(string ProjectName, string Extend, string PostData = "", string IsLegal = "true", string LoadData = "")
+        {
+            string s = "using DAF.Plugin.Common;\r\n" +
+                "using Newtonsoft.Json;\r\n"+
+                "using System.Collections.ObjectModel;\r\n" +
+                "using System.Collections.Generic;\r\n" +
+                "namespace " + ProjectName + ".ViewModels\r\n{\r\n    " +
+                "class EditVM : WindowViewModelBase\r\n    {\r\n        \r\n        string json;" +
+                "public EditVM(IWindowPlugin plugin, string js) : base(plugin)\r\n        " +
+                "{\r\n            json = js;\r\n" +
+                "LoadData();\r\n        }\r\n\r\n        " +
+                "#region 分页\r\n\r\n        " +
+                "private int _pageIndex = 1;\r\n        " +
+                "public int PageIndex\r\n        {\r\n            " +
+                "get { return _pageIndex; }\r\n            " +
+                "set\r\n            {\r\n                " +
+                "if (_pageIndex != value)\r\n                {\r\n                    " +
+                "_pageIndex = value;\r\n                    " +
+                "NotifyPropertyChanged(\"PageIndex\");\r\n                    " +
+                "LoadData();\r\n                }\r\n            }\r\n        }\r\n\r\n        " +
+                "private int _pageSize = 20;\r\n        " +
+                "public int PageSize\r\n        {\r\n            get { return _pageSize; }\r\n            " +
+                "set\r\n            {\r\n                _pageSize = value;\r\n                " +
+                "NotifyPropertyChanged(\"PageSize\");\r\n                " +
+                "LoadData();\r\n            }\r\n        }\r\n\r\n\r\n        " +
+                "private int _totalCount;\r\n        " +
+                "public int TotalCount\r\n        {\r\n            " +
+                "get { return _totalCount; }\r\n            set\r\n            {\r\n                " +
+                "if (_totalCount != value)\r\n                {\r\n                    " +
+                "_totalCount = value;\r\n                    " +
+                "NotifyPropertyChanged(\"TotalCount\");\r\n                }\r\n            }\r\n        }\r\n\r\n        " +
+                "#endregion\r\n\r\n        " +
+                "/// <summary>\r\n        /// 主数据\r\n        /// </summary>\r\n        " +
+                "private List<Model> _DataSource;\r\n        " +
+                "public List<Model> DataSource\r\n        {\r\n            get\r\n            {\r\n                " +
+                "return _DataSource;\r\n            }\r\n            set\r\n            {\r\n                " +
+                "_DataSource = value;\r\n                " +
+                "NotifyPropertyChanged(\"DataSource\");\r\n            }\r\n        }\r\n\r\n        " +
+                "private Model _SelectedRow;\r\n        " +
+                "public Model SelectedRow\r\n        {\r\n            get\r\n            {\r\n                " +
+                "return _SelectedRow;\r\n            }\r\n            set\r\n            {\r\n                " +
+                "_SelectedRow = value;\r\n                " +
+                "NotifyPropertyChanged(\"SelectedRow\");\r\n            }\r\n        }\r\n\r\n        " +
+                Extend +
+                "public SimpleCommand CmdSave => new SimpleCommand()\r\n        {\r\n            " +
+                "ExecuteDelegate = x =>\r\n            {\r\n                " +
+                "if (IsLegal())\r\n                " +
+                "{\r\n                    " +
+                "plugin.Framework.PostData(Services.url_edit, new{model = PostData()});\r\n" +
+                "this.plugin.DialogResult = true;\r\n                }\r\n            },\r\n            " +
+                "CanExecuteDelegate = o =>\r\n            {\r\n                " +
+                "return IsLegal();\r\n            }\r\n        };\r\n\r\n        #region 方法\r\n        " +
+                "/// <summary>\r\n        /// 初始化数据\r\n        /// </summary>\r\n        " +
+                "private void LoadData()\r\n        {\r\n        " +
+                LoadData +
+                "    \r\n        }\r\n\r\n        " +
+                "/// <summary>\r\n        /// 保存数据\r\n        /// </summary>\r\n        " +
+                "private List<Model> PostData()\r\n        " +
+                "{\r\n\r\n        " +
+                PostData +
+                "}\r\n\r\n        " +
+                "/// <summary>\r\n        /// 校验数据\r\n        /// </summary>\r\n        /// <returns></returns>\r\n        " +
+                "private bool IsLegal()\r\n        " +
+                "{\r\n            " +
+                "return " +
                 IsLegal +
                 ";\r\n        " +
                 "}\r\n        " +
@@ -530,7 +695,7 @@ namespace Project.G.Models
                 "{\r\n                    _pageIndex = value;\r\n                    " +
                 "NotifyPropertyChanged(\"PageIndex\");\r\n                    " +
                 "LoadData();\r\n                }\r\n            }\r\n        }\r\n\r\n        " +
-                "private int _pageSize;\r\n        public int PageSize\r\n        {\r\n            " +
+                "private int _pageSize = 20;\r\n        public int PageSize\r\n        {\r\n            " +
                 "get { return _pageSize; }\r\n            set\r\n            {\r\n                " +
                 "_pageSize = value;\r\n                NotifyPropertyChanged(\"PageSize\");\r\n                " +
                 "LoadData();\r\n            }\r\n        }\r\n\r\n\r\n        private int _totalCount;\r\n        " +
@@ -622,7 +787,7 @@ namespace Project.G.Models
                 "<ColumnDefinition Width=\"*\" />\r\n    " +
                 "</Grid.ColumnDefinitions>\r\n    " +
                 "<Button Grid.Row=\"1\" Grid.Column=\"0\" Width=\"130\" Margin=\"{StaticResource BtnMargin}\" HorizontalAlignment=\"Left\" Command=\"{Binding CmdImport}\" Content=\"{DynamicResource SelectFile}\" />\r\n    " +
-                "<controls:IconButton Grid.Row=\"1\" Grid.Column=\"1\" Margin=\"{StaticResource BtnMargin}\" HorizontalAlignment=\"Left\" Command=\"{Binding CmdDownTemp}\" Content=\"{DynamicResource DownloadTemplate}\" />\r\n    " +
+                "<Button Grid.Row=\"1\" Grid.Column=\"1\" Margin=\"{StaticResource BtnMargin}\" HorizontalAlignment=\"Left\" Command=\"{Binding CmdDownTemp}\" Content=\"{DynamicResource DownloadTemplate}\" />\r\n    " +
                 "<DataGrid Name=\"dgRepairOrder\" Grid.Row=\"2\" Grid.Column=\"0\" Grid.ColumnSpan=\"8\" Margin=\"10,0,10,0\" AutoGenerateColumns=\"False\" CanUserAddRows=\"False\" CanUserDeleteRows=\"False\" CanUserReorderColumns=\"True\" CanUserSortColumns=\"True\" IsReadOnly=\"True\" ItemsSource=\"{Binding DataSource, Mode=TwoWay}\" SelectionMode=\"Single\">\r\n      " +
                 "<DataGrid.Columns>\r\n        \r\n      " +
                 Extend +
@@ -649,7 +814,7 @@ namespace Project.G.Models
             return s;
         }
 
-        public static string GetImprotVM(string ProjectName, ImportClass import, string Xss, string EmptyCode, string RepeatCode, string Function)
+        public static string GetImprotVM(string ProjectName, ImportClass import, string Xss, string EmptyCode, string RepeatCode, string Function, string CheckImportData)
         {
             string s = "using System;\r\n" +
                 "using System.Collections.Generic;\r\n" +
@@ -674,11 +839,11 @@ namespace Project.G.Models
                 Xss +
                 EmptyCode +
                 RepeatCode +
-                "models.Add(CheckImportData(model, models));\r\n                    }\r\n\r\n                    DataSource = models;\r\n                }\r\n            }\r\n          }}  catch (Exception ex)\r\n            {\r\n                MessageBox.Show(\"请删除结尾空行！\\n\" + ex.Message);\r\n            }\r\n        }\r\n\r\n       \r\n\r\n        /// <summary>\r\n        /// 重复返回1，反之返回0\r\n        /// </summary>\r\n        /// <param name=\"code\"></param>\r\n        /// <returns></returns>\r\n        " +
+                "models.Add(CheckImportData(model, models));\r\n                    }\r\n\r\n                    DataSource = models;\r\n                }\r\n            }\r\n        catch (Exception ex)\r\n            {\r\n                MessageBox.Show(\"请删除结尾空行！\\n\" + ex.Message);\r\n            }\r\n        }\r\n\r\n       \r\n\r\n        /// <summary>\r\n        /// 重复返回1，反之返回0\r\n        /// </summary>\r\n        /// <param name=\"code\"></param>\r\n        /// <returns></returns>\r\n        " +
                 Function +
                 "\r\n            var rs = res.GetData<string>();\r\n            if (rs == \"0\")\r\n                return false;\r\n            else\r\n                return true;\r\n        }\r\n\r\n " +
                 "       /// <summary>\r\n        /// 前台判断重复\r\n        /// </summary>\r\n        /// <param name=\"model\"></param>\r\n        /// <param name=\"models\"></param>\r\n        /// <returns></returns>\r\n        " +
-                "private Model CheckImportData(Model model, List<Model> models)\r\n        {\r\n            model.IsChecked = true;\r\n            if(models.FirstOrDefault(x => x.MES_LINESTOCK_CODE == model.MES_LINESTOCK_CODE) != null)\r\n            {\r\n                model.IsChecked = false;\r\n            }\r\n            return model;\r\n        }\r\n\r\n\r\n    }\r\n}\r\n";
+                "private Model CheckImportData(Model model, List<Model> models)\r\n        {\r\n            if(models.FirstOrDefault(x => "+CheckImportData+") != null)\r\n            {\r\n                model.IsChecked = false;\r\n            }\r\n            return model;\r\n        }\r\n\r\n\r\n    }\r\n}\r\n";
             return s;
         }
 
@@ -698,22 +863,30 @@ namespace Project.G.Models
             string s = "";
             for(int i = 0; i < import.EMPTY_CODE.Count; i++)
             {
-                string tmp = "if (string.IsNullOrEmpty(model."+import.EMPTY_CODE[i]+"))\r\n                        {\r\n                            " +
-                "model.TextState = \"失败！\" + Translator.Get(\"Grid_"+import.EMPTY_CODE[i]+"\") + \"不能为空\";\r\n                            model.Color = \"Red\";\r\n              ";
-                s += tmp;
+                string tmp = "";
+                if (i != 0) tmp += "else ";
+                tmp += "if (string.IsNullOrEmpty(model."+import.EMPTY_CODE[i]+"))\r\n                        {\r\n                            " +
+                "model.TextState = \"失败！\" + Translator.Get(\"Grid_"+import.EMPTY_CODE[i]+"\") + \"不能为空\";\r\n                            " +
+                "model.Color = \"Red\";\r\n              " +
+                "model.IsChecked = false;\r\n              ";
+                s += tmp + "}\r\n";
             }
             return s;
         }
 
         public static string CreateRepeat(ImportClass import)
         {
-            string s = "if (HasWord(model." + import.REPEAT_CODE[0];
+            string s = "else if (HasWord(model." + import.REPEAT_CODE[0];
             for(int i = 1; i < import.REPEAT_CODE.Count; i++)
             {
                 string tmp = ",model." + import.REPEAT_CODE[i];
                 s += tmp;
             }
-            return s += "))\r\n                        {\r\n                            model.TextState = \"失败！词条数据已存在\";\r\n                            model.Color = \"Red\";\r\n                        }\r\n                        else\r\n                        {\r\n                            model.TextState = \"成功！\";\r\n                            model.Color = \"Green\";\r\n                        }\r\n\r\n                        "; ;
+            return s += "))\r\n                        " +
+                "{\r\n                            model.TextState = \"失败！词条数据已存在\";\r\n                            " +
+                "model.Color = \"Red\";\r\n                        " +
+                "model.IsChecked = false;\r\n              " +
+            "}\r\n                        else\r\n                        {\r\n                            model.IsChecked = true;\r\n                            model.TextState = \"成功！\";\r\n                            model.Color = \"Green\";\r\n                        }\r\n\r\n                        "; ;
         }
 
         public static string CreateRepeatFunction(ImportClass import)
@@ -725,7 +898,7 @@ namespace Project.G.Models
                 s += tmp;
             }
             s += ")\r\n        {\r\n            var res = plugin.Framework.GetData(Services.url_hasword";
-            for (int i = 1; i < import.REPEAT_CODE.Count; i++)
+            for (int i = 0; i < import.REPEAT_CODE.Count; i++)
             {
                 ModelHelper model = new ModelHelper();
                 string tmp = ", " + import.REPEAT_CODE[i];
@@ -751,7 +924,7 @@ namespace Project.G.Models
                 string tmp = "";
                 if(ds.CONTROL_CODE == "Combox")
                 {
-                    tmp = "model." + ds.SEARCH_CODE + " = Filter_" + ds.SEARCH_CODE + ".ToString();\r\n";
+                    tmp = "model." + ds.SEARCH_CODE + " = Filter_" + ds.SEARCH_CODE + "?.Value;\r\n";
                 }
                 else 
                     tmp = "model." + ds.SEARCH_CODE + " = " + ds.SEARCH_CODE + ";\r\n";
@@ -775,7 +948,7 @@ namespace Project.G.Models
                 if(model[i].CONTROL_CODE != "Combox")
                     tmp += "&& !string.IsNullOrEmpty(" + model[i].SEARCH_CODE + ")";
                 else
-                    tmp += "&& !string.IsNullOrEmpty(Filter_" + model[i].SEARCH_CODE + ".ToString())";
+                    tmp += "&& !string.IsNullOrEmpty(Filter_" + model[i].SEARCH_CODE + "?.ToString())";
                 s += tmp;
             }
             return s + ";";
@@ -790,7 +963,14 @@ namespace Project.G.Models
         public static string CreateAddUrl(string ProjectName)
         {
             var ls = ProjectName.Split('.');
-            string s = "\r\n\t\tpublic const string url_add = \"api/" + ls.Last().ToLower() + "/add\";";
+            string s = "\r\n\t\tpublic const string url_add = \"/api/" + ls.Last().ToLower() +"/" + ls.Last().ToLower() + "/add\";";
+            return s;
+        }
+
+        public static string CreateEditUrl(string ProjectName)
+        {
+            var ls = ProjectName.Split('.');
+            string s = "\r\n\t\tpublic const string url_edit = \"/api/" + ls.Last().ToLower() + "/" + ls.Last().ToLower() + "/edit\";";
             return s;
         }
 
@@ -800,20 +980,23 @@ namespace Project.G.Models
         /// <param name="ProjectName"></param>
         /// <param name="models"></param>
         /// <returns></returns>
-        public static string CreateGetallUrl(string ProjectName, List<Excel> models, int t)
+        public static string CreateGetallUrl(string ProjectName, List<Excel> models, int t = 0)
         {
+            models = models.Where(x => x.IsApi).ToList();
             var ls = ProjectName.Split('.');
-            string s = "\r\n\t\tpublic const string url_getall = \"api/" + ls.Last().ToLower() + "/getall?";
+            string s = "\r\n\t\tpublic const string url_getall = \"/api/" + ls.Last().ToLower() + "/" + ls.Last().ToLower() + "/getall?";
             for(int i = 0; i < models.Count(); i++)
             {
-                string tmp = "&" + models[i].SEARCH_CODE + "={";
-                if (t == 1) models[i].SEARCH_CODE = i.ToString();
-                tmp += models[i].SEARCH_CODE + "}";
+                string tmp = "";
+                if (i > 0) tmp += "&";
+                tmp += models[i].SEARCH_CODE + "={";
+                if (t == 1) tmp += i.ToString() + "}";
+                else tmp += models[i].SEARCH_CODE + "}";
                 s += tmp;
             }
             if(t == 1)
             {
-                s += "&Start={"+ Convert.ToInt32(models.Count()) + 1+ "}&Length={" + Convert.ToInt32(models.Count()) + 2 + "}";
+                s += "&Start={"+ Convert.ToInt32(models.Count())+ "}&Length={" + (Convert.ToInt32(models.Count()) + 1) + "}";
             }
             else s += "&Start={Start}&Length={Length}";
             return s + "\";";
@@ -822,7 +1005,7 @@ namespace Project.G.Models
         public static string CreateDeleteUrl(string ProjectName)
         {
             var ls = ProjectName.Split('.');
-            string s = "\r\n\t\tpublic const string url_delete = \"api/" + ls.Last().ToLower() + "/delete\";";
+            string s = "\r\n\t\tpublic const string url_delete = \"/api/" + ls.Last().ToLower() + "/" + ls.Last().ToLower() + "/delete\";";
             return s;
         }
 
@@ -836,7 +1019,7 @@ namespace Project.G.Models
         public static string CreateBoxUrl(string ProjectName, string boxName, string code)
         {
             var ls = ProjectName.Split('.');
-            string s = "string url_"+boxName.ToLower()+" = \"api/" + ls.Last().ToLower() + "/"+boxName.ToLower()+"_search?" + code +"={" + code + "}\";";
+            string s = "string url_"+boxName.ToLower()+" = \"/api/" + ls.Last().ToLower() + "/" + ls.Last().ToLower() + "/"+boxName.ToLower()+"_search?" + code +"={" + code + "}\";";
             return s;
         }
 
@@ -848,21 +1031,26 @@ namespace Project.G.Models
         public static string CreateUpdateUrl(string ProjectName)
         {
             var ls = ProjectName.Split('.');
-            string s = "\r\n\t\tpublic const string url_update = \"api/" + ls.Last().ToLower() + "/update\";";
+            string s = "\r\n\t\tpublic const string url_update = \"/api/" + ls.Last().ToLower() + "/" + ls.Last().ToLower() + "/update\";";
             return s;
         }
 
 
         public static string CreateLoadData(List<Excel> models)
         {
-            string s = "var res = plugin.Framework.GetData(Services.url_getall,";
+            models = models.Where(x => x.IsApi).ToList();
+            string s = "try{\r\n//务必重载(如果有)下拉框模型的ToString()函数,以保证传参正确\r\n" +
+                "var res = plugin.Framework.GetData(Services.url_getall,";
             string tmp = models[0].SEARCH_CODE;
-            for(int i = 1; i < models.Count(); i++)
+            for (int i = 1; i < models.Count(); i++)
             {
-                tmp += "," + models[i].SEARCH_CODE;
+                if (models[i].CONTROL_CODE == "Combox")
+                    tmp += ", Filter_" + models[i].SEARCH_CODE + "?.Value";
+                else
+                    tmp += ", " + models[i].SEARCH_CODE;
             }
             s += tmp;
-            s += " );\nif (res.success)\n{\nDataSource = JsonConvert.DeserializeObject<List<Model>>(Convert.ToString(res.data.data));\nTotalCount = res.data.TotalCount;\n}\n";
+            s += ", PageIndex * (PageIndex - 1), PageSize);\nif (res.success)\n{\nDataSource = JsonConvert.DeserializeObject<List<Model>>(Convert.ToString(res.data.data));\nTotalCount = res.data.TotalCount;\n}}catch(Exception ex){}\n";
 
             return s;
         }
@@ -870,14 +1058,44 @@ namespace Project.G.Models
         public static string CreateImportUrl(string ProjectName, ImportClass import)
         {
             var ls = ProjectName.Split('.');
-            string s = "\r\n\t\tpublic const string url_hasword = \"api/" + ls.Last().ToLower() + "/hasword?";
+            string s = "\r\n\t\tpublic const string url_hasword = \"/api/" + ls.Last().ToLower() +"/"+ ls.Last().ToLower() +"/hasword?";
             for(int i = 0; i < import.REPEAT_CODE.Count(); i++)
             {
                 ModelHelper model = new ModelHelper();
-                string tmp = "&" + model.Col(import.REPEAT_CODE[i]).Replace("Col", "") + "={" + model.Col(import.REPEAT_CODE[i]).Replace("Col", "") + "}";
+                string tmp = "";
+                if (i > 0) tmp += "&";
+                tmp += model.Col(import.REPEAT_CODE[i]).Replace("Col", "") + "={" + i + "}";
                 s += tmp;
             }
             return s +"\";";
+        }
+
+        public static string CreateEditLoadData(List<Excel> models)
+        {
+            
+            string s = "var model = JsonConvert.DeserializeObject<Model>(json);\r\n";
+            foreach(var ds in models)
+            {
+                string tmp = "";
+                if (ds.CONTROL_CODE == "Combox")
+                    continue;
+                else
+                    tmp += ds.SEARCH_CODE + "= model." + ds.SEARCH_CODE + ";\r\n";
+                s += tmp;
+            }
+            return s;
+        }
+        //检测List内是否重复
+        public static string CheckImportData(ImportClass import)
+        {
+            string s = "";
+            foreach(var ds in import.REPEAT_CODE)
+            {
+                s += "x." + ds + " == model." + ds;
+                if (ds != import.REPEAT_CODE.Last())
+                    s += "&&";
+            }
+            return s;
         }
         #endregion
     }
