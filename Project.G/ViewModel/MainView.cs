@@ -570,7 +570,6 @@ namespace Project.G.ViewModel
                     ss += "var res = plugin.Framework.OpenWindowPlugin(\"" + ProjectName + ".dll;" + ProjectName + "." + model.BOX_CODE + "\",\"\");" +
                     "if(res.success){" +
                     excel.SEARCH_CODE + " = res.data." + Reback(excel.SEARCH_CODE) + ";" +
-                    "//" + excel.SEARCH_CODE.Replace("Desc", "Code") + " = res.data." + Reback(excel.SEARCH_CODE).Replace("DESC", "CODE") + ";\r\n" +
                     "}";
                 }
                     ss += "},CanExecuteDelegate = o =>{return true;}};";
@@ -882,9 +881,9 @@ namespace Project.G.ViewModel
 
                 Write(Strings.GetAssembly(ProjectName), dir + "\\" + csproj + "\\Properties\\AssemblyInfo.cs");
                 //Write(Strings.resx, dir + "\\" + csproj + "\\Properties\\Resources.resx");
-                Write(LoadModel(IndexBodies), dir + "\\" + csproj + "\\Models\\Model.cs");
-                Write(LoadModel(), dir + "\\" + csproj + "\\Models\\ComboxModel.cs");
-                Write(Strings.GetIndexPage(csproj, CreateButton(Buttones), CreateContents(IndexContents), CreateDataGrid(IndexBodies)), dir + "\\" + csproj + "\\Views\\IndexPage.xaml");//indexpage.xaml
+                Write(CreateClass.LoadModel(IndexBodies, ProjectName), dir + "\\" + csproj + "\\Models\\Model.cs");
+                Write(CreateClass.LoadModel(ProjectName), dir + "\\" + csproj + "\\Models\\ComboxModel.cs");
+                Write(Strings.GetIndexPage(csproj, Buttons.CreateButton(Buttones), Controls.CreateContents(IndexContents), Controls.CreateDataGrid(IndexBodies)), dir + "\\" + csproj + "\\Views\\IndexPage.xaml");//indexpage.xaml
                 Write(Strings.GetIndexXamlCs(csproj), dir + "\\" + csproj + "\\Views\\IndexPage.xaml.cs");//xaml.cs
                 Write(Strings.GetIndexVM(csproj, CreateWord(IndexContents) + CreateCommand(IndexContents, Buttones, boxes), Strings.CreateLoadData(IndexContents)), dir + "\\" + csproj + "\\ViewModels\\IndexPageVM.cs");//indexVM
 
@@ -894,7 +893,7 @@ namespace Project.G.ViewModel
                 //Add
                 if (AddChecked)
                 {
-                    Write(Strings.GetAddPageXaml(csproj, CreateAddContents(AddContents), "auto"), dir + "\\" + csproj + "\\Views\\Add.xaml");//Add.xaml
+                    Write(Strings.GetAddPageXaml(csproj, Controls.CreateAddContents(AddContents), "auto"), dir + "\\" + csproj + "\\Views\\Add.xaml");//Add.xaml
                     Write(Strings.GetAddPageXamlCs(csproj), dir + "\\" + csproj + "\\Views\\Add.xaml.cs");//xaml.cs
                     Write(Strings.GetAddVM(csproj, CreateWord(AddContents) + CreateCommand(AddContents, new List<MyModel>() { }), Strings.PostData(AddContents), Strings.IsLegal(AddContents)), dir + "\\" + csproj + "\\ViewModels\\AddVM.cs");//AddVM
                     res += Strings.CreateAddUrl(csproj);
@@ -904,7 +903,7 @@ namespace Project.G.ViewModel
 
                 if (EditChecked)
                 {
-                    Write(Strings.GetEditPageXaml(csproj, CreateAddContents(AddContents), "auto"), dir + "\\" + csproj + "\\Views\\Edit.xaml");//Edit.xaml
+                    Write(Strings.GetEditPageXaml(csproj, Controls.CreateAddContents(AddContents), "auto"), dir + "\\" + csproj + "\\Views\\Edit.xaml");//Edit.xaml
                     Write(Strings.GetEditPageXamlCs(csproj), dir + "\\" + csproj + "\\Views\\Edit.xaml.cs");//xaml.cs
                     Write(Strings.GetEditVM(csproj, CreateWord(AddContents) + CreateCommand(AddContents, new List<MyModel>() { }), Strings.PostData(AddContents), Strings.IsLegal(AddContents), Strings.CreateEditLoadData(AddContents)), dir + "\\" + csproj + "\\ViewModels\\EditVM.cs");//AddVM
                     res += Strings.CreateEditUrl(csproj);
@@ -915,10 +914,10 @@ namespace Project.G.ViewModel
                 //Import
                 if (ImportChecked)
                 {
-                    Write(Strings.GetImportXaml(csproj, CreateDataGrid(ImportBidies)), dir + "\\" + csproj + "\\Views\\ImportPage.xaml");//Import.xaml
+                    Write(Strings.GetImportXaml(csproj, Controls.CreateDataGrid(ImportBidies)), dir + "\\" + csproj + "\\Views\\ImportPage.xaml");//Import.xaml
                     Write(Strings.GetImportXamlCs(csproj), dir + "\\" + csproj + "\\Views\\ImportPage.xaml.cs");//xaml.cs
-                    Write(Strings.GetImprotVM(csproj, ImportBidies, Strings.CreateXss(ImportBidies), Strings.CreateNull(ImportBidies), Strings.CreateRepeat(ImportBidies), Strings.CreateRepeatFunction(ImportBidies), Strings.CheckImportData(ImportBidies)), dir + "\\" + csproj + "\\ViewModels\\ImportPageVM.cs");//ImportVM
-                    res += Strings.CreateImportUrl(csproj, ImportBidies);
+                    Write(Strings.GetImprotVM(csproj, ImportBidies, Import.CreateXss(ImportBidies), Import.CreateNull(ImportBidies), Import.CreateRepeat(ImportBidies), Import.CreateRepeatFunction(ImportBidies), Import.CheckImportData(ImportBidies)), dir + "\\" + csproj + "\\ViewModels\\ImportPageVM.cs");//ImportVM
+                    res += Import.CreateImportUrl(csproj, ImportBidies);
                     Include += GetImportInclude;
                     Complie += GetImportComplie;
                 }
@@ -927,7 +926,7 @@ namespace Project.G.ViewModel
                 {
                     foreach(var ds in boxes)
                     {
-                        Write(Strings.GetBoxesXaml(csproj, ds.BOX_CODE, CreateDataGrid(ds.Body), ds.SEARCH_CODE), dir + "\\" + csproj + "\\Views\\"+ds.BOX_CODE+".xaml");//Add.xaml
+                        Write(Strings.GetBoxesXaml(csproj, ds.BOX_CODE, Controls.CreateDataGrid(ds.Body), ds.SEARCH_CODE), dir + "\\" + csproj + "\\Views\\"+ds.BOX_CODE+".xaml");//Add.xaml
                         Write(Strings.GetBoxesXamlCs(csproj, ds.BOX_CODE), dir + "\\" + csproj + "\\Views\\" + ds.BOX_CODE + ".xaml.cs");//xaml.cs
                         Write(Strings.GetBoxesVM(csproj, ds.BOX_CODE, CreateWord(ds.Body), Strings.CreateBoxUrl(csproj, ds.BOX_CODE, ds.SEARCH_CODE)), dir + "\\" + csproj + "\\ViewModels\\" + ds.BOX_CODE + "VM.cs");//AddVM
                     }
@@ -935,7 +934,7 @@ namespace Project.G.ViewModel
                     Complie += GetComplie(boxes);
                 }
 
-                Write(Strings.GetResource(ChineseName, CreateResorce(AllRes())), dir + "\\" + csproj + "\\Resources\\Strings.zh-CN.xaml");//资源文件
+                Write(Strings.GetResource(ChineseName, Resources.CreateResorce(Resources.AllRes(IndexContents, IndexBodies, boxes))), dir + "\\" + csproj + "\\Resources\\Strings.zh-CN.xaml");//资源文件
                 Write(Strings.GetCsproj(csproj, Complie, Include), dir + "\\" + csproj + "\\" + csproj + ".csproj");
 
 
@@ -980,42 +979,6 @@ namespace Project.G.ViewModel
             fs.Close();
         }
 
-        /// <summary>
-        /// 生成模型
-        /// </summary>
-        /// <param name="str"></param>
-        /// <returns></returns>
-        private string LoadModel(List<Excel> lists)
-        {
-            string s = "using DAF.Plugin.Common;using System;using System.Collections.Generic;using System.Linq;using System.Text;namespace "+ProjectName+ "{public class Model : ValidationBase{";
-            s += "public string ID {get;set;}";
-            s += "public string Color {get;set;}";
-            s += "public string TextState {get; set;}";
-            foreach (var marx in lists)
-            {
-                string model = "";
-                model += "//[Excel(Width =5000, Title =\"" + marx.GRID_NAME + "\")]\r\n";
-                model += "public string " + marx.GRID_CODE.ToUpper() + " {get;set;}";
-                s += model;
-            }
-            s += "private bool _IsChecked;public bool IsChecked{get{return _IsChecked;}set{_IsChecked = value;NotifyPropertyChanged(\"IsChecked\");}}}}";
-            return Common.format(s);
-        }
-
-        private string LoadModel()
-        {
-            string s = "using DAF.Plugin.Common;using System;using System.Collections.Generic;using System.Linq;using System.Text;namespace " + ProjectName + "{public class ComboxModel : ValidationBase{";
-            s += "//下拉框模型\n\t#region models \n\t" +
-                "public string Label{get;set;}"+
-                "public string Value{get;set;}" +
-                "\t#endregion\n//重载ToString()以显示SelectedItem\n";
-            s += "public override string ToString()" +
-            "{" +
-            "    return Label?.ToString();" +
-            "}";
-            s += "}}";
-            return Common.format(s);
-        }
 
         #region 保存表格数据
         List<Excel> IndexHeaders;
@@ -1181,328 +1144,10 @@ namespace Project.G.ViewModel
             
         }
 
-        private string CreateButton(List<string> btn)
-        {
-            string s = "<WrapPanel>\r\n";
-            foreach(var ds in btn)
-            {
-                string style = ds == "刷新" ? "Style=\"{DynamicResource HighLightButtonStyle}\"" : "";
-                string tmp = "<Button Content=\"{DynamicResource " + command(ds, "") + "}\" " +
-                    "Margin=\"{DynamicResource BtnMargin}\" " +
-                    "Command=\"{Binding " + command(ds, "Cmd") + "}\" " +
-                    "controls:ButtonHelper.IconContent=\"{DynamicResource " + command(ds, "Icon_") + "}\" " +
-                    style +
-                    "/>\r\n";
-                s += tmp;
-            }
-            s += "</WrapPanel>";
-            return s;
-        }
-
-        private string command(string s, string pre)
-        {
-            switch (s)
-            {
-                case "刷新": return pre + "Refresh";
-                case "打印": return pre + "Print";
-                case "导出": return pre + "Export";
-                case "导入": return pre + "Import";
-                case "生成": return pre + "Create";
-                case "编辑": return pre + "Edit";
-                case "新增": return pre + "Add";
-                case "删除": return pre + "Delete";
-                case "保存": return pre + "Save";
-                case "禁用": return pre + "Forbiden";
-                case "重置": return pre + "Reset";
-                default:return s;
-            }
-        }
-
-        /// <summary>
-        /// 生成表格
-        /// </summary>
-        /// <returns></returns>
-        private string CreateDataGrid(List<Excel> Bodies)
-        {
-            string s = "<DataGridTemplateColumn>\r\n" +
-                            "<DataGridTemplateColumn.HeaderTemplate>\r\n" +
-                                "<DataTemplate>\r\n" +
-                                    "<CheckBox IsChecked=\"{Binding DataContext.IsSelectedAll, RelativeSource={RelativeSource AncestorType=common:PagePlugin, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}\"/>\r\n" +
-                                "</DataTemplate>\r\n" +
-                           "</DataGridTemplateColumn.HeaderTemplate>\r\n" +
-                            "<DataGridTemplateColumn.CellTemplate>\r\n" +
-                                "<DataTemplate>\r\n" +
-                                    "<CheckBox IsChecked=\"{Binding IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}\"/>\r\n" +
-                                "</DataTemplate>\r\n" +
-                            "</DataGridTemplateColumn.CellTemplate>\r\n" +
-                        "</DataGridTemplateColumn>\r\n";
-
-            foreach(var ds in Bodies)
-            {
-                string tmp = "<DataGridTemplateColumn Width=\"150\" HeaderStyle=\"{DynamicResource DataGridColumnHeader_Center}\" CellStyle=\"{DynamicResource DataGridCell_Center}\">\r\n" +
-                            "<DataGridTemplateColumn.Header>\r\n" +
-                                "<TextBlock Text=\"{DynamicResource Grid_"+ ds.GRID_CODE +"}\"/>\r\n" +
-                            "</DataGridTemplateColumn.Header>\r\n" +
-                            "<DataGridTemplateColumn.CellTemplate>\r\n" +
-                                "<DataTemplate>\r\n" +
-                                    "<TextBlock Text=\"{Binding "+ds.GRID_CODE+"}\"/>\r\n" +
-                                "</DataTemplate>\r\n" +
-                            "</DataGridTemplateColumn.CellTemplate>\r\n" +
-                        "</DataGridTemplateColumn>\r\n";
-                s += tmp;
-            }
-            return s;
-        }
-
-        /// <summary>
-        /// 生成表格
-        /// </summary>
-        /// <returns></returns>
-        private string CreateDataGrid(ImportClass Bodies)
-        {
-            string s = "<DataGridTemplateColumn>\r\n" +
-                            "<DataGridTemplateColumn.Header>\r\n" +
-                                "<TextBlock Text=\"{DynamicResource Status}\" />\r\n" +
-                           "</DataGridTemplateColumn.Header>\r\n" +
-                            "<DataGridTemplateColumn.CellTemplate>\r\n" +
-                                "<DataTemplate>\r\n" +
-                                    "<TextBlock Foreground=\"{Binding Color}\" Text=\"{Binding TextState}\" />\r\n" +
-                                "</DataTemplate>\r\n" +
-                            "</DataGridTemplateColumn.CellTemplate>\r\n" +
-                        "</DataGridTemplateColumn>\r\n";
-            foreach (var ds in Bodies.Body)
-            {
-                string tmp = "<DataGridTemplateColumn Width=\"150\" HeaderStyle=\"{DynamicResource DataGridColumnHeader_Center}\" CellStyle=\"{DynamicResource DataGridCell_Center}\">\r\n" +
-                            "<DataGridTemplateColumn.Header>\r\n" +
-                                "<TextBlock Text=\"{DynamicResource Grid_" + ds.GRID_CODE + "}\"/>\r\n" +
-                            "</DataGridTemplateColumn.Header>\r\n" +
-                            "<DataGridTemplateColumn.CellTemplate>\r\n" +
-                                "<DataTemplate>\r\n" +
-                                    "<TextBlock Text=\"{Binding " + ds.GRID_CODE + "}\"/>\r\n" +
-                                "</DataTemplate>\r\n" +
-                            "</DataGridTemplateColumn.CellTemplate>\r\n" +
-                        "</DataGridTemplateColumn>\r\n";
-                s += tmp;
-            }
-            return s;
-        }
-
-        /// <summary>
-        /// 资源文件拓展
-        /// </summary>
-        /// <returns></returns>
-        private string CreateResorce(List<Excel> Contents)
-        {
-            string s = "";
-            List<string> str = new List<string>();
-            List<string> mark = new List<string>();
-            foreach (var ds in Contents)
-            {
-                if (str.Contains(ds.SEARCH_CODE))
-                    continue;
-                string tmp = "";
-                if (!String.IsNullOrEmpty(ds.SEARCH_CODE) && !String.IsNullOrEmpty(ds.SEARCH_NAME))
-                    tmp += "<sys:String x:Key=\"" + ds.SEARCH_CODE + "_Watermark\">请输入" + ds.SEARCH_NAME + "</sys:String>\r\n";
-                s += tmp;
-                str.Add(ds.SEARCH_CODE);
-            }
+        
 
 
-            foreach (var ds in Contents)
-            {
-                if (mark.Contains(ds.SEARCH_CODE))
-                    continue;
-                string tmp = "";
-                if (!String.IsNullOrEmpty(ds.SEARCH_CODE) && !String.IsNullOrEmpty(ds.SEARCH_NAME))
-                    tmp += "<sys:String x:Key=\"Grid_" + ds.SEARCH_CODE + "\">" + ds.SEARCH_NAME + "</sys:String>\r\n";
-                s += tmp;
-                mark.Add(ds.SEARCH_CODE);
-            }
-            return s;
-        }
-
-        /// <summary>
-        /// 取所有资源文件key的参数
-        /// </summary>
-        /// <returns></returns>
-        private List<Excel> AllRes()
-        {
-            List<Excel> excels = new List<Excel>();
-            foreach(var ds in IndexContents)
-            {
-                Excel ex = new Excel();
-                ex.SEARCH_CODE = ds.SEARCH_CODE;
-                ex.SEARCH_NAME = ds.SEARCH_NAME;
-                excels.Add(ex);
-            }
-
-            foreach(var ds in IndexBodies)
-            {
-                Excel ex = new Excel();
-                ex.SEARCH_CODE = ds.GRID_CODE;
-                ex.SEARCH_NAME = ds.GRID_NAME;
-                excels.Add(ex);
-            }
-
-            foreach(var ds in boxes)
-            {
-                foreach(var ls in ds.Content)
-                {
-                    Excel ex = new Excel();
-                    ex.SEARCH_CODE = ls.GRID_CODE;
-                    ex.SEARCH_NAME = ls.GRID_NAME;
-                    excels.Add(ex);
-                }
-            }
-            return excels;
-        }
-
-        /// <summary>
-        /// 生成TextBox代码
-        /// </summary>
-        /// <returns></returns>
-        private string CreateTextBox(string Binding)
-        {
-            string s = "\r\n<TextBox Text=\"{Binding "+Binding+", Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}\" " +
-                "controls:TextBoxHelper.Watermark=\"{DynamicResource " + Binding + "_Watermark}\" " +
-                "Margin=\"0,0,50,0\" />\r\n";
-            return s;
-        }
-
-        private string ReadonlyTextbox(string Binding)
-        {
-            string s = "\r\n<TextBox Text=\"{Binding " + Binding + ", Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}\" " +
-                "controls:TextBoxHelper.ClearTextButton = \"False\" " +
-                "controls:TextBoxHelper.SelectAllOnFocus = \"True\" " +
-                "IsReadOnly=\"True\" "+
-                "controls:TextBoxExHelper.IsUnderLine = \"True\" " +
-                "controls:TextBoxHelper.Watermark=\"{DynamicResource " + Binding + "_Watermark}\" " +
-                "Margin=\"0,0,50,0\" />\r\n";
-            return s;
-        }
-
-        /// <summary>
-        /// 生成带弹出框的TextBox
-        /// </summary>
-        /// <param name="Binding">绑定的值</param>
-        /// <param name="name">查询条件名字</param>
-        /// <returns></returns>
-        private string CreateTextBoxWithCommand(string Binding)
-        {
-            Model.Helper.ModelHelper model = new ModelHelper();
-            
-            string s = "<TextBox Text=\"{Binding "+Binding+", Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}\" " +
-                "Margin=\"0,0,50,0\" " +
-                "controls:TextBoxHelper.ButtonCommand=\"{Binding "+model.GetCmd(Binding)+"}\" " +
-                "controls:TextBoxHelper.ButtonContent=\"2\" " +
-                "controls:TextBoxHelper.ClearTextButton=\"True\" " +
-                "controls:TextBoxHelper.Watermark=\"{DynamicResource "+Binding+ "_Watermark}\" Style=\"{DynamicResource MetroButtonTextBox}\"/>\r\n";
-            return s;
-        }
-
-        /// <summary>
-        /// 生成下拉框
-        /// </summary>
-        /// <param name="DataSource">下拉框的英文名字</param>
-        /// <returns></returns>
-        private string CreateCombox(string DataSource)
-        {
-            Model.Helper.ModelHelper model = new ModelHelper();
-            string s = "<ComboBox Margin=\"0,0,50,0\" " +
-                "controls:TextBoxHelper.Watermark=\"{DynamicResource Grid_"+DataSource+"}\" " +
-                "ItemsSource=\"{Binding "+ DataSource +", Mode=TwoWay}\" " +
-                "SelectedItem=\"{Binding Filter_"+ DataSource + ", Mode=TwoWay}\"/>\r\n";
-            return s;
-        }
-
-        /// <summary>
-        /// 生成日期控件
-        /// </summary>
-        /// <param name="Binding">绑定的值</param>
-        /// <returns></returns>
-        private string CreateDatePicker(string Binding)
-        {
-            string s = "<DatePicker Text=\"{Binding "+Binding+", Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}\" Margin=\"0,0,50,0\"/>\r\n";
-            return s;
-        }
-
-        private string CreateTextBlock(string name)
-        {
-            string s = "";
-            if (string.IsNullOrEmpty(name))
-            {
-                s += "<TextBlock VerticalAlignment=\"Center\" Width=\"60\" TextWrapping=\"Wrap\"/>\r\n";
-            }
-            else
-                s += "<TextBlock Text=\"{DynamicResource Grid_" + name + "}\" VerticalAlignment=\"Center\" Width=\"60\"  TextWrapping=\"Wrap\"/>\r\n";
-            return s;
-        }
-
-        //占位
-        private string EmptyControl()
-        {
-            string s = "<TextBox Text=\"{Binding ABC, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}\" Margin=\"0,0,50,0\" Foreground=\"Transparent\" BorderThickness=\"0\" Background=\"Transparent\" IsEnabled=\"False\"/>\r\n";
-            return s;
-        }
-
-        /// <summary>
-        /// 生成查询条件
-        /// </summary>
-        /// <returns></returns>
-        private string CreateContents(List<Excel> Contents)
-        {
-            string s = "<WrapPanel Grid.Row=\"0\">\r\n";
-            int t = Contents.Count % 3 == 0 ? Contents.Count / 3 : (Contents.Count / 3) + 1;
-
-            for (int j = 0; j < Contents.Count; j++)
-            {
-                s += "<WrapPanel  Margin=\"10,10,0,0\">";
-                s += CreateTextBlock(Contents[j].SEARCH_CODE);
-                switch (Contents[j].CONTROL_CODE)
-                {
-                    case "TextBox": s += CreateTextBox(Contents[j].SEARCH_CODE); break;
-                    case "TextBox带弹出框": s += CreateTextBoxWithCommand(Contents[j].SEARCH_CODE); break;
-                    case "Combox": s += CreateCombox(Contents[j].SEARCH_CODE); break;
-                    case "DatePicker": s += CreateDatePicker(Contents[j].SEARCH_CODE); break;
-                    case "占位控件": s += EmptyControl(); break;
-                    case "只读TextBox": s += ReadonlyTextbox(Contents[j].SEARCH_CODE); break;
-                    default: break;
-                }
-                s += "</WrapPanel>";
-            }
-
-            s += "\r\n</WrapPanel>";
-            return s;
-        }
-
-        /// <summary>
-        /// 新增的界面控件
-        /// </summary>
-        /// <param name="Contents"></param>
-        /// <returns></returns>
-        private string CreateAddContents(List<Excel> Contents)
-        {
-            string s = "";
-            for (int i = 0; i < Contents.Count(); i++)
-            {
-                s += "<WrapPanel Grid.Row=\"" + i + "\" Margin=\"70,15,0,0\">\r\n";
-
-                s += CreateTextBlock(Contents[i].SEARCH_CODE);
-                switch (Contents[i].CONTROL_CODE)
-                {
-                    case "TextBox": s += CreateTextBox(Contents[i].SEARCH_CODE); break;
-                    case "TextBox带弹出框": s += CreateTextBoxWithCommand(Contents[i].SEARCH_CODE); break;
-                    case "Combox": s += CreateCombox(Contents[i].SEARCH_CODE); break;
-                    case "DatePicker": s += CreateDatePicker(Contents[i].SEARCH_CODE); break;
-                    case "占位控件": s += EmptyControl(); break;
-                    default: break;
-                }
-                
-                s += "\r\n</WrapPanel>";
-            }
-            return s;
-        }
-
+        
        
         /// <summary>
         /// 生成Command
@@ -1517,7 +1162,7 @@ namespace Project.G.ViewModel
             {
                 if (Contents[i].CONTROL_CODE == "TextBox带弹出框")
                 {
-                    if(models.Count > 0)
+                    if(models.Count > 0 && i < models.Count)
                         s += "\t" + AddCommand(model.GetCmd(Contents[i].SEARCH_CODE), models[t++], Contents[i]) + "\r\n";
                     else
                         s += "\t" + AddCommand(model.GetCmd(Contents[i].SEARCH_CODE), null, Contents[i]) + "\r\n";
@@ -1526,7 +1171,7 @@ namespace Project.G.ViewModel
 
             foreach(var ds in btn)
             {
-                s += "\t" + AddCommand(model.GetCmd(command(ds, ""))) + "\r\n";
+                s += "\t" + AddCommand(model.GetCmd(Buttons.command(ds, ""))) + "\r\n";
             }
             return s + "#endregion\r\n";
         }

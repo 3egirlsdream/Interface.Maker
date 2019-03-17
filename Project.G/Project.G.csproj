@@ -115,13 +115,18 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Models\Buttons.cs" />
     <Compile Include="Models\Connection.cs" />
+    <Compile Include="Models\Controls.cs" />
+    <Compile Include="Models\CreateClass.cs" />
     <Compile Include="Models\Domain.cs" />
     <Compile Include="Models\excel.cs" />
     <Compile Include="Models\ExModel.cs" />
     <Compile Include="LeftPage.xaml.cs">
       <DependentUpon>LeftPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Models\Import.cs" />
+    <Compile Include="Models\Resources.cs" />
     <Compile Include="Models\Strings.cs" />
     <Compile Include="RightPage.xaml.cs">
       <DependentUpon>RightPage.xaml</DependentUpon>
