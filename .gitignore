@@ -2,9 +2,9 @@
 # 此 .gitignore 文件已由 Microsoft(R) Visual Studio 自动创建。
 ################################################################################
 /.vs
-/Project.G/bin/Debug
-/Project.G/obj
-/Project.G/plugins/Creative.ODA.dll
-/Project.G/bin
-/Project.G/Models/models4.cs
-/Project.G/.vs/Project.G/v15/.suo
+/GenerateToolbox/bin/Debug
+/GenerateToolbox/obj
+/GenerateToolbox/plugins/Creative.ODA.dll
+/GenerateToolbox/bin
+/GenerateToolbox/Models/models4.cs
+/GenerateToolbox/.vs/Project.G/v15/.suo

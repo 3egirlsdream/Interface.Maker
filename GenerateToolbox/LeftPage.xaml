@@ -5,11 +5,11 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Project.G"
       mc:Ignorable="d" 
-      d:DesignHeight="480" d:DesignWidth="300"
       Title="LeftPage">
     <Page.Effect>
         <DropShadowEffect ShadowDepth="1" BlurRadius="30" Opacity="0.2"/>
     </Page.Effect>
+    <ScrollViewer>
     <Border Background="#E6E6E6" Opacity="0.9">
         <Grid>
             <Grid.RowDefinitions>
@@ -28,4 +28,5 @@
             <Button Background="#B8B8B8" Grid.Row="4" Content="保存" Click="Save" Margin="100,0,100,10" BorderThickness="0"/>
         </Grid>
     </Border>
+    </ScrollViewer>
 </Page>

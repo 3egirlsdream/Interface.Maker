@@ -30,7 +30,11 @@ namespace Project.G
         {
             InitializeComponent();
 
-            //if(Common.Key() != Common.SetConfig("Password"))
+            #region 激活校验
+            /*
+             * 不启用激活校验
+             */
+            //if (Common.Key() != Common.SetConfig("Password"))
             //{
             //    JiHuo ji = new JiHuo();
             //    ji.ShowDialog();
@@ -38,17 +42,22 @@ namespace Project.G
             //        this.Close();
             //}
 
-            //if (Common.SetConfig("Date") == "0"){
+            //if (Common.SetConfig("Date") == "0")
+            //{
             //    this.Close();
             //}
-            //else{
+            //else
+            //{
             //    Common.SetConfig("Date", (Convert.ToInt32(Common.SetConfig("Date")) - 1).ToString());
             //}
+#endregion
+
             left.ParentWindow = this;
             page.ParentWindow = this;
 
             right.Content = new Frame() { Content = page };
             right.Visibility = Visibility.Visible;
+            //打开更新日志界面
             if (Common.SetConfig("Update") == "0")
             {
                 UpdateDesc u = new UpdateDesc();

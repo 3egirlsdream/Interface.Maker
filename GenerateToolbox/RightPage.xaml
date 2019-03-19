@@ -33,17 +33,17 @@
                     <TextBox Width="110" Text="{Binding HeaderText,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     <TextBox Margin="30,0,0,0" Width="110" Text="{Binding ItemText,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     <TextBox Height="50" Background="#E6E6E6" Width="250" Margin="0,10,1,0" TextWrapping="Wrap" Text="{Binding ConnStr, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    <Button Width="80" Margin="170,10,0,0" Background="Aquamarine" FontFamily="幼圆"  Content="录  入" Command="{Binding CmdLuRu}" BorderThickness="0"/>
+                    <Button Width="80" Margin="170,10,0,0" Background="#2964AB" FontFamily="等线" Foreground="White"  Content="录入" Command="{Binding CmdLuRu}" BorderThickness="0"  FontSize="12"/>
                 </WrapPanel>
                 <WrapPanel Grid.Row="3" Orientation="Horizontal" Margin="15,10,15,0">
                     <TextBlock Text="查询连接关系" FontWeight="Bold" Width="200" Margin="0,0,0,10"/>
                     <ComboBox Width="110" ItemsSource="{Binding HeaderMain, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding FilterHeader, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     <ComboBox Margin="30,0,0,0" Width="110" ItemsSource="{Binding Item, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding FilterItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     <TextBox Height="80" Background="#E6E6E6" IsReadOnly="True" Width="250" Margin="0,10,0,0" TextWrapping="Wrap" Text="{Binding SrchConnStr, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    <Button Width="80" Margin="170,10,0,0" FontFamily="幼圆"  Content="查  询" Command="{Binding CmdSearch}" BorderThickness="0"/>
+                    <Button Width="80" Margin="170,10,0,0" FontFamily="等线"  Content="查询" Command="{Binding CmdSearch}" BorderThickness="0" Background="#2964AB" Foreground="White" FontSize="12"/>
                 </WrapPanel>
 
-                <Button Background="#B8B8B8" Grid.Row="5" Width="100" Content="保存" FontFamily="幼圆" Click="Save" Margin="0,0,0,10" BorderThickness="0"/>
+                <Button Background="#2964AB" Grid.Row="5" Width="100" Content="保存" FontFamily="等线" Click="Save" Margin="0,0,0,10" BorderThickness="0" Foreground="White" FontSize="13"/>
         </Grid>
         </ScrollViewer>
     </Border>

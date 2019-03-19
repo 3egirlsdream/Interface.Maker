@@ -101,7 +101,7 @@
                                 <CheckBox IsChecked="{Binding IsExsitModel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10,10,10,0" Foreground="Gray">
                                     <TextBlock Text="检查模型是否存在"/>
                                 </CheckBox>
-                                <Button Content="生  成" Command="{Binding CmdGenerate}" Width="100" Height="30"  FontSize="13"  BorderThickness="0" Background="#C83C56" Margin="25,10,10,0" />
+                                <Button Content="生  成" Command="{Binding CmdGenerate}" Width="100" Height="30"  FontSize="13"  BorderThickness="0" Background="#C83C56" Margin="25,10,10,0" Foreground="White"/>
                             </WrapPanel>
 
                             <!--<WrapPanel Grid.Column="1">
@@ -138,7 +138,7 @@
                                     </CheckBox>
                                 </StackPanel>
                                 -->
-                                <Button Grid.Column="4" Width="100" HorizontalAlignment="Left" Content="执行" BorderThickness="0" Background="#119EDA" FontSize="13" VerticalAlignment="Center" Margin="10,0,0,0" Command="{Binding CmdOpen}"/>
+                                <Button Grid.Column="4" Width="100" HorizontalAlignment="Left" Content="执行" BorderThickness="0" Background="#2964AB" Foreground="White" FontSize="13" VerticalAlignment="Center" Margin="10,0,0,0" Command="{Binding CmdOpen}"/>
                             </Grid>
                             <TextBox Grid.Row="1" BorderThickness="0" Text="{Binding SqlText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" FontFamily="Consolas" FontSize="14">
 

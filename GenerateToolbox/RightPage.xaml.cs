@@ -37,7 +37,8 @@ namespace Project.G
             //    string name = t.Name;
             //    MessageBox.Show(name);
             //}
-            this.ParentWindow.LoadLeftPage(vm.FilterDb.value);
+
+            //this.ParentWindow.LoadLeftPage(vm.FilterDb.value);
             this.Visibility = Visibility.Hidden;
         }
     }
