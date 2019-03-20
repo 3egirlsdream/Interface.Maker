@@ -120,7 +120,8 @@
     <Compile Include="Models\Controls.cs" />
     <Compile Include="Models\CreateClass.cs" />
     <Compile Include="Models\Domain.cs" />
-    <Compile Include="Models\excel.cs" />
+    <Compile Include="Models\ExcelHelper.cs" />
+    <Compile Include="Models\Models.cs" />
     <Compile Include="Models\ExModel.cs" />
     <Compile Include="LeftPage.xaml.cs">
       <DependentUpon>LeftPage.xaml</DependentUpon>
@@ -128,6 +129,9 @@
     <Compile Include="Models\Import.cs" />
     <Compile Include="Models\Resources.cs" />
     <Compile Include="Models\Strings.cs" />
+    <Compile Include="NewPage\NewPage.xaml.cs">
+      <DependentUpon>NewPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="RightPage.xaml.cs">
       <DependentUpon>RightPage.xaml</DependentUpon>
     </Compile>
@@ -135,6 +139,7 @@
       <DependentUpon>JiHuo.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\MainView.cs" />
+    <Compile Include="ViewModel\NewPageVM.cs" />
     <Compile Include="ViewModel\RightPageVM.cs" />
     <Compile Include="UpdateDesc.xaml.cs">
       <DependentUpon>UpdateDesc.xaml</DependentUpon>
@@ -154,6 +159,10 @@
     <Page Include="LeftPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="NewPage\NewPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="RightPage.xaml">
       <SubType>Designer</SubType>
@@ -201,9 +210,7 @@
   <ItemGroup>
     <Resource Include="img\setting.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="System\Configuration\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="img\bitbug_favicon.ico" />
   </ItemGroup>

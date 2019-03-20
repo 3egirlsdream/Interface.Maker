@@ -48,7 +48,7 @@ namespace Project.G.Models
             string s = "<WrapPanel>\r\n";
             foreach (var ds in btn)
             {
-                string style = ds == "刷新" || ds == "保存" ? "Style=\"{DynamicResource HighLightButtonStyle}\"" : "";
+                string style = (ds == "刷新" || ds == "保存") ? "Style=\"{DynamicResource HighLightButtonStyle}\"" : "";
                 string tmp = "<Button Content=\"{DynamicResource " + command(ds, "") + "}\" " +
                     "Margin=\"{DynamicResource BtnMargin}\" " +
                     "Command=\"{Binding " + command(ds, "Cmd") + "}\" " +

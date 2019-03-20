@@ -1,4 +1,5 @@
-﻿using Project.G.ViewModel;
+﻿using GenerateToolbox.NewPage;
+using Project.G.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,7 @@ namespace Project.G
     {
         RightPage page = new RightPage();
         LeftPage left = new LeftPage();
+        NewPage newPage = new NewPage();
         MainView vm = new MainView();
         public MainWindow()
         {
@@ -54,6 +56,8 @@ namespace Project.G
 
             left.ParentWindow = this;
             page.ParentWindow = this;
+            newPage.ParentWindow = this;
+            Preview.Content = new Frame { Content = newPage };
 
             right.Content = new Frame() { Content = page };
             right.Visibility = Visibility.Visible;
@@ -103,6 +107,33 @@ namespace Project.G
             this.WindowState = WindowState.Minimized;
         }
 
-        
+        private void Service_GotFocus(object sender, RoutedEventArgs e)
+        {
+            bd1.Background = GetColor("#C83C56");
+            bd2.Background = GetColor("#C83C56");
+        }
+
+        private SolidColorBrush GetColor(string str)
+        {
+            return new SolidColorBrush((Color)ColorConverter.ConvertFromString(str));
+        }
+
+        private void Model_GotFocus(object sender, RoutedEventArgs e)
+        {
+            bd1.Background = GetColor("#404671");
+            bd2.Background = GetColor("#404671");
+        }
+
+        private void Domain_GotFocus(object sender, RoutedEventArgs e)
+        {
+            bd1.Background = GetColor("#242225");
+            bd2.Background = GetColor("#242225");
+        }
+
+        private void Preview_GotFocus(object sender, RoutedEventArgs e)
+        {
+            bd1.Background = GetColor("#AA96BE");
+            bd2.Background = GetColor("#AA96BE");
+        }
     }
 }

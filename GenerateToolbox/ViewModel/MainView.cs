@@ -879,13 +879,13 @@ namespace Project.G.ViewModel
 
 
 
-                Write(Strings.GetAssembly(ProjectName), dir + "\\" + csproj + "\\Properties\\AssemblyInfo.cs");
+                Strings.Write(Strings.GetAssembly(ProjectName), dir + "\\" + csproj + "\\Properties\\AssemblyInfo.cs");
                 //Write(Strings.resx, dir + "\\" + csproj + "\\Properties\\Resources.resx");
-                Write(CreateClass.LoadModel(IndexBodies, ProjectName), dir + "\\" + csproj + "\\Models\\Model.cs");
-                Write(CreateClass.LoadModel(ProjectName), dir + "\\" + csproj + "\\Models\\ComboxModel.cs");
-                Write(Strings.GetIndexPage(csproj, Buttons.CreateButton(Buttones), Controls.CreateContents(IndexContents), Controls.CreateDataGrid(IndexBodies)), dir + "\\" + csproj + "\\Views\\IndexPage.xaml");//indexpage.xaml
-                Write(Strings.GetIndexXamlCs(csproj), dir + "\\" + csproj + "\\Views\\IndexPage.xaml.cs");//xaml.cs
-                Write(Strings.GetIndexVM(csproj, CreateWord(IndexContents) + CreateCommand(IndexContents, Buttones, boxes), Strings.CreateLoadData(IndexContents)), dir + "\\" + csproj + "\\ViewModels\\IndexPageVM.cs");//indexVM
+                Strings.Write(CreateClass.LoadModel(IndexBodies, ProjectName), dir + "\\" + csproj + "\\Models\\Model.cs");
+                Strings.Write(CreateClass.LoadModel(ProjectName), dir + "\\" + csproj + "\\Models\\ComboxModel.cs");
+                Strings.Write(Strings.GetIndexPage(csproj, Buttons.CreateButton(Buttones), Controls.CreateContents(IndexContents), Controls.CreateDataGrid(IndexBodies)), dir + "\\" + csproj + "\\Views\\IndexPage.xaml");//indexpage.xaml
+                Strings.Write(Strings.GetIndexXamlCs(csproj), dir + "\\" + csproj + "\\Views\\IndexPage.xaml.cs");//xaml.cs
+                Strings.Write(Strings.GetIndexVM(csproj, CreateWord(IndexContents) + CreateCommand(IndexContents, Buttones, boxes), Strings.CreateLoadData(IndexContents)), dir + "\\" + csproj + "\\ViewModels\\IndexPageVM.cs");//indexVM
 
                 string res = Strings.CreateGetallUrl(csproj, IndexContents, 1) + Strings.CreateDeleteUrl(csproj) + Strings.CreateUpdateUrl(csproj);
                 string Include = "";
@@ -893,9 +893,9 @@ namespace Project.G.ViewModel
                 //Add
                 if (AddChecked)
                 {
-                    Write(Strings.GetAddPageXaml(csproj, Controls.CreateAddContents(AddContents), "auto"), dir + "\\" + csproj + "\\Views\\Add.xaml");//Add.xaml
-                    Write(Strings.GetAddPageXamlCs(csproj), dir + "\\" + csproj + "\\Views\\Add.xaml.cs");//xaml.cs
-                    Write(Strings.GetAddVM(csproj, CreateWord(AddContents) + CreateCommand(AddContents, new List<MyModel>() { }), Strings.PostData(AddContents), Strings.IsLegal(AddContents)), dir + "\\" + csproj + "\\ViewModels\\AddVM.cs");//AddVM
+                    Strings.Write(Strings.GetAddPageXaml(csproj, Controls.CreateAddContents(AddContents), "auto"), dir + "\\" + csproj + "\\Views\\Add.xaml");//Add.xaml
+                    Strings.Write(Strings.GetAddPageXamlCs(csproj), dir + "\\" + csproj + "\\Views\\Add.xaml.cs");//xaml.cs
+                    Strings.Write(Strings.GetAddVM(csproj, CreateWord(AddContents) + CreateCommand(AddContents, new List<MyModel>() { }), Strings.PostData(AddContents), Strings.IsLegal(AddContents)), dir + "\\" + csproj + "\\ViewModels\\AddVM.cs");//AddVM
                     res += Strings.CreateAddUrl(csproj);
                     Include += GetAddInclude;
                     Complie += GetAddComplie;
@@ -903,9 +903,9 @@ namespace Project.G.ViewModel
 
                 if (EditChecked)
                 {
-                    Write(Strings.GetEditPageXaml(csproj, Controls.CreateAddContents(AddContents), "auto"), dir + "\\" + csproj + "\\Views\\Edit.xaml");//Edit.xaml
-                    Write(Strings.GetEditPageXamlCs(csproj), dir + "\\" + csproj + "\\Views\\Edit.xaml.cs");//xaml.cs
-                    Write(Strings.GetEditVM(csproj, CreateWord(AddContents) + CreateCommand(AddContents, new List<MyModel>() { }), Strings.PostData(AddContents), Strings.IsLegal(AddContents), Strings.CreateEditLoadData(AddContents)), dir + "\\" + csproj + "\\ViewModels\\EditVM.cs");//AddVM
+                    Strings.Write(Strings.GetEditPageXaml(csproj, Controls.CreateAddContents(AddContents), "auto"), dir + "\\" + csproj + "\\Views\\Edit.xaml");//Edit.xaml
+                    Strings.Write(Strings.GetEditPageXamlCs(csproj), dir + "\\" + csproj + "\\Views\\Edit.xaml.cs");//xaml.cs
+                    Strings.Write(Strings.GetEditVM(csproj, CreateWord(AddContents) + CreateCommand(AddContents, new List<MyModel>() { }), Strings.PostData(AddContents), Strings.IsLegal(AddContents), Strings.CreateEditLoadData(AddContents)), dir + "\\" + csproj + "\\ViewModels\\EditVM.cs");//AddVM
                     res += Strings.CreateEditUrl(csproj);
                     Include += GetEditInclude;
                     Complie += GetEditComplie;
@@ -914,9 +914,9 @@ namespace Project.G.ViewModel
                 //Import
                 if (ImportChecked)
                 {
-                    Write(Strings.GetImportXaml(csproj, Controls.CreateDataGrid(ImportBidies)), dir + "\\" + csproj + "\\Views\\ImportPage.xaml");//Import.xaml
-                    Write(Strings.GetImportXamlCs(csproj), dir + "\\" + csproj + "\\Views\\ImportPage.xaml.cs");//xaml.cs
-                    Write(Strings.GetImprotVM(csproj, ImportBidies, Import.CreateXss(ImportBidies), Import.CreateNull(ImportBidies), Import.CreateRepeat(ImportBidies), Import.CreateRepeatFunction(ImportBidies), Import.CheckImportData(ImportBidies)), dir + "\\" + csproj + "\\ViewModels\\ImportPageVM.cs");//ImportVM
+                    Strings.Write(Strings.GetImportXaml(csproj, Controls.CreateDataGrid(ImportBidies)), dir + "\\" + csproj + "\\Views\\ImportPage.xaml");//Import.xaml
+                    Strings.Write(Strings.GetImportXamlCs(csproj), dir + "\\" + csproj + "\\Views\\ImportPage.xaml.cs");//xaml.cs
+                    Strings.Write(Strings.GetImprotVM(csproj, ImportBidies, Import.CreateXss(ImportBidies), Import.CreateNull(ImportBidies), Import.CreateRepeat(ImportBidies), Import.CreateRepeatFunction(ImportBidies), Import.CheckImportData(ImportBidies)), dir + "\\" + csproj + "\\ViewModels\\ImportPageVM.cs");//ImportVM
                     res += Import.CreateImportUrl(csproj, ImportBidies);
                     Include += GetImportInclude;
                     Complie += GetImportComplie;
@@ -926,19 +926,19 @@ namespace Project.G.ViewModel
                 {
                     foreach(var ds in boxes)
                     {
-                        Write(Strings.GetBoxesXaml(csproj, ds.BOX_CODE, Controls.CreateDataGrid(ds.Body), ds.SEARCH_CODE), dir + "\\" + csproj + "\\Views\\"+ds.BOX_CODE+".xaml");//Add.xaml
-                        Write(Strings.GetBoxesXamlCs(csproj, ds.BOX_CODE), dir + "\\" + csproj + "\\Views\\" + ds.BOX_CODE + ".xaml.cs");//xaml.cs
-                        Write(Strings.GetBoxesVM(csproj, ds.BOX_CODE, CreateWord(ds.Body), Strings.CreateBoxUrl(csproj, ds.BOX_CODE, ds.SEARCH_CODE)), dir + "\\" + csproj + "\\ViewModels\\" + ds.BOX_CODE + "VM.cs");//AddVM
+                        Strings.Write(Strings.GetBoxesXaml(csproj, ds.BOX_CODE, Controls.CreateDataGrid(ds.Body), ds.SEARCH_CODE), dir + "\\" + csproj + "\\Views\\"+ds.BOX_CODE+".xaml");//Add.xaml
+                        Strings.Write(Strings.GetBoxesXamlCs(csproj, ds.BOX_CODE), dir + "\\" + csproj + "\\Views\\" + ds.BOX_CODE + ".xaml.cs");//xaml.cs
+                        Strings.Write(Strings.GetBoxesVM(csproj, ds.BOX_CODE, CreateWord(ds.Body), Strings.CreateBoxUrl(csproj, ds.BOX_CODE, ds.SEARCH_CODE)), dir + "\\" + csproj + "\\ViewModels\\" + ds.BOX_CODE + "VM.cs");//AddVM
                     }
                     Include += GetInclude(boxes);
                     Complie += GetComplie(boxes);
                 }
 
-                Write(Strings.GetResource(ChineseName, Resources.CreateResorce(Resources.AllRes(IndexContents, IndexBodies, boxes))), dir + "\\" + csproj + "\\Resources\\Strings.zh-CN.xaml");//资源文件
-                Write(Strings.GetCsproj(csproj, Complie, Include), dir + "\\" + csproj + "\\" + csproj + ".csproj");
+                Strings.Write(Strings.GetResource(ChineseName, Resources.CreateResorce(Resources.AllRes(IndexContents, IndexBodies, boxes))), dir + "\\" + csproj + "\\Resources\\Strings.zh-CN.xaml");//资源文件
+                Strings.Write(Strings.GetCsproj(csproj, Complie, Include), dir + "\\" + csproj + "\\" + csproj + ".csproj");
 
 
-                Write(Strings.GetServices(csproj, res), dir + "\\" + csproj + "\\Services.cs");
+                Strings.Write(Strings.GetServices(csproj, res), dir + "\\" + csproj + "\\Services.cs");
 
                 Domain = Strings.CreateGetallUrl(csproj, IndexContents).Replace("\r\n\t\t", "") ;
                 #endregion
@@ -951,10 +951,10 @@ namespace Project.G.ViewModel
                 Directory.CreateDirectory(dir + "\\" + csproj.Replace("Plugin", "ServerPlugin") + "\\Services");
 
                 var ls = csproj.Split('.');
-                Write(Domains.GetAssembly(ProjectName, ChineseName), dir + "\\" + csproj.Replace("Plugin", "ServerPlugin") + "\\Properties\\AssemblyInfo.cs");
-                Write(Domains.GetCsproj(csproj, LoadTables()), dir + "\\" + csproj.Replace("Plugin", "ServerPlugin") + "\\" + csproj.Replace("Plugin", "ServerPlugin") + ".csproj");
-                Write(Domains.GetDomain(csproj, Domains.GetAllUrlBody(IndexContents, 1), Domains.GetHasWordUrl(ImportBidies, 1), Domains.GetHasWrodFunction(ImportBidies), Domains.GetAllFunction(Tables, IndexContents)), dir + "\\" + csproj.Replace("Plugin", "ServerPlugin") + "\\Domains\\" + ls.Last() + "Domain.cs");
-                Write(Domains.GetService(csproj, Domains.GetAllUrlHeader(csproj, IndexContents), Domains.GetAllUrlBody(IndexContents, 1), Domains.GetAllUrlBody(IndexContents, 0), ChineseName, Domains.GetHasWordUrl(ImportBidies, 0), Domains.GetHasWordUrl(ImportBidies, 1), Domains.GetHasWordUrl(ImportBidies, 2)), dir + "\\" + csproj.Replace("Plugin", "ServerPlugin") + "\\Services\\" + ls.Last() + "Service.cs");
+                Strings.Write(Domains.GetAssembly(ProjectName, ChineseName), dir + "\\" + csproj.Replace("Plugin", "ServerPlugin") + "\\Properties\\AssemblyInfo.cs");
+                Strings.Write(Domains.GetCsproj(csproj, LoadTables()), dir + "\\" + csproj.Replace("Plugin", "ServerPlugin") + "\\" + csproj.Replace("Plugin", "ServerPlugin") + ".csproj");
+                Strings.Write(Domains.GetDomain(csproj, Domains.GetAllUrlBody(IndexContents, 1), Domains.GetHasWordUrl(ImportBidies, 1), Domains.GetHasWrodFunction(ImportBidies), Domains.GetAllFunction(Tables, IndexContents)), dir + "\\" + csproj.Replace("Plugin", "ServerPlugin") + "\\Domains\\" + ls.Last() + "Domain.cs");
+                Strings.Write(Domains.GetService(csproj, Domains.GetAllUrlHeader(csproj, IndexContents), Domains.GetAllUrlBody(IndexContents, 1), Domains.GetAllUrlBody(IndexContents, 0), ChineseName, Domains.GetHasWordUrl(ImportBidies, 0), Domains.GetHasWordUrl(ImportBidies, 1), Domains.GetHasWordUrl(ImportBidies, 2)), dir + "\\" + csproj.Replace("Plugin", "ServerPlugin") + "\\Services\\" + ls.Last() + "Service.cs");
                 if(ModelChecked)
                     CreateDbModel();
                 #endregion
@@ -966,18 +966,7 @@ namespace Project.G.ViewModel
             }
         }
 
-        private void Write(string str, string path)
-        {
-            FileStream fs = new FileStream(path, FileMode.Create);
-            StreamWriter sw = new StreamWriter(fs);
-            //开始写入
-            sw.Write(str);
-            //清空缓冲区
-            sw.Flush();
-            //关闭流
-            sw.Close();
-            fs.Close();
-        }
+        
 
 
         #region 保存表格数据
@@ -1379,7 +1368,7 @@ namespace Project.G.ViewModel
             {
                 if (!File.Exists(ShareModel + "\\" + ds.ToUpper() + ".cs"))
                 {
-                    Write(GenerateModel(ds), dir + "\\" + ProjectName.Replace("Plugin", "ServerPlugin") + "\\Models\\" + ds.ToUpper() + ".cs");
+                    Strings.Write(GenerateModel(ds), dir + "\\" + ProjectName.Replace("Plugin", "ServerPlugin") + "\\Models\\" + ds.ToUpper() + ".cs");
                     s += ds.ToUpper() + "\r\n";
                 }
             }

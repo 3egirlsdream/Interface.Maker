@@ -27,6 +27,15 @@ namespace Project.G.Models
         public string BUTTON { get; set; }
     }
 
+    public class Grid
+    {
+        public bool IS_API { get; set; }
+        public bool IS_BTN { get { return false; } }
+        public string NAME { get; set; }
+        public string CODE { get; set; }
+
+    }
+
     /// <summary>
     /// 根据长度排序
     /// </summary>

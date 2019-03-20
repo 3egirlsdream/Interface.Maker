@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Project.G.Models
 {
+    /// <summary>
+    /// 录入连接条件数据结构
+    /// </summary>
     public class Connection
     {
         public Connection(string Header, string Item, string Conditions)

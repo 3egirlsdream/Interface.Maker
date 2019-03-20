@@ -22,11 +22,24 @@ namespace Project.G.Models
                 file.Close();
                 return json;
             }
-            catch (IOException)
+            catch (IOException ex)
             {
                 return null;
                 //Console.WriteLine(e.ToString());
             }
+        }
+
+        public static void Write(string str, string path)
+        {
+            FileStream fs = new FileStream(path, FileMode.Create);
+            StreamWriter sw = new StreamWriter(fs, Encoding.Unicode);
+            //开始写入
+            sw.Write(str);
+            //清空缓冲区
+            sw.Flush();
+            //关闭流
+            sw.Close();
+            fs.Close();
         }
 
 
