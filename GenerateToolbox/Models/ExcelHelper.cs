@@ -19,15 +19,14 @@ namespace GenerateToolbox.Models
         /// </summary>
         /// <param name="pages">Excel页数</param>
         /// <returns></returns>
-        public bool OpenExcel(int pages)
+        public List<Grids> OpenExcel(int pages)
         {
             OpenFileDialog open = new OpenFileDialog
             {
                 Filter = "Excel (*.XLSX)|*.xlsx|all file|*.*"
             };
 
-            List<string> btns = new List<string>();
-            List<Grid> grids = new List<Grid>();
+            List<Grids> listGrids = new List<Grids>();
 
             open.ShowDialog();
             try
@@ -39,43 +38,76 @@ namespace GenerateToolbox.Models
                 }
                 for (int t = 0; t < pages; t++)
                 {
-                    if (t == 0)
+                    Grids grids = new Grids();
+                    XSSFSheet sheet = (XSSFSheet)xss.GetSheetAt(t);
+                    int cot = sheet.LastRowNum;
+                    //取第一行按钮
+                    for (int i = 0; i < 13; i++)
                     {
-                        XSSFSheet sheet = (XSSFSheet)xss.GetSheetAt(t);
-                        int cot = sheet.LastRowNum;
-                        //取第一行按钮
-                        for (int i = 0; i < 13; i++)
-                        {
-                            string btn = sheet.GetRow(1).GetCell(i) == null ? "" : sheet.GetRow(1).GetCell(i).ToString();
-                            if (String.IsNullOrEmpty(btn))
-                                break;
-                            btns.Add(btn);
-                        }
-                        
-                        //读取其他控件
-                        for(int i = 2; i <= cot; i++)
-                        {
-                            string Signal = sheet.GetRow(i).GetCell(0) == null ? "" : sheet.GetRow(i).GetCell(0).ToString();
-                            switch (Signal)
-                            {
-                                case "按钮":break;
-                                case "普通控件":break;
-                                case "表格":break;
-                                default:break;
-                            }
-                            string btn = sheet.GetRow(1).GetCell(i) == null ? "" : sheet.GetRow(1).GetCell(i).ToString();
-                        }
-
+                        string btn = sheet.GetRow(1).GetCell(i) == null ? "" : sheet.GetRow(1).GetCell(i).ToString();
+                        if (String.IsNullOrEmpty(btn))
+                            break;
+                        grids.strs.Add(btn);
                     }
-                }
 
-                return true;
+                    //读取其他控件
+                    for (int i = 2; i <= cot; i++)
+                    {
+                        string Signal = sheet.GetRow(i).GetCell(0) == null ? "" : sheet.GetRow(i).GetCell(0).ToString();
+                        switch (Signal)
+                        {
+                            case "按钮":
+                                {
+                                    var name = sheet.GetRow(i).GetCell(1) == null ? "" : sheet.GetRow(i).GetCell(1).ToString();
+                                    Grid grid = new Grid
+                                    {
+                                        CONTROL_NAME = "btn",
+                                        NAME = name
+                                    };
+                                    grids.grids.Add(grid);
+                                }
+                                break;
+                            case "普通控件":
+                                {
+                                    var controlName = sheet.GetRow(i).GetCell(1) == null ? "" : sheet.GetRow(i).GetCell(1).ToString();
+                                    var Code = sheet.GetRow(i).GetCell(2) == null ? "" : sheet.GetRow(i).GetCell(2).ToString();
+                                    var Name = sheet.GetRow(i).GetCell(3) == null ? "" : sheet.GetRow(i).GetCell(3).ToString();
+                                    var isApi = sheet.GetRow(i).GetCell(4) == null ? "" : sheet.GetRow(i).GetCell(4).ToString();
+                                    Grid grid = new Grid
+                                    {
+                                        CONTROL_NAME = controlName,
+                                        NAME = Name,
+                                        CODE = Code,
+                                        IS_API = isApi == "YES" ? true : false
+                                    };
+                                    grids.grids.Add(grid);
+                                }
+                                break;
+                            case "表格":
+                                {
+                                    var gridCode = sheet.GetRow(i).GetCell(1) == null ? "" : sheet.GetRow(i).GetCell(1).ToString();
+                                    var gridName = sheet.GetRow(i).GetCell(2) == null ? "" : sheet.GetRow(i).GetCell(2).ToString();
+                                    Grid grid = new Grid
+                                    {
+                                        CONTROL_NAME = "DATAGRID",
+                                        NAME = gridName,
+                                        CODE = gridCode
+                                    };
+                                    grids.grids.Add(grid);
+                                }
+                                break;
+                            default: break;
+                        }
+                    }
+                    listGrids.Add(grids);   
+                }
+                return listGrids;
             }
             catch (Exception ex)
             {
                 Warning warning = new Warning(ex.Message);
                 warning.ShowDialog();
-                return false;
+                return null;
             }
 
 

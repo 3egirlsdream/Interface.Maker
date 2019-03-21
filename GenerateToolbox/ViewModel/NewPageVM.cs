@@ -49,6 +49,8 @@ namespace GenerateToolbox.ViewModel
             {
                 Strings.Write(config, "config.xml");
                 dynamic res = ExcelHelper.LoadXml();
+                ExcelHelper helper = new ExcelHelper();
+                var result = helper.OpenExcel((int)res.count);
             }
         };
         #endregion

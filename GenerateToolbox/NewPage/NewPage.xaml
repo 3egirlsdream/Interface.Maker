@@ -27,7 +27,7 @@
                 Width="100"
                 Height="30"
                 Margin="25,10,10,0"
-                Background="#C83C56"
+                Background="#659EB9"
                 BorderThickness="0"
                 Command="{Binding CmdGenerate}"
                 Content="生  成"

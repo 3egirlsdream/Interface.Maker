@@ -30,10 +30,22 @@ namespace Project.G.Models
     public class Grid
     {
         public bool IS_API { get; set; }
-        public bool IS_BTN { get { return false; } }
+        public string CONTROL_NAME { get;set;}
         public string NAME { get; set; }
         public string CODE { get; set; }
 
+    }
+
+    public class Grids
+    {
+        public List<Grid> grids { get; set; }
+        public List<string> strs { get; set; }
+
+        public Grids()
+        {
+            grids = new List<Grid>();
+            strs = new List<string>();
+        }
     }
 
     /// <summary>

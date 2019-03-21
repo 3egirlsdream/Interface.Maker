@@ -132,8 +132,8 @@ namespace Project.G
 
         private void Preview_GotFocus(object sender, RoutedEventArgs e)
         {
-            bd1.Background = GetColor("#AA96BE");
-            bd2.Background = GetColor("#AA96BE");
+            bd1.Background = GetColor("#659EB9");
+            bd2.Background = GetColor("#659EB9");
         }
     }
 }
