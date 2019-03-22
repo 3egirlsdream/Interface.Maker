@@ -1291,6 +1291,123 @@ namespace Project.G.Models
             return s;
         }
 
+        /// <summary>
+        /// [新]链接项目文件
+        /// </summary>
+        public static string GetCsproj_new(string ProjectName, string Complier = "", string Page = "", string Extend = "", string Link = "")
+        {
+            string csproject = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n" +
+                "<Project ToolsVersion=\"15.0\" xmlns=\"http://schemas.microsoft.com/developer/msbuild/2003\">\r\n  " +
+                "<Import Project=\"$(MSBuildExtensionsPath)\\$(MSBuildToolsVersion)\\Microsoft.Common.props\" Condition=\"Exists('$(MSBuildExtensionsPath)\\$(MSBuildToolsVersion)\\Microsoft.Common.props')\" />\r\n  " +
+                "<PropertyGroup>\r\n    <Configuration Condition=\" '$(Configuration)' == '' \">Debug</Configuration>\r\n    " +
+                "<Platform Condition=\" '$(Platform)' == '' \">AnyCPU</Platform>\r\n    <ProjectGuid>{04C6C65A-8C05-4C4B-9F82-CEB1C218DEA5}" +
+                "</ProjectGuid>\r\n    " +
+                "<OutputType>Library</OutputType>\r\n    " +
+                "<AppDesignerFolder>Properties</AppDesignerFolder>\r\n    " +
+                "<RootNamespace>" + ProjectName + "</RootNamespace>\r\n    " +
+                "<AssemblyName>" + ProjectName + "</AssemblyName>\r\n    " +
+                "<TargetFrameworkVersion>v4.0</TargetFrameworkVersion>\r\n    " +
+                "<FileAlignment>512</FileAlignment>\r\n    " +
+                "<Deterministic>false</Deterministic>\r\n  " +
+                "</PropertyGroup>\r\n  " +
+                "<PropertyGroup>\r\n    " +
+                "<StartupObject />\r\n  " +
+                "</PropertyGroup>\r\n  " +
+                "<PropertyGroup Condition=\"'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'\">\r\n    " +
+                "<DebugSymbols>true</DebugSymbols>\r\n    " +
+                "<DebugType>full</DebugType>\r\n    " +
+                "<Optimize>false</Optimize>\r\n    " +
+                "<OutputPath>X:\\CLIENT\\plugins\\</OutputPath>\r\n    " +
+                "<DefineConstants>\r\n    </DefineConstants>\r\n    " +
+                "<ErrorReport>prompt</ErrorReport>\r\n    " +
+                "<WarningLevel>4</WarningLevel>\r\n  " +
+                "</PropertyGroup>\r\n  " +
+                "<PropertyGroup Condition=\"'$(Configuration)|$(Platform)' == 'Release|AnyCPU'\">\r\n    " +
+                "<DebugType>pdbonly</DebugType>\r\n    " +
+                "<Optimize>true</Optimize>\r\n    " +
+                "<OutputPath>bin\\Release\\</OutputPath>\r\n    " +
+                "<DefineConstants>TRACE</DefineConstants>\r\n    " +
+                "<ErrorReport>prompt</ErrorReport>\r\n    " +
+                "<WarningLevel>4</WarningLevel>\r\n  " +
+                "</PropertyGroup>\r\n  " +
+                "<ItemGroup>\r\n    " +
+                "<Reference Include=\"Creative.Plugin.Common\">\r\n      " +
+                "<HintPath>..\\..\\Reference Assemblies\\Creative.Plugin.Common.dll</HintPath>\r\n    " +
+                "</Reference>\r\n    <Reference Include=\"DAF.Plugin.Common\">\r\n      " +
+                "<HintPath>..\\..\\Reference Assemblies\\DAF.Plugin.Common.dll</HintPath>\r\n    " +
+                "</Reference>\r\n    <Reference Include=\"MES.Plugin.Common\">\r\n      " +
+                "<HintPath>..\\..\\Reference Assemblies\\MES.Plugin.Common.dll</HintPath>\r\n    " +
+                "</Reference>\r\n    " +
+                "<Reference Include=\"Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL\">\r\n      " +
+                "<SpecificVersion>False</SpecificVersion>\r\n      " +
+                "<HintPath>..\\..\\Reference Assemblies\\Newtonsoft.Json.dll</HintPath>\r\n    " +
+                "</Reference>\r\n    " +
+
+                "<Reference Include=\"NPOI, Version=2.2.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL\">\r\n      " +
+                "<SpecificVersion>False</SpecificVersion>\r\n      " +
+                "<HintPath>..\\..\\Reference Assemblies\\NPOI.dll</HintPath>\r\n    " +
+                "</Reference>\r\n    " +
+                "<Reference Include=\"NPOI.OOXML, Version=2.2.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL\">\r\n      " +
+                "<SpecificVersion>False</SpecificVersion>\r\n      " +
+                "<HintPath>..\\..\\Reference Assemblies\\NPOI.OOXML.dll</HintPath>\r\n    " +
+                "</Reference>\r\n    <Reference Include=\"NPOI.OpenXml4Net, Version=2.2.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL\">\r\n      " +
+                "<SpecificVersion>False</SpecificVersion>\r\n      " +
+                "<HintPath>..\\..\\Reference Assemblies\\NPOI.OpenXml4Net.dll</HintPath>\r\n    " +
+                "</Reference>\r\n    <Reference Include=\"NPOI.OpenXmlFormats, Version=2.2.1.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL\">\r\n      " +
+                "<SpecificVersion>False</SpecificVersion>\r\n      " +
+                "<HintPath>..\\..\\Reference Assemblies\\NPOI.OpenXmlFormats.dll</HintPath>\r\n    " +
+                "</Reference>" +
+
+                "<Reference Include=\"System\" />\r\n    " +
+                "<Reference Include=\"System.ComponentModel.DataAnnotations\" />\r\n    " +
+                "<Reference Include=\"System.Data\" />\r\n    " +
+                "<Reference Include=\"System.Xml\" />\r\n    " +
+                "<Reference Include=\"Microsoft.CSharp\" />\r\n    " +
+                "<Reference Include=\"System.Core\" />\r\n    " +
+                "<Reference Include=\"System.Xml.Linq\" />\r\n    " +
+                "<Reference Include=\"System.Data.DataSetExtensions\" />\r\n    " +
+                "<Reference Include=\"System.Xaml\">\r\n      " +
+                "<RequiredTargetFramework>4.0</RequiredTargetFramework>\r\n    " +
+                "</Reference>\r\n    " +
+                "<Reference Include=\"WindowsBase\" />\r\n    " +
+                "<Reference Include=\"PresentationCore\" />\r\n    " +
+                "<Reference Include=\"PresentationFramework\" />\r\n  " +
+                "</ItemGroup>\r\n  " +
+
+
+                "<ItemGroup>\r\n   " +
+                Page +
+
+
+                "<Page Include=\"Resources\\Strings.zh-CN.xaml\">\r\n      " +
+                "<Generator>MSBuild:Compile</Generator>\r\n      " +
+                "<SubType>Designer</SubType>\r\n    " +
+                "</Page>\r\n  " +
+                "</ItemGroup>\r\n  " +
+
+
+                "<ItemGroup>\r\n " +
+                "<Compile Include=\"..\\..\\Reference Assemblies\\Release\\GlobalAssemblyInfo.cs\">\r\n      " +
+                "<Link>Properties\\GlobalAssemblyInfo.cs</Link>\r\n    " +
+                "</Compile>\r\n\r\n    " +
+                Link +
+                "<Compile Include=\"Services.cs\" />" +
+                "<Compile Include=\"Models\\Model.cs\" />\r\n\r\n    " +
+                "<Compile Include=\"Models\\ComboxModel.cs\" />\r\n\r\n    " +
+                
+                Complier +
+                "<Compile Include=\"Properties\\AssemblyInfo.cs\">\r\n      " +
+                "<SubType>Code</SubType>\r\n    " +
+                "</Compile>\r\n    " +
+                "<AppDesigner Include=\"Properties\\\" />\r\n  " +
+                "</ItemGroup>\r\n   " +
+
+
+                "<Import Project=\"$(MSBuildToolsPath)\\Microsoft.CSharp.targets\" />\r\n" + Extend + "\r\n" +
+                "</Project>";
+            return csproject;
+        }
+
         #endregion
     }
 }

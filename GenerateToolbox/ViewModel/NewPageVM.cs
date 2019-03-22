@@ -48,63 +48,72 @@ namespace GenerateToolbox.ViewModel
         {
             ExecuteDelegate = c =>
             {
-                Strings.Write(config, "config.xml");
-                dynamic res = ExcelHelper.LoadXml();
-                CreateFile(res.en);
-                ExcelHelper helper = new ExcelHelper();
-                var result = helper.OpenExcel((int)res.count);
-                List<string> excels = assemblyPage(res.en, result, res.datas);
-                for(int i = 0; i < result.Count; i++)
+                try
                 {
-                    switch (result[i].Identity)
+                    Strings.Write(config, "config.xml");
+                    dynamic res = ExcelHelper.LoadXml();
+                    CreateFile(res.en);
+                    ExcelHelper helper = new ExcelHelper();
+                    var result = helper.OpenExcel((int)res.count);
+                    List<string> excels = assemblyPage(res.en, result, res.datas);
+                    for (int i = 0; i < result.Count; i++)
                     {
-                        case "主页":
-                            {
-                                Strings.Write(excels[i], dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml");
-                                Strings.Write(Strings.GetIndexXamlCs(res.en), dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml.cs");
-                                Strings.Write(Strings.GetIndexVM(res.en, "", ""), dir + "\\" + res.en + "\\ViewModels\\" + result[i].PageCode + "VM.cs");
-                            }
-                            break;
-                        case "新增":
-                            {
-                                Strings.Write(excels[i], dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml");
-                                Strings.Write(Strings.GetAddPageXamlCs(res.en), dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml.cs");
-                                Strings.Write(Strings.GetAddVM(res.en, "", ""), dir + "\\" + res.en + "\\ViewModels\\" + result[i].PageCode + "VM.cs");
-                            }break;
-                        case "编辑":
-                            {
-                                Strings.Write(excels[i], dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml");
-                                Strings.Write(Strings.GetEditPageXamlCs(res.en), dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml.cs");
-                                Strings.Write(Strings.GetEditVM(res.en, "", ""), dir + "\\" + res.en + "\\ViewModels\\" + result[i].PageCode + "VM.cs");
-                            }
-                            break;
-                        case "导入":
-                            {
-                                Strings.Write(excels[i], dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml");
-                                Strings.Write(Strings.GetImportXamlCs(res.en), dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml.cs");
-                                Strings.Write(Strings.GetImprotVM_new(res.en, result[i].grids, "", "", "", "", ""), dir + "\\" + res.en + "\\ViewModels\\" + result[i].PageCode + "VM.cs");
-                            }
-                            break;
-                        default:
-                            {
-                                Strings.Write(excels[i], dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml");
-                                Strings.Write(Strings.GetBoxesXamlCs(res.en, result[i].PageCode), dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml.cs");
-                                Strings.Write(Strings.GetBoxesVM(res.en, result[i].PageCode), dir + "\\" + res.en + "\\ViewModels\\" + result[i].PageCode + "VM.cs");
-                            }
-                            break;
+                        switch (result[i].Identity)
+                        {
+                            case "主页":
+                                {
+                                    Strings.Write(excels[i], dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml");
+                                    Strings.Write(Strings.GetIndexXamlCs(res.en), dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml.cs");
+                                    Strings.Write(Strings.GetIndexVM(res.en, "", ""), dir + "\\" + res.en + "\\ViewModels\\" + result[i].PageCode + "VM.cs");
+                                }
+                                break;
+                            case "新增":
+                                {
+                                    Strings.Write(excels[i], dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml");
+                                    Strings.Write(Strings.GetAddPageXamlCs(res.en), dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml.cs");
+                                    Strings.Write(Strings.GetAddVM(res.en, "", ""), dir + "\\" + res.en + "\\ViewModels\\" + result[i].PageCode + "VM.cs");
+                                }
+                                break;
+                            case "编辑":
+                                {
+                                    Strings.Write(excels[i], dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml");
+                                    Strings.Write(Strings.GetEditPageXamlCs(res.en), dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml.cs");
+                                    Strings.Write(Strings.GetEditVM(res.en, "", ""), dir + "\\" + res.en + "\\ViewModels\\" + result[i].PageCode + "VM.cs");
+                                }
+                                break;
+                            case "导入":
+                                {
+                                    Strings.Write(excels[i], dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml");
+                                    Strings.Write(Strings.GetImportXamlCs(res.en), dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml.cs");
+                                    Strings.Write(Strings.GetImprotVM_new(res.en, result[i].grids, "", "", "", "", ""), dir + "\\" + res.en + "\\ViewModels\\" + result[i].PageCode + "VM.cs");
+                                }
+                                break;
+                            default:
+                                {
+                                    Strings.Write(excels[i], dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml");
+                                    Strings.Write(Strings.GetBoxesXamlCs(res.en, result[i].PageCode), dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml.cs");
+                                    Strings.Write(Strings.GetBoxesVM(res.en, result[i].PageCode), dir + "\\" + res.en + "\\ViewModels\\" + result[i].PageCode + "VM.cs");
+                                }
+                                break;
+                        }
+
                     }
-                    
+
+                    Strings.Write(Strings.GetResource(res.en, ""), dir + "\\" + res.en + "\\Resources\\Strings.zh-CN.xaml");//资源文件
+
+                    string Include = Strings.GetInclude_new(result);
+                    string Complie = Strings.GetComplie_new(result);
+
+                    Strings.Write(Strings.GetCsproj_new(res.en, Complie, Include), dir + "\\" + res.en + "\\" + res.en + ".csproj");
+
+
+                    Strings.Write(Strings.GetServices(res.en), dir + "\\" + res.en + "\\Services.cs");
                 }
-
-                Strings.Write(Strings.GetResource(res.en, ""), dir + "\\" + res.en + "\\Resources\\Strings.zh-CN.xaml");//资源文件
-
-                string Include = Strings.GetInclude_new(result);
-                string Complie = Strings.GetComplie_new(result);
-
-                Strings.Write(Strings.GetCsproj(res.en, Complie, Include), dir + "\\" + res.en + "\\" + res.en + ".csproj");
-
-
-                Strings.Write(Strings.GetServices(res.en), dir + "\\" + res.en + "\\Services.cs");
+                catch (Exception ex)
+                {
+                    Warning warning = new Warning(ex.Message);
+                    warning.ShowDialog();
+                }
             }
         };
         #endregion
