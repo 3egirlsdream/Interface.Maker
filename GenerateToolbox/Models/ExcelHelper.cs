@@ -41,7 +41,16 @@ namespace GenerateToolbox.Models
                     Grids grids = new Grids();
                     XSSFSheet sheet = (XSSFSheet)xss.GetSheetAt(t);
                     int cot = sheet.LastRowNum;
-                    //取第一行按钮
+                    //取第一行标识
+                    string Identity = sheet.GetRow(0).GetCell(0) == null ? "" : sheet.GetRow(0).GetCell(0).ToString();
+                    string PageCode = sheet.GetRow(0).GetCell(1) == null ? "" : sheet.GetRow(0).GetCell(1).ToString();
+                    string PageName = sheet.GetRow(0).GetCell(2) == null ? "" : sheet.GetRow(0).GetCell(2).ToString();
+                    //string Level = sheet.GetRow(0).GetCell(3) == null ? "" : sheet.GetRow(0).GetCell(3).ToString();
+                    grids.Identity = Identity;
+                    grids.PageCode = PageCode;
+                    grids.PageName = PageName;
+                    //grids.Level = Convert.ToInt32(Level);
+                    //取第二行按钮
                     for (int i = 0; i < 13; i++)
                     {
                         string btn = sheet.GetRow(1).GetCell(i) == null ? "" : sheet.GetRow(1).GetCell(i).ToString();
@@ -93,6 +102,16 @@ namespace GenerateToolbox.Models
                                         NAME = gridName,
                                         CODE = gridCode
                                     };
+                                    grids.grids.Add(grid);
+                                }
+                                break;
+                            case "换行":
+                                {
+                                    Grid grid = new Grid
+                                    {
+                                        CONTROL_NAME = "NEXT_LINE"
+                                    };
+                                    grids.Level++;
                                     grids.grids.Add(grid);
                                 }
                                 break;
@@ -168,12 +187,36 @@ namespace GenerateToolbox.Models
                 }
             }
 
+            List<DataGrids> datas = new List<DataGrids>(); 
+
+            //datagrid
+            XmlNodeList datagrids = root.GetElementsByTagName("datagrid");
+            foreach(XmlNode node in datagrids)
+            {
+                DataGrids data = new DataGrids();
+
+                XmlNodeList ItemsSources = ((XmlElement)node).GetElementsByTagName("ItemsSource");
+                XmlNodeList SelectedItems = ((XmlElement)node).GetElementsByTagName("SelectedItem");
+                XmlNodeList PageSizes = ((XmlElement)node).GetElementsByTagName("PageSize");
+                XmlNodeList TotalCounts = ((XmlElement)node).GetElementsByTagName("TotalCount");
+                XmlNodeList PageIndexs = ((XmlElement)node).GetElementsByTagName("PageIndex");
+
+                data.ItemsSource = ItemsSources[0].InnerText;
+                data.SelectedItem = SelectedItems[0].InnerText;
+                data.PageIndex = PageIndexs[0].InnerText;
+                data.PageSize = PageSizes[0].InnerText;
+                data.TotalCount = TotalCounts[0].InnerText;
+                datas.Add(data);
+            }
+
+
             return new
             {
                 count,
                 en,
                 zh,
-                sharemodel
+                sharemodel,
+                datas
             };
         }
     }

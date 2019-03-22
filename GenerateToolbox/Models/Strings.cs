@@ -197,12 +197,14 @@ namespace Project.G.Models
         /// <returns></returns>
         public static string GetResource(string ProjectName, string Extend)
         {
-            string resource = "<ResourceDictionary\r\nxmlns=\"http://schemas.microsoft.com/winfx/2006/xaml/presentation\"\r\n" +
+            string resource = 
+                "<ResourceDictionary\r\nxmlns=\"http://schemas.microsoft.com/winfx/2006/xaml/presentation\"\r\n" +
                 "xmlns:x=\"http://schemas.microsoft.com/winfx/2006/xaml\"\r\n" +
                 "xmlns:sys=\"clr-namespace:System;assembly=mscorlib\">\r\n" +
                 "<sys:String x:Key=\"Title\">"+ProjectName+"</sys:String>\r\n" +
                 "<sys:String x:Key=\"Title_Add\">新增</sys:String>\r\n" +
                 "<sys:String x:Key=\"Title_Edit\">编辑</sys:String>\r\n" +
+                "<sys:String x:Key=\"Title_Import\">导入</sys:String>\r\n" +
                 "<sys:String x:Key=\"ErrorMsg\">错误原因</sys:String>\r\n" +
                 "<sys:String x:Key=\"BillNo\">单据号</sys:String>\r\n" +
                 "<sys:String x:Key=\"Submit\">提交</sys:String>\r\n" +
@@ -230,10 +232,14 @@ namespace Project.G.Models
                 "<sys:String x:Key=\"SelectFile\">选择导入文件</sys:String>\r\n" +
                 "<sys:String x:Key=\"DownloadTemplate\">下载导入文件模板</sys:String>\r\n" +
                 "<sys:String x:Key=\"InvaliableColume\">不合法的列数</sys:String>\r\n" +
+                "<sys:String x:Key=\"Conditions\">查询条件</sys:String>\r\n" +
+                "<sys:String x:Key=\"QueryCriteria\">查询条件</sys:String>\r\n" +
                 "<!--自动生成-->\r\n" +
-                Extend +"\r\n</ResourceDictionary>";
+                Extend +
+                "\r\n</ResourceDictionary>";
             return resource;
         }
+        
 
         public static string GetIndexPage(string ProjectName, string Button, string SearchContent, string DataGrid)
         {
@@ -265,13 +271,13 @@ namespace Project.G.Models
                 "<RowDefinition Height=\"Auto\"/>\r\n        " +
                 "</Grid.RowDefinitions>\r\n        " +
                 "<Border \r\n            Grid.Row=\"0\"\r\n            Margin=\"0,0,0,0\"\r\n            Background=\"{DynamicResource PanelBrush}\">\r\n            " +
-                "<Grid Margin=\"{DynamicResource ContainerPadding}\">\r\n                \r\n            " +
+                "<Grid>\r\n                \r\n            " +
                 Button +
                 "</Grid>\r\n        " +
                 "</Border>\r\n       " +
                 " <Border\r\n            Grid.Row=\"1\"\r\n            Margin=\"0,0,0,0\"\r\n            " +
                 "Background=\"{DynamicResource PanelBrush}\">\r\n            " +
-                "<Border BorderBrush=\"#D8D8D9\" BorderThickness=\"1\" Margin=\"{DynamicResource ContainerPadding}\" Padding=\"5\">" +
+                "<GroupBox Header={DynamicResource Conditions} BorderBrush=\"#D8D8D9\" BorderThickness=\"1\" Margin=\"{DynamicResource ContainerPadding}\" Padding=\"5\">" +
                 "<Grid>\r\n                " +
                 
                 "<Grid.RowDefinitions>\r\n                    " +
@@ -280,7 +286,7 @@ namespace Project.G.Models
                 "</Grid.RowDefinitions>\r\n                \r\n            " +
                 SearchContent +
                 "</Grid>\r\n        " +
-                "</Border>\r\n" +
+                "</GroupBox>\r\n" +
                 "</Border>\r\n        " +
                 "<Border Grid.Row=\"6\" Margin=\"0,0,0,0\" Background=\"{DynamicResource PanelBrush}\">\r\n            " +
                 "<Grid Margin=\"{DynamicResource ContainerPadding}\">\r\n                " +
@@ -860,7 +866,44 @@ namespace Project.G.Models
             return s;
         }
 
-       
+        /// <summary>
+        /// [新]导入VM
+        /// </summary>
+        /// <returns></returns>
+        public static string GetImprotVM_new(string ProjectName, List<Grid> import, string Xss, string EmptyCode, string RepeatCode, string Function, string CheckImportData)
+        {
+            string s = "using System;\r\n" +
+                "using System.Collections.Generic;\r\n" +
+                "using System.IO;\r\nusing System.Linq;\r\n" +
+                "using System.Net;\r\nusing System.Windows;\r\n" +
+                "using DAF.Plugin.Common;\r\nusing Microsoft.Win32;\r\n" +
+                "using MES.Plugin.Common;\r\nusing NPOI.XSSF.UserModel;\r\n\r\n" +
+                "namespace " + ProjectName + ".ViewModel\r\n{\r\n    " +
+                "public class ImportPageVM : WindowViewModelBase\r\n    {\r\n\r\n        " +
+                "public ImportPageVM(WindowPlugin plugin) : base(plugin)\r\n        {\r\n\r\n        }\r\n\r\n\r\n        private List<Model> _DataSource;\r\n        public List<Model> DataSource\r\n        {\r\n            get\r\n            {\r\n                return _DataSource;\r\n            }\r\n            set\r\n            {\r\n                _DataSource = value;\r\n                NotifyPropertyChanged(\"DataSource\");\r\n            }\r\n        }\r\n\r\n\r\n\r\n\r\n        /// <summary>\r\n        /// 下载模板\r\n        /// </summary>\r\n        public SimpleCommand CmdDownTemp => new SimpleCommand\r\n        {\r\n            ExecuteDelegate = (o) =>\r\n            {\r\n                DownTemp();\r\n            }\r\n        };\r\n\r\n        public SimpleCommand CmdImport => new SimpleCommand\r\n        {\r\n            ExecuteDelegate = (o) =>\r\n            {\r\n                Import();\r\n            }\r\n        };\r\n\r\n        public SimpleCommand CmdSave => new SimpleCommand\r\n        {\r\n            ExecuteDelegate = (o) =>\r\n            {\r\n                List<Model> models = new List<Model>();\r\n                foreach(var ds in DataSource)\r\n                {\r\n                    if (ds.IsChecked) models.Add(ds);\r\n                }\r\n                plugin.Framework.PostData(Services.url_add, new\r\n                {\r\n                    model = models\r\n                });\r\n                plugin.DialogResult = true;\r\n            },\r\n            CanExecuteDelegate = x =>\r\n            {\r\n                return DataSource != null;\r\n            }\r\n        };\r\n\r\n\r\n        public void DownTemp()\r\n        {\r\n            string fileName = string.Format(\"{0}{1}\",Translator.Get(\"Title\"), \".xlsx\");\r\n            string allPath = AppDomain.CurrentDomain.SetupInformation.ApplicationBase;\r\n            string path = allPath + \"\\\\Templates\\\\Import\\\\\" + fileName;\r\n            WebClient webClient = new WebClient();\r\n            SaveFileDialog dlg = new SaveFileDialog();\r\n            dlg.FileName = fileName;\r\n            if (dlg.ShowDialog() == true)\r\n            {\r\n                //获取要保存文件名的完整路径\r\n                string filename = dlg.FileName;\r\n                try\r\n                {\r\n                    webClient.DownloadFile(path, filename);\r\n                }\r\n                catch (Exception)\r\n                {\r\n                    throw;\r\n                }\r\n            }\r\n        }\r\n\r\n        " +
+                "public void Import()\r\n        {\r\n            try\r\n            {\r\n                " +
+                "OpenFileDialog open = new OpenFileDialog();\r\n                " +
+                "open.Filter = \"Excel (*.XLSX)|*.xlsx|*.XLS|*.xls\";\r\n                " +
+                "if ((bool)(open.ShowDialog()))\r\n                {\r\n\r\n                    //上传成功后获取文件进行读取\r\n                    XSSFWorkbook xssfWorkbook;\r\n                    " +
+                "using (FileStream fs = new FileStream(open.FileName, FileMode.Open, FileAccess.Read))\r\n                    {\r\n                        xssfWorkbook = new XSSFWorkbook(fs);\r\n                    }\r\n\r\n                    " +
+                "List<Model> models = new List<Model>();\r\n                    " +
+                "XSSFSheet sheet = (XSSFSheet)xssfWorkbook.GetSheetAt(0);//SheetAt 索引从0开始                    \r\n                    \r\n                    " +
+                "if(sheet.GetRow(0).Cells.Count != " + import.Count() + ")\r\n                    {\r\n                        MessageBox.Show(Translator.Get(\"InvaliableColume\"));\r\n                    }\r\n                    \r\n                    " +
+                "for(int i = 0; i <= sheet.LastRowNum; i++)\r\n                    {\r\n                        " +
+                "Model model = new Model();\r\n                        " +
+                "if (sheet.GetRow(i) == null)\r\n                            continue;\r\n                        " +
+                Xss +
+                EmptyCode +
+                RepeatCode +
+                "models.Add(CheckImportData(model, models));\r\n                    }\r\n\r\n                    DataSource = models;\r\n                }\r\n            }\r\n        catch (Exception ex)\r\n            {\r\n                MessageBox.Show(\"请删除结尾空行！\\n\" + ex.Message);\r\n            }\r\n        }\r\n\r\n       \r\n\r\n        /// <summary>\r\n        /// 重复返回1，反之返回0\r\n        /// </summary>\r\n        /// <param name=\"code\"></param>\r\n        /// <returns></returns>\r\n        " +
+                Function +
+                "\r\n            var rs = res.GetData<string>();\r\n            if (rs == \"0\")\r\n                return false;\r\n            else\r\n                return true;\r\n        }\r\n\r\n " +
+                "       /// <summary>\r\n        /// 前台判断重复\r\n        /// </summary>\r\n        /// <param name=\"model\"></param>\r\n        /// <param name=\"models\"></param>\r\n        /// <returns></returns>\r\n        " +
+                "private Model CheckImportData(Model model, List<Model> models)\r\n        {\r\n            if(models.FirstOrDefault(x => " + CheckImportData + ") != null)\r\n            {\r\n                model.IsChecked = false;\r\n            }\r\n            return model;\r\n        }\r\n\r\n\r\n    }\r\n}\r\n";
+            return s;
+        }
+
+
 
         #region 扩展方法
 
@@ -1032,7 +1075,222 @@ namespace Project.G.Models
             }
             return s;
         }
-        
+
+        #endregion
+
+
+        #region 新版界面
+
+        /// <summary>
+        /// page类型的页面
+        /// </summary>
+        /// <param name="projName">项目名</param>
+        /// <param name="pageName">页面名</param>
+        /// <param name="Extention">拓展</param>
+        /// <returns></returns>
+        public string PageXaml(string projName, string pageName, string Extention)
+        {
+            string s = "<common:PagePlugin\r\n    " +
+                "x:Class=\""+projName+"."+pageName+"\"\r\n    " +
+                "xmlns=\"http://schemas.microsoft.com/winfx/2006/xaml/presentation\"\r\n    " +
+                "xmlns:x=\"http://schemas.microsoft.com/winfx/2006/xaml\"\r\n    " +
+                "xmlns:common=\"http://schemas.creative.com/plugin\"\r\n    " +
+                "xmlns:controls=\"http://schemas.creative.com/controls\"\r\n    " +
+                "xmlns:d=\"http://schemas.microsoft.com/expression/blend/2008\"\r\n    " +
+                "xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibility/2006\"\r\n    " +
+                "Title=\"{DynamicResource "+pageName+"}\"\r\n    " +
+                "d:DesignHeight=\"768\"\r\n    " +
+                "d:DesignWidth=\"1024\"\r\n    " +
+                "mc:Ignorable=\"d\">\r\n    " +
+                "<Page.Resources>\r\n        " +
+                "<ResourceDictionary>\r\n            " +
+                "<ResourceDictionary.MergedDictionaries>\r\n                " +
+                "<ResourceDictionary Source=\"/"+projName+";component/Resources/Strings.zh-CN.xaml\" />\r\n                " +
+                "<ResourceDictionary Source=\"/Creative.Plugin.Common;component/Themes/Generic.xaml\" />\r\n            " +
+                "</ResourceDictionary.MergedDictionaries>\r\n        " +
+                "</ResourceDictionary>\r\n    " +
+                "</Page.Resources>\r\n    " +
+                "<Grid>\r\n        " +
+                "<Grid.RowDefinitions>\r\n            " +
+                "<RowDefinition Height=\"Auto\" />\r\n            " +
+                "<RowDefinition Height=\"Auto\" />\r\n            " +
+                "<RowDefinition Height=\"Auto\" />\r\n            " +
+                "<RowDefinition Height=\"Auto\" />\r\n            " +
+                "<RowDefinition Height=\"Auto\" />\r\n            " +
+                "<RowDefinition Height=\"Auto\" />\r\n            " +
+                "<RowDefinition Height=\"*\" />\r\n            " +
+                "<RowDefinition Height=\"Auto\" />\r\n        " +
+                "</Grid.RowDefinitions>\r\n    " +
+                Extention +
+                "</Grid>\r\n" +
+                "</common:PagePlugin>\r\n";
+            return s;
+        }
+
+        /// <summary>
+        /// 窗口类型页面
+        /// </summary>
+        /// <param name="projName">项目名</param>
+        /// <param name="pageName">页面名</param>
+        /// <param name="Extention">拓展</param>
+        /// <returns></returns>
+        public string WindowXaml(string projName, string pageName, string Extention)
+        {
+            string s = "<common:WindowPlugin\r\n    " +
+                "x:Class=\""+projName+"."+pageName+"\"\r\n    " +
+                "xmlns=\"http://schemas.microsoft.com/winfx/2006/xaml/presentation\"\r\n    " +
+                "xmlns:x=\"http://schemas.microsoft.com/winfx/2006/xaml\"\r\n    " +
+                "xmlns:common=\"http://schemas.creative.com/plugin\"\r\n    " +
+                "xmlns:controls=\"http://schemas.creative.com/controls\"\r\n    " +
+                "xmlns:d=\"http://schemas.microsoft.com/expression/blend/2008\"\r\n    " +
+                "xmlns:local=\"clr-namespace:"+projName+"\"\r\n    " +
+                "xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibility/2006\"\r\n    " +
+                "Title=\"{DynamicResource "+pageName+"}\"\r\n    " +
+                "Width=\"700\"\r\n    " +
+                "Height=\"480\"\r\n    " +
+                "mc:Ignorable=\"d\">\r\n    " +
+                "<Window.Resources>\r\n        " +
+                "<ResourceDictionary>\r\n            " +
+                "<ResourceDictionary.MergedDictionaries>\r\n                " +
+                "<ResourceDictionary Source=\"/Creative.Plugin.Common;component/Themes/Generic.xaml\" />\r\n                " +
+                "<ResourceDictionary Source=\"/"+projName+";component/Resources/Strings.zh-CN.xaml\" />\r\n            " +
+                "</ResourceDictionary.MergedDictionaries>\r\n        " +
+                "</ResourceDictionary>\r\n    " +
+                "</Window.Resources>\r\n    " +
+                "<Grid>\r\n        " +
+                "<Grid.RowDefinitions>\r\n            " +
+                "<RowDefinition Height=\"Auto\" />\r\n            " +
+                "<RowDefinition Height=\"Auto\" />\r\n            " +
+                "<RowDefinition Height=\"Auto\" />\r\n            " +
+                "<RowDefinition Height=\"Auto\" />\r\n            " +
+                "<RowDefinition Height=\"Auto\" />\r\n            " +
+                "<RowDefinition Height=\"Auto\" />\r\n            " +
+                "<RowDefinition Height=\"Auto\" />\r\n            " +
+                "<RowDefinition Height=\"Auto\" />\r\n        " +
+                "</Grid.RowDefinitions>\r\n    " +
+                Extention +
+                "</Grid>\r\n" +
+                "</common:WindowPlugin>\r\n";
+            return s;
+        }
+
+        /// <summary>
+        /// 每层的border
+        /// </summary>
+        /// <param name="level"></param>
+        /// <param name="Extention"></param>
+        /// <returns></returns>
+        public string borderLevel(int level, string Extention)
+        {
+            string s = "<Border\r\n    " +
+                "Grid.Row=\""+level+"\"\r\n    " +
+                "Background=\"{DynamicResource PanelBrush}\">     \r\n" +
+                Extention +
+                "</Border>";
+            return s;
+        }
+
+        /// <summary>
+        /// 生成表格
+        /// </summary>
+        /// <param name="ItemsSource"></param>
+        /// <param name="SelectedItem"></param>
+        /// <param name="PageSize"></param>
+        /// <param name="TotalCount"></param>
+        /// <param name="PageIndex"></param>
+        /// <param name="grids">数据源</param>
+        /// <returns></returns>
+        public object DataGrid(string ItemsSource, string SelectedItem, string PageSize, string TotalCount, string PageIndex, List<Grid> grids, int i)
+        {
+            string grid = "<DataGridTemplateColumn>\r\n" +
+                            "<DataGridTemplateColumn.HeaderTemplate>\r\n" +
+                                "<DataTemplate>\r\n" +
+                                    "<CheckBox IsChecked=\"{Binding DataContext.IsSelectedAll, RelativeSource={RelativeSource AncestorType=common:PagePlugin, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}\"/>\r\n" +
+                                "</DataTemplate>\r\n" +
+                           "</DataGridTemplateColumn.HeaderTemplate>\r\n" +
+                            "<DataGridTemplateColumn.CellTemplate>\r\n" +
+                                "<DataTemplate>\r\n" +
+                                    "<CheckBox IsChecked=\"{Binding IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}\"/>\r\n" +
+                                "</DataTemplate>\r\n" +
+                            "</DataGridTemplateColumn.CellTemplate>\r\n" +
+                        "</DataGridTemplateColumn>\r\n";
+
+            for (; i < grids.Count; i++)
+            {
+                if (grids[i].CONTROL_NAME == "NEXT_LINE")
+                    break;
+                string tmp = "<DataGridTemplateColumn Width=\"150\" HeaderStyle=\"{DynamicResource DataGridColumnHeader_Center}\" CellStyle=\"{DynamicResource DataGridCell_Center}\">\r\n" +
+                            "<DataGridTemplateColumn.Header>\r\n" +
+                                "<TextBlock Text=\"{DynamicResource Grid_" + grids[i].CODE + "}\"/>\r\n" +
+                            "</DataGridTemplateColumn.Header>\r\n" +
+                            "<DataGridTemplateColumn.CellTemplate>\r\n" +
+                                "<DataTemplate>\r\n" +
+                                    "<TextBlock Text=\"{Binding " + grids[i].CODE + "}\"/>\r\n" +
+                                "</DataTemplate>\r\n" +
+                            "</DataGridTemplateColumn.CellTemplate>\r\n" +
+                        "</DataGridTemplateColumn>\r\n";
+                if (grids[i].CONTROL_NAME == "DATAGRID")
+                    grid += tmp;
+            }
+
+            string s = "<Grid  Margin=\"{DynamicResource ContainerPadding}\">\r\n                " +
+                "<Grid.RowDefinitions>\r\n                    " +
+                "<RowDefinition Height=\"*\"/>\r\n                    " +
+                "<RowDefinition Height=\"auto\"/>\r\n                " +
+                "</Grid.RowDefinitions>\r\n                    " +
+                "<DataGrid ItemsSource=\"{Binding "+ItemsSource+"}\" " +
+                "SelectedItem=\"{Binding "+SelectedItem+"}\">\r\n                        " +
+                "<DataGrid.Columns>\r\n                          \r\n                        " +
+                 grid +
+                "</DataGrid.Columns>\r\n                    " +
+                "</DataGrid>\r\n                " +
+                "<controls:DataPager\r\n                    " +
+                "Grid.Row=\"1\"\r\n                    " +
+                "PageSize=\"{Binding "+PageSize+", Mode=TwoWay}\"\r\n                    " +
+                "TotalCount=\"{Binding "+TotalCount+", Mode=TwoWay}\"\r\n                    " +
+                "PageIndex=\"{Binding "+PageIndex+", Mode=TwoWay}\" />\r\n            " +
+                "</Grid>";
+            return new
+            {
+                str = s,
+                count = i
+            };
+        }
+
+
+        /// <summary>
+        /// [新]生成项目文件内容
+        /// </summary>
+        public static string GetComplie_new(List<Grids> grids)
+        {
+            string s = "";
+            foreach (var ds in grids)
+            {
+                s += "<Compile Include=\"Views\\" + ds.PageCode + ".xaml.cs\">\r\n" +
+                        "<DependentUpon>" + ds.PageCode + ".xaml</DependentUpon>\r\n" +
+                        "<SubType>Code</SubType>" +
+                        "</Compile>\r\n" +
+                        "<Compile Include=\"ViewModels\\" + ds.PageCode + "VM.cs\" />\r\n";
+            }
+
+            return s;
+        }
+        /// <summary>
+        /// [新]生成项目文件内容
+        /// </summary>
+        public static string GetInclude_new(List<Grids> grids)
+        {
+            string s = "";
+            foreach (var ds in grids)
+            {
+                s += "<Page Include=\"Views\\" + ds.PageCode + ".xaml\">\r\n" +
+                "<SubType>Designer</SubType>\r\n" +
+                "<Generator>MSBuild:Compile</Generator>\r\n" +
+                "</Page>\r\n";
+            }
+            return s;
+        }
+
         #endregion
     }
 }

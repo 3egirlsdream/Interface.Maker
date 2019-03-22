@@ -50,7 +50,7 @@ namespace Project.G.Models
             {
                 string style = (ds == "刷新" || ds == "保存") ? "Style=\"{DynamicResource HighLightButtonStyle}\"" : "";
                 string tmp = "<Button Content=\"{DynamicResource " + command(ds, "") + "}\" " +
-                    "Margin=\"{DynamicResource BtnMargin}\" " +
+                    "Margin=\"20,10,-5,5\" " +
                     "Command=\"{Binding " + command(ds, "Cmd") + "}\" " +
                     "controls:ButtonHelper.IconContent=\"{DynamicResource " + command(ds, "Icon_") + "}\" " +
                     style +
@@ -61,6 +61,48 @@ namespace Project.G.Models
             return s;
         }
 
+        /// <summary>
+        /// [新]生成按钮的xaml代码
+        /// </summary>
+        /// <param name="btn"></param>
+        /// <returns></returns>
+        public static string CreateButton_new(string btn)
+        {
+            string s = "<WrapPanel>\r\n";
+
+            string style = (btn == "刷新" || btn == "保存") ? "Style=\"{DynamicResource HighLightButtonStyle}\"" : "";
+            string tmp = "<Button Content=\"{DynamicResource " + command(btn, "") + "}\" " +
+                "Margin=\"20,10,-5,5\" " +
+                "Command=\"{Binding " + command(btn, "Cmd") + "}\" " +
+                "controls:ButtonHelper.IconContent=\"{DynamicResource " + command(btn, "Icon_") + "}\" " +
+                style +
+                "/>\r\n";
+            s += tmp;
+
+            s += "</WrapPanel>";
+            return s;
+        }
+
+        /// <summary>
+        /// [新][定制]按钮的xaml代码
+        /// </summary>
+        /// <param name="btn"></param>
+        /// <returns></returns>
+        public static string CreateButton_Custom(string btn)
+        {
+            string s = "";
+
+            string style = (btn == "刷新" || btn == "保存") ? "Style=\"{DynamicResource HighLightButtonStyle}\"" : "";
+            string tmp = "<Button Content=\"{DynamicResource " + command(btn, "") + "}\" " +
+                "Margin=\"10,0,0,0\" " +
+                "Command=\"{Binding " + command(btn, "Cmd") + "}\" " +
+                "controls:ButtonHelper.IconContent=\"{DynamicResource " + command(btn, "Icon_") + "}\" " +
+                style +
+                "/>\r\n";
+            s += tmp;
+
+            return s;
+        }
 
     }
 }

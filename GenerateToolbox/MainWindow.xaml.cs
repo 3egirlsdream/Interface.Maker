@@ -32,6 +32,7 @@ namespace Project.G
         {
             InitializeComponent();
 
+
             #region 激活校验
             /*
              * 不启用激活校验

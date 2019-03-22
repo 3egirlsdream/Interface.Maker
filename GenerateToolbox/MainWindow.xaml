@@ -290,7 +290,7 @@
                                     Margin="10,0,0,0"
                                     HorizontalAlignment="Left"
                                     VerticalAlignment="Center"
-                                    Background="#2964AB"
+                                    Background="#404671"
                                     BorderThickness="0"
                                     Command="{Binding CmdOpen}"
                                     Content="执行"

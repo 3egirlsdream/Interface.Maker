@@ -19,6 +19,7 @@ namespace Project.G.ViewModel
         
         public MainView()
         {
+            Domain = Strings.LoadJson("a.txt");
             LoadCombox();
             ShareModel = Common.SetConfig("ShareModel");
             BoxNumber = 0;
@@ -413,33 +414,10 @@ namespace Project.G.ViewModel
                     + "{get{return _" + arrs[2] + ";}set{_" + arrs[2] + " = value;NotifyPropertyChanged(\"" + arrs[2] + "\");}";
             }
             sr = System.Text.RegularExpressions.Regex.Replace(sr, "[\r\n\t]", "");
-            SqlText = Xu.Common.Common.format(sr + '}');
+            SqlText = "/// <summary>\r\n///\r\n/// </summary>\r\n" + Xu.Common.Common.format(sr + '}');
         }
-
-        private string AddNotify_Click(string s)
-        {
-            List<string> arrs = new List<string>(s.Split(' '));
-
-            string sr = "";
-            if (arrs.Count == 1)
-            {
-                sr += "private string _" + arrs[0] + ";public string " + arrs[0]
-                    + "{get{return _" + arrs[0] + ";}set{_" + arrs[0] + " = value;NotifyPropertyChanged(\"" + arrs[0] + "\");}";
-            }
-            else if (arrs.Count == 2)
-            {
-                sr += "private " + arrs[0] + " _" + arrs[1] + ";public " + arrs[0] + " " + arrs[1]
-                    + "{get{return _" + arrs[1] + ";}set{_" + arrs[1] + " = value;NotifyPropertyChanged(\"" + arrs[1] + "\");}";
-            }
-            else if (arrs.Count > 2)
-            {
-                sr += "private " + arrs[1] + " _" + arrs[2] + ";"
-                    + arrs[0] + " " + arrs[1] + " " + arrs[2]
-                    + "{get{return _" + arrs[2] + ";}set{_" + arrs[2] + " = value;NotifyPropertyChanged(\"" + arrs[2] + "\");}";
-            }
-            sr = System.Text.RegularExpressions.Regex.Replace(sr, "[\r\n\t]", "");
-            return Xu.Common.Common.format(sr + '}');
-        }
+        
+        
 
         private void FormatJson()
         {
@@ -515,84 +493,7 @@ namespace Project.G.ViewModel
         }
 
 
-        /// <summary>
-        /// 生成command
-        /// </summary>
-        /// <param name="s">名字，Cmdxxx形式</param>
-        /// <param name="model">弹出框的数据，为了获取弹出框名 model.BOX_CODE</param>
-        /// <param name="excel">获取IndexPage的查询字段</param>
-        /// <returns></returns>
-        private string AddCommand(string s, MyModel model = null, Excel excel = null)
-        {
-            StringBuilder str = new StringBuilder("");
-            if(s == "CmdExport")
-            {
-                str.Append("//导出\r\n");
-                str.Append("public SimpleCommand " + s.Replace("\n", "") + " => new SimpleCommand(){ExecuteDelegate = x =>{" +
-                    "ExcelHelper.Export<Model>(DataSource, \""+ChineseName+"\");" +
-                    "},CanExecuteDelegate = o =>{return true;}};");
-            }
-            else if(s == "CmdImport")
-            {
-                str.Append("//导入\r\n");
-                str.Append("public SimpleCommand " + s.Replace("\n", "") + " => new SimpleCommand(){ExecuteDelegate = x =>{" +
-                    "plugin.Framework.OpenWindowPlugin(\""+ProjectName+".dll;"+ProjectName+".ImportPage\",\"\");" +
-                    "},CanExecuteDelegate = o =>{return true;}};");
-            }
-            else if(s == "CmdDelete")
-            {
-                str.Append("//删除选中的数据\r\n");
-                str.Append("public SimpleCommand " + s.Replace("\n", "") + " => new SimpleCommand(){ExecuteDelegate = x =>{" +
-                    "var list = DataSource.Where(e => e.IsChecked).Select(e => e.ID).ToList();" +
-                    "plugin.Framework.PostData(Services.url_delete, new" +
-                    "{" +
-                    "ids = list" +
-                    "});" +
-                    "},CanExecuteDelegate = o =>{return DataSource != null && DataSource.Where(e => e.IsChecked).Count() > 0;}};");
-            }
-            else if(s == "CmdAdd")
-            {
-                str.Append("//新增\r\n");
-                str.Append("public SimpleCommand " + s.Replace("\n", "") + " => new SimpleCommand(){ExecuteDelegate = x =>{" +
-                    "plugin.Framework.OpenWindowPlugin(\"" + ProjectName + ".dll;" + ProjectName + ".Add\",\"\");" +
-                    "},CanExecuteDelegate = o =>{return true;}};");
-            }
-            else if(s == "CmdRefresh")
-            {
-                str.Append("//刷新\r\n");
-                str.Append("public SimpleCommand " + s.Replace("\n", "") + " => new SimpleCommand(){ExecuteDelegate = x =>{LoadData();},CanExecuteDelegate = o =>{return true;}};");
-            }
-            else
-            {
-                string ss = "public SimpleCommand " + s.Replace("\n", "") + " => new SimpleCommand(){ExecuteDelegate = x =>{";
-                if(model != null)
-                {
-                    ss += "var res = plugin.Framework.OpenWindowPlugin(\"" + ProjectName + ".dll;" + ProjectName + "." + model.BOX_CODE + "\",\"\");" +
-                    "if(res.success){" +
-                    excel.SEARCH_CODE + " = res.data." + Reback(excel.SEARCH_CODE) + ";" +
-                    "}";
-                }
-                    ss += "},CanExecuteDelegate = o =>{return true;}};";
-                str.Append(ss);
-            }
-            
-            return Common.format(str.ToString());
-        }
-
-        private string Reback(string s)
-        {
-            string str = s[0].ToString();
-            for(int i = 1; i < s.Length - 1; i++)
-            {
-                str += s[i];
-                if (Char.IsUpper(s[i + 1]))
-                {
-                    str += "_";
-                }
-            }
-            str += s[s.Length - 1];
-            return str.ToUpper();
-        }
+        
 
         private void GenerateModel()
         {
@@ -885,7 +786,7 @@ namespace Project.G.ViewModel
                 Strings.Write(CreateClass.LoadModel(ProjectName), dir + "\\" + csproj + "\\Models\\ComboxModel.cs");
                 Strings.Write(Strings.GetIndexPage(csproj, Buttons.CreateButton(Buttones), Controls.CreateContents(IndexContents), Controls.CreateDataGrid(IndexBodies)), dir + "\\" + csproj + "\\Views\\IndexPage.xaml");//indexpage.xaml
                 Strings.Write(Strings.GetIndexXamlCs(csproj), dir + "\\" + csproj + "\\Views\\IndexPage.xaml.cs");//xaml.cs
-                Strings.Write(Strings.GetIndexVM(csproj, CreateWord(IndexContents) + CreateCommand(IndexContents, Buttones, boxes), Strings.CreateLoadData(IndexContents)), dir + "\\" + csproj + "\\ViewModels\\IndexPageVM.cs");//indexVM
+                Strings.Write(Strings.GetIndexVM(csproj, Controls.CreateWord(IndexContents) + CreateCommand(IndexContents, Buttones, boxes), Strings.CreateLoadData(IndexContents)), dir + "\\" + csproj + "\\ViewModels\\IndexPageVM.cs");//indexVM
 
                 string res = Strings.CreateGetallUrl(csproj, IndexContents, 1) + Strings.CreateDeleteUrl(csproj) + Strings.CreateUpdateUrl(csproj);
                 string Include = "";
@@ -895,7 +796,7 @@ namespace Project.G.ViewModel
                 {
                     Strings.Write(Strings.GetAddPageXaml(csproj, Controls.CreateAddContents(AddContents), "auto"), dir + "\\" + csproj + "\\Views\\Add.xaml");//Add.xaml
                     Strings.Write(Strings.GetAddPageXamlCs(csproj), dir + "\\" + csproj + "\\Views\\Add.xaml.cs");//xaml.cs
-                    Strings.Write(Strings.GetAddVM(csproj, CreateWord(AddContents) + CreateCommand(AddContents, new List<MyModel>() { }), Strings.PostData(AddContents), Strings.IsLegal(AddContents)), dir + "\\" + csproj + "\\ViewModels\\AddVM.cs");//AddVM
+                    Strings.Write(Strings.GetAddVM(csproj, Controls.CreateWord(AddContents) + CreateCommand(AddContents, new List<MyModel>() { }), Strings.PostData(AddContents), Strings.IsLegal(AddContents)), dir + "\\" + csproj + "\\ViewModels\\AddVM.cs");//AddVM
                     res += Strings.CreateAddUrl(csproj);
                     Include += GetAddInclude;
                     Complie += GetAddComplie;
@@ -905,7 +806,7 @@ namespace Project.G.ViewModel
                 {
                     Strings.Write(Strings.GetEditPageXaml(csproj, Controls.CreateAddContents(AddContents), "auto"), dir + "\\" + csproj + "\\Views\\Edit.xaml");//Edit.xaml
                     Strings.Write(Strings.GetEditPageXamlCs(csproj), dir + "\\" + csproj + "\\Views\\Edit.xaml.cs");//xaml.cs
-                    Strings.Write(Strings.GetEditVM(csproj, CreateWord(AddContents) + CreateCommand(AddContents, new List<MyModel>() { }), Strings.PostData(AddContents), Strings.IsLegal(AddContents), Strings.CreateEditLoadData(AddContents)), dir + "\\" + csproj + "\\ViewModels\\EditVM.cs");//AddVM
+                    Strings.Write(Strings.GetEditVM(csproj, Controls.CreateWord(AddContents) + CreateCommand(AddContents, new List<MyModel>() { }), Strings.PostData(AddContents), Strings.IsLegal(AddContents), Strings.CreateEditLoadData(AddContents)), dir + "\\" + csproj + "\\ViewModels\\EditVM.cs");//AddVM
                     res += Strings.CreateEditUrl(csproj);
                     Include += GetEditInclude;
                     Complie += GetEditComplie;
@@ -928,7 +829,7 @@ namespace Project.G.ViewModel
                     {
                         Strings.Write(Strings.GetBoxesXaml(csproj, ds.BOX_CODE, Controls.CreateDataGrid(ds.Body), ds.SEARCH_CODE), dir + "\\" + csproj + "\\Views\\"+ds.BOX_CODE+".xaml");//Add.xaml
                         Strings.Write(Strings.GetBoxesXamlCs(csproj, ds.BOX_CODE), dir + "\\" + csproj + "\\Views\\" + ds.BOX_CODE + ".xaml.cs");//xaml.cs
-                        Strings.Write(Strings.GetBoxesVM(csproj, ds.BOX_CODE, CreateWord(ds.Body), Strings.CreateBoxUrl(csproj, ds.BOX_CODE, ds.SEARCH_CODE)), dir + "\\" + csproj + "\\ViewModels\\" + ds.BOX_CODE + "VM.cs");//AddVM
+                        Strings.Write(Strings.GetBoxesVM(csproj, ds.BOX_CODE, Controls.CreateWord(ds.Body), Strings.CreateBoxUrl(csproj, ds.BOX_CODE, ds.SEARCH_CODE)), dir + "\\" + csproj + "\\ViewModels\\" + ds.BOX_CODE + "VM.cs");//AddVM
                     }
                     Include += GetInclude(boxes);
                     Complie += GetComplie(boxes);
@@ -1152,15 +1053,15 @@ namespace Project.G.ViewModel
                 if (Contents[i].CONTROL_CODE == "TextBox带弹出框")
                 {
                     if(models.Count > 0 && i < models.Count)
-                        s += "\t" + AddCommand(model.GetCmd(Contents[i].SEARCH_CODE), models[t++], Contents[i]) + "\r\n";
+                        s += "\t" + Controls.AddCommand(model.GetCmd(Contents[i].SEARCH_CODE), ChineseName, ProjectName ,models[t++], Contents[i]) + "\r\n";
                     else
-                        s += "\t" + AddCommand(model.GetCmd(Contents[i].SEARCH_CODE), null, Contents[i]) + "\r\n";
+                        s += "\t" + Controls.AddCommand(model.GetCmd(Contents[i].SEARCH_CODE), ChineseName, ProjectName, null, Contents[i]) + "\r\n";
                 }
             }
 
             foreach(var ds in btn)
             {
-                s += "\t" + AddCommand(model.GetCmd(Buttons.command(ds, ""))) + "\r\n";
+                s += "\t" + Controls.AddCommand(model.GetCmd(Buttons.command(ds, "")), ChineseName, ProjectName) + "\r\n";
             }
             return s + "#endregion\r\n";
         }
@@ -1179,42 +1080,16 @@ namespace Project.G.ViewModel
                 if (Contents[i].CONTROL_CODE == "TextBox带弹出框")
                 {
                     if (models.Count > 0)
-                        s += "\t" + AddCommand(model.GetCmd(Contents[i].SEARCH_CODE), models[t++], Contents[i]) + "\r\n";
+                        s += "\t" + Controls.AddCommand(model.GetCmd(Contents[i].SEARCH_CODE), ChineseName, ProjectName, models[t++], Contents[i]) + "\r\n";
                     else
-                        s += "\t" + AddCommand(model.GetCmd(Contents[i].SEARCH_CODE), null, Contents[i]) + "\r\n";
+                        s += "\t" + Controls.AddCommand(model.GetCmd(Contents[i].SEARCH_CODE), ChineseName, ProjectName, null, Contents[i]) + "\r\n";
                 }
             }
 
             return s + "#endregion\r\n";
         }
 
-        /// <summary>
-        /// 生成绑定字段
-        /// </summary>
-        /// <returns></returns>
-        private string CreateWord(List<Excel> Contents)
-        {
-            Model.Helper.ModelHelper model = new ModelHelper();
-            string s = "#region 字段\r\n\t";
-            foreach(var ds in Contents)
-            {
-                if(ds.CONTROL_CODE == "TextBox" || ds.CONTROL_CODE == "TextBox带弹出框" || ds.CONTROL_CODE == "DatePicker")
-                {
-                    s += "\t//" + ds.SEARCH_NAME + "\r\n\t";
-                    s += AddNotify_Click(ds.SEARCH_CODE) + "\r\n";
-                }
-
-                if(ds.CONTROL_CODE == "Combox")
-                {
-                    s += "\t//" + ds.SEARCH_NAME + "\r\n\t";
-                    s += AddNotify_Click("ObservableCollection<ComboxModel> " + ds.SEARCH_CODE) + "\r\n";
-                    s += AddNotify_Click("ComboxModel " + "Filter_" + ds.SEARCH_CODE) + "\r\n";
-                }
-            }
-            s += "#endregion\r\n";
-            return s;
-        }
-
+        
         /// <summary>
         /// 生成项目文件内容
         /// </summary>
@@ -1247,6 +1122,7 @@ namespace Project.G.ViewModel
             }
             return s;
         }
+
 
         #region 导入
         /// <summary>

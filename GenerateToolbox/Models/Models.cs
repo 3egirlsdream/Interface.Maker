@@ -38,11 +38,16 @@ namespace Project.G.Models
 
     public class Grids
     {
+        public int Level { get; set; }
+        public string Identity { get; set; }
+        public string PageName { get; set; }
+        public string PageCode { get; set; }
         public List<Grid> grids { get; set; }
         public List<string> strs { get; set; }
 
         public Grids()
         {
+            Level = 0;
             grids = new List<Grid>();
             strs = new List<string>();
         }
@@ -109,5 +114,14 @@ namespace Project.G.Models
     {
         public string GRID_CODE { get; set; }
         public string GRID_NAME { get; set; }
+    }
+
+    public class DataGrids
+    {
+        public string ItemsSource { get; set; }
+        public string SelectedItem { get; set; }
+        public string PageSize { get; set; }
+        public string TotalCount { get; set; }
+        public string PageIndex { get; set; }
     }
 }

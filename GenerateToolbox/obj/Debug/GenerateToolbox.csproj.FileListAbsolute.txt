@@ -39,3 +39,5 @@ D:\MyData\jiangxj.CN\source\生成器\GenerateToolbox\GenerateToolbox\obj\Debug\
 D:\MyData\jiangxj.CN\source\生成器\GenerateToolbox\GenerateToolbox\obj\Debug\GenerateToolbox.csproj.CopyComplete
 D:\MyData\jiangxj.CN\source\生成器\GenerateToolbox\GenerateToolbox\obj\Debug\ToolKit.exe
 D:\MyData\jiangxj.CN\source\生成器\GenerateToolbox\GenerateToolbox\obj\Debug\ToolKit.pdb
+D:\MyData\jiangxj.CN\source\生成器\GenerateToolbox\GenerateToolbox\obj\Debug\NewPage\NewPage.g.cs
+D:\MyData\jiangxj.CN\source\生成器\GenerateToolbox\GenerateToolbox\obj\Debug\NewPage\NewPage.baml
