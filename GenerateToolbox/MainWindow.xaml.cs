@@ -93,7 +93,7 @@ namespace Project.G
             }
         }
 
-        private void CloseWindow(object sender, MouseButtonEventArgs e)
+        private void CloseWindow(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
@@ -103,9 +103,18 @@ namespace Project.G
             page.Visibility = page.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
         }
 
-        private void MinWindow(object sender, MouseButtonEventArgs e)
+        private void MinWindow(object sender, RoutedEventArgs e)
         {
             this.WindowState = WindowState.Minimized;
+        }
+
+        private void MaxWindow(object sender, RoutedEventArgs e)
+        {
+            if (this.WindowState == WindowState.Normal)
+                this.WindowState = WindowState.Maximized;
+            else
+                this.WindowState = WindowState.Normal;
+            
         }
 
         private void Service_GotFocus(object sender, RoutedEventArgs e)
@@ -133,8 +142,15 @@ namespace Project.G
 
         private void Preview_GotFocus(object sender, RoutedEventArgs e)
         {
-            bd1.Background = GetColor("#659EB9");
-            bd2.Background = GetColor("#659EB9");
+            bd1.Background = GetColor("#4F4150");
+            bd2.Background = GetColor("#4F4150");
         }
+
+        private void CLOSE_MouseEnter(object sender, MouseEventArgs e)
+        {
+            CLOSE.Background = GetColor("#4F4150");
+        }
+
+       
     }
 }

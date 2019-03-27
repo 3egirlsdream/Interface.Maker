@@ -23,7 +23,7 @@ namespace Project.G.Models
                     continue;
                 string tmp = "";
                 if (!String.IsNullOrEmpty(ds.SEARCH_CODE) && !String.IsNullOrEmpty(ds.SEARCH_NAME))
-                    tmp += "<sys:String x:Key=\"" + ds.SEARCH_CODE + "_Watermark\">请输入" + ds.SEARCH_NAME + "</sys:String>\r\n";
+                    tmp += "    <sys:String x:Key=\"" + ds.SEARCH_CODE + "_Watermark\">请输入" + ds.SEARCH_NAME + "</sys:String>\r\n";
                 s += tmp;
                 str.Add(ds.SEARCH_CODE);
             }
@@ -35,7 +35,7 @@ namespace Project.G.Models
                     continue;
                 string tmp = "";
                 if (!String.IsNullOrEmpty(ds.SEARCH_CODE) && !String.IsNullOrEmpty(ds.SEARCH_NAME))
-                    tmp += "<sys:String x:Key=\"Grid_" + ds.SEARCH_CODE + "\">" + ds.SEARCH_NAME + "</sys:String>\r\n";
+                    tmp += "    <sys:String x:Key=\"Grid_" + ds.SEARCH_CODE + "\">" + ds.SEARCH_NAME + "</sys:String>\r\n";
                 s += tmp;
                 mark.Add(ds.SEARCH_CODE);
             }
@@ -79,7 +79,78 @@ namespace Project.G.Models
         }
 
 
+        #region 新版资源文件
+        /// <summary>
+        /// [新]资源文件拓展
+        /// </summary>
+        /// <returns></returns>
+        public static string CreateResorce_new(List<Key_Value> Contents)
+        {
+            string s = "";
+            List<string> str = new List<string>();
+            List<string> mark = new List<string>();
+            foreach (var ds in Contents)
+            {
+                if (str.Contains(ds.Key))
+                    continue;
+                string tmp = "";
+                if (!String.IsNullOrEmpty(ds.Key) && !String.IsNullOrEmpty(ds.Value))
+                    tmp += "    <sys:String x:Key=\"" + ds.Key + "_Watermark\">请输入" + ds.Value + "</sys:String>\r\n";
+                s += tmp;
+                str.Add(ds.Key);
+            }
 
+            foreach (var ds in Contents)
+            {
+                if (mark.Contains(ds.Key))
+                    continue;
+                string tmp = "";
+                if (!String.IsNullOrEmpty(ds.Key) && !String.IsNullOrEmpty(ds.Value))
+                    tmp += "    <sys:String x:Key=\"Grid_" + ds.Key + "\">" + ds.Value + "</sys:String>\r\n";
+                s += tmp;
+                mark.Add(ds.Key);
+            }
+
+            return s;
+        }
+
+        /// <summary>
+        /// [新]取所有资源文件key的参数
+        /// </summary>
+        /// <returns></returns>
+        public static List<Key_Value> AllRes_new(List<Grids> grids)
+        {
+            List<Key_Value> vs = new List<Key_Value>();
+            foreach (var marx in grids)
+            {
+                foreach(var ds in marx.grids)
+                {
+                    if(ds.CONTROL_NAME != "NEXT_LINE")
+                    {
+                        var key = new Key_Value
+                        {
+                            Key = ds.CODE,
+                            Value = ds.NAME
+                        };
+                        if (!CreateClass.Contains(vs, key))
+                        {
+                            vs.Add(key);
+                        }    
+                    }
+                }
+                var pageName = new Key_Value
+                {
+                    Key = marx.PageCode,
+                    Value = marx.PageName
+                };
+                if (!CreateClass.Contains(vs, pageName))
+                {
+                    vs.Add(pageName);
+                }
+            }
+            return vs;
+        }
+        #endregion
 
 
     }

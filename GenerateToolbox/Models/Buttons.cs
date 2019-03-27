@@ -94,7 +94,7 @@ namespace Project.G.Models
 
             string style = (btn == "刷新" || btn == "保存") ? "Style=\"{DynamicResource HighLightButtonStyle}\"" : "";
             string tmp = "<Button Content=\"{DynamicResource " + command(btn, "") + "}\" " +
-                "Margin=\"10,0,0,0\" " +
+                "Margin=\"0,0,0,0\" " +
                 "Command=\"{Binding " + command(btn, "Cmd") + "}\" " +
                 "controls:ButtonHelper.IconContent=\"{DynamicResource " + command(btn, "Icon_") + "}\" " +
                 style +

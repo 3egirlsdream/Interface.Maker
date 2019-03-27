@@ -256,6 +256,33 @@ namespace Project.G.Models
             return s;
         }
 
+        #region 新版生成vm字段
+        /// <summary>
+        /// [新]生成绑定字段
+        /// </summary>
+        /// <returns></returns>
+        public static string CreateWord_new(Grids Contents)
+        {
+            Model.Helper.ModelHelper model = new ModelHelper();
+            string s = "#region 字段\r\n\t";
+            foreach (var ds in Contents.grids)
+            {
+                if (ds.CONTROL_NAME == "TextBox" || ds.CONTROL_NAME == "TextBox带弹出框" || ds.CONTROL_NAME == "DatePicker")
+                {
+                    s += AddNotify_Click(ds.CODE, ds.NAME) + "\r\n";
+                }
+
+                if (ds.CONTROL_NAME == "Combox")
+                {
+                    //s += "\t//" + ds.NAME + "\r\n\t";
+                    s += AddNotify_Click("ObservableCollection<ComboxModel> " + ds.CODE, ds.NAME) + "\r\n";
+                    s += AddNotify_Click("ComboxModel " + "Filter_" + ds.CODE, ds.NAME) + "\r\n";
+                }
+            }
+            s += "#endregion\r\n";
+            return s;
+        }
+        #endregion
 
         #region 私有函数
 
@@ -375,7 +402,7 @@ namespace Project.G.Models
                     + "{get{return _" + arrs[2] + ";}set{_" + arrs[2] + " = value;NotifyPropertyChanged(\"" + arrs[2] + "\");}";
             }
             sr = System.Text.RegularExpressions.Regex.Replace(sr, "[\r\n\t]", "");
-            return "/// <summary>\r\n///" + name + "\r\n/// </summary>\r\n" + Xu.Common.Common.format(sr + '}');
+            return "/// <summary>\r\n/// " + name + "\r\n/// </summary>\r\n" + Xu.Common.Common.format(sr + '}');
         }
 
         /// <summary>

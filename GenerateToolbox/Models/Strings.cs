@@ -201,39 +201,38 @@ namespace Project.G.Models
                 "<ResourceDictionary\r\nxmlns=\"http://schemas.microsoft.com/winfx/2006/xaml/presentation\"\r\n" +
                 "xmlns:x=\"http://schemas.microsoft.com/winfx/2006/xaml\"\r\n" +
                 "xmlns:sys=\"clr-namespace:System;assembly=mscorlib\">\r\n" +
-                "<sys:String x:Key=\"Title\">"+ProjectName+"</sys:String>\r\n" +
-                "<sys:String x:Key=\"Title_Add\">新增</sys:String>\r\n" +
-                "<sys:String x:Key=\"Title_Edit\">编辑</sys:String>\r\n" +
-                "<sys:String x:Key=\"Title_Import\">导入</sys:String>\r\n" +
-                "<sys:String x:Key=\"ErrorMsg\">错误原因</sys:String>\r\n" +
-                "<sys:String x:Key=\"BillNo\">单据号</sys:String>\r\n" +
-                "<sys:String x:Key=\"Submit\">提交</sys:String>\r\n" +
-                "<sys:String x:Key=\"ModifiedBy\">修改人</sys:String>\r\n" +
-                "<sys:String x:Key=\"Export\">导出</sys:String>\r\n" +
-                "<sys:String x:Key=\"Refresh\">刷新</sys:String>\r\n" +
-                "<sys:String x:Key=\"Abort\">放弃</sys:String>\r\n" +
-                "<sys:String x:Key=\"DateEnd\">交易结束时间</sys:String>\r\n" +
-                "<sys:String x:Key=\"Processing\">处理中</sys:String>\r\n" +
-                "<sys:String x:Key=\"transDate\">事务日期</sys:String>\r\n" +
-                "<sys:String x:Key=\"Status\">状态</sys:String>\r\n" +
-                "<sys:String x:Key=\"To\">至</sys:String>\r\n" +
-                "<sys:String x:Key=\"Success\">成功</sys:String>\r\n" +
-                "<sys:String x:Key=\"Fail\">失败</sys:String>\r\n" +
-                "<sys:String x:Key=\"Waiting\">等待</sys:String>\r\n" +
-                "<sys:String x:Key=\"Save\">保存</sys:String>\r\n" +
-                "<sys:String x:Key=\"Cancel\">取消</sys:String>\r\n"+
-                "<sys:String x:Key=\"Print\">打印</sys:String>\r\n" +
-                "<sys:String x:Key=\"Import\">导入</sys:String>\r\n" +
-                "<sys:String x:Key=\"Create\">生成</sys:String>\r\n" +
-                "<sys:String x:Key=\"Edit\">编辑</sys:String>\r\n" +
-                "<sys:String x:Key=\"Add\">新增</sys:String>\r\n" +
-                "<sys:String x:Key=\"Delete\">删除</sys:String>\r\n" +
-                "<sys:String x:Key=\"Forbiden\">禁用</sys:String>\r\n" +
-                "<sys:String x:Key=\"SelectFile\">选择导入文件</sys:String>\r\n" +
-                "<sys:String x:Key=\"DownloadTemplate\">下载导入文件模板</sys:String>\r\n" +
-                "<sys:String x:Key=\"InvaliableColume\">不合法的列数</sys:String>\r\n" +
-                "<sys:String x:Key=\"Conditions\">查询条件</sys:String>\r\n" +
-                "<sys:String x:Key=\"QueryCriteria\">查询条件</sys:String>\r\n" +
+                "   <sys:String x:Key=\"Title\">"+ProjectName+"</sys:String>\r\n" +
+                "   <sys:String x:Key=\"Title_Add\">新增</sys:String>\r\n" +
+                "   <sys:String x:Key=\"Title_Edit\">编辑</sys:String>\r\n" +
+                "   <sys:String x:Key=\"Title_Import\">导入</sys:String>\r\n" +
+                "   <sys:String x:Key=\"ErrorMsg\">错误原因</sys:String>\r\n" +
+                "   <sys:String x:Key=\"Submit\">提交</sys:String>\r\n" +
+                "   <sys:String x:Key=\"ModifiedBy\">修改人</sys:String>\r\n" +
+                "   <sys:String x:Key=\"Export\">导出</sys:String>\r\n" +
+                "   <sys:String x:Key=\"Refresh\">刷新</sys:String>\r\n" +
+                "   <sys:String x:Key=\"Abort\">放弃</sys:String>\r\n" +
+                "   <sys:String x:Key=\"DateEnd\">交易结束时间</sys:String>\r\n" +
+                "   <sys:String x:Key=\"Processing\">处理中</sys:String>\r\n" +
+                "   <sys:String x:Key=\"transDate\">事务日期</sys:String>\r\n" +
+                "   <sys:String x:Key=\"Status\">状态</sys:String>\r\n" +
+                "   <sys:String x:Key=\"To\">至</sys:String>\r\n" +
+                "   <sys:String x:Key=\"Success\">成功</sys:String>\r\n" +
+                "   <sys:String x:Key=\"Fail\">失败</sys:String>\r\n" +
+                "   <sys:String x:Key=\"Waiting\">等待</sys:String>\r\n" +
+                "   <sys:String x:Key=\"Save\">保存</sys:String>\r\n" +
+                "   <sys:String x:Key=\"Cancel\">取消</sys:String>\r\n"+
+                "   <sys:String x:Key=\"Print\">打印</sys:String>\r\n" +
+                "   <sys:String x:Key=\"Import\">导入</sys:String>\r\n" +
+                "   <sys:String x:Key=\"Create\">生成</sys:String>\r\n" +
+                "   <sys:String x:Key=\"Edit\">编辑</sys:String>\r\n" +
+                "   <sys:String x:Key=\"Add\">新增</sys:String>\r\n" +
+                "   <sys:String x:Key=\"Delete\">删除</sys:String>\r\n" +
+                "   <sys:String x:Key=\"Forbiden\">禁用</sys:String>\r\n" +
+                "   <sys:String x:Key=\"SelectFile\">选择导入文件</sys:String>\r\n" +
+                "   <sys:String x:Key=\"DownloadTemplate\">下载导入文件模板</sys:String>\r\n" +
+                "   <sys:String x:Key=\"InvaliableColume\">不合法的列数</sys:String>\r\n" +
+                "   <sys:String x:Key=\"Conditions\">查询条件</sys:String>\r\n" +
+                "   <sys:String x:Key=\"QueryCriteria\">查询条件</sys:String>\r\n" +
                 "<!--自动生成-->\r\n" +
                 Extend +
                 "\r\n</ResourceDictionary>";
@@ -870,7 +869,7 @@ namespace Project.G.Models
         /// [新]导入VM
         /// </summary>
         /// <returns></returns>
-        public static string GetImprotVM_new(string ProjectName, List<Grid> import, string Xss, string EmptyCode, string RepeatCode, string Function, string CheckImportData)
+        public static string GetImprotVM_new(string ProjectName, List<Grid> import, string Words, string Xss, string EmptyCode, string RepeatCode, string Function, string CheckImportData)
         {
             string s = "using System;\r\n" +
                 "using System.Collections.Generic;\r\n" +
@@ -880,7 +879,10 @@ namespace Project.G.Models
                 "using MES.Plugin.Common;\r\nusing NPOI.XSSF.UserModel;\r\n\r\n" +
                 "namespace " + ProjectName + ".ViewModel\r\n{\r\n    " +
                 "public class ImportPageVM : WindowViewModelBase\r\n    {\r\n\r\n        " +
-                "public ImportPageVM(WindowPlugin plugin) : base(plugin)\r\n        {\r\n\r\n        }\r\n\r\n\r\n        private List<Model> _DataSource;\r\n        public List<Model> DataSource\r\n        {\r\n            get\r\n            {\r\n                return _DataSource;\r\n            }\r\n            set\r\n            {\r\n                _DataSource = value;\r\n                NotifyPropertyChanged(\"DataSource\");\r\n            }\r\n        }\r\n\r\n\r\n\r\n\r\n        /// <summary>\r\n        /// 下载模板\r\n        /// </summary>\r\n        public SimpleCommand CmdDownTemp => new SimpleCommand\r\n        {\r\n            ExecuteDelegate = (o) =>\r\n            {\r\n                DownTemp();\r\n            }\r\n        };\r\n\r\n        public SimpleCommand CmdImport => new SimpleCommand\r\n        {\r\n            ExecuteDelegate = (o) =>\r\n            {\r\n                Import();\r\n            }\r\n        };\r\n\r\n        public SimpleCommand CmdSave => new SimpleCommand\r\n        {\r\n            ExecuteDelegate = (o) =>\r\n            {\r\n                List<Model> models = new List<Model>();\r\n                foreach(var ds in DataSource)\r\n                {\r\n                    if (ds.IsChecked) models.Add(ds);\r\n                }\r\n                plugin.Framework.PostData(Services.url_add, new\r\n                {\r\n                    model = models\r\n                });\r\n                plugin.DialogResult = true;\r\n            },\r\n            CanExecuteDelegate = x =>\r\n            {\r\n                return DataSource != null;\r\n            }\r\n        };\r\n\r\n\r\n        public void DownTemp()\r\n        {\r\n            string fileName = string.Format(\"{0}{1}\",Translator.Get(\"Title\"), \".xlsx\");\r\n            string allPath = AppDomain.CurrentDomain.SetupInformation.ApplicationBase;\r\n            string path = allPath + \"\\\\Templates\\\\Import\\\\\" + fileName;\r\n            WebClient webClient = new WebClient();\r\n            SaveFileDialog dlg = new SaveFileDialog();\r\n            dlg.FileName = fileName;\r\n            if (dlg.ShowDialog() == true)\r\n            {\r\n                //获取要保存文件名的完整路径\r\n                string filename = dlg.FileName;\r\n                try\r\n                {\r\n                    webClient.DownloadFile(path, filename);\r\n                }\r\n                catch (Exception)\r\n                {\r\n                    throw;\r\n                }\r\n            }\r\n        }\r\n\r\n        " +
+                "public ImportPageVM(WindowPlugin plugin) : base(plugin)\r\n        {\r\n\r\n        }\r\n\r\n\r\n        " +
+                "/// <summary>\r\n        /// 主数据\r\n        /// </summary>\r\n        private List<Model> _DataSource;\r\n        public List<Model> DataSource\r\n        {\r\n            get\r\n            {\r\n                return _DataSource;\r\n            }\r\n            set\r\n            {\r\n                _DataSource = value;\r\n                NotifyPropertyChanged(\"DataSource\");\r\n            }\r\n        }\r\n\r\n\r\n\r\n\r\n        " +
+                Words +
+                "/// <summary>\r\n        /// 下载模板\r\n        /// </summary>\r\n        public SimpleCommand CmdDownTemp => new SimpleCommand\r\n        {\r\n            ExecuteDelegate = (o) =>\r\n            {\r\n                DownTemp();\r\n            }\r\n        };\r\n\r\n        public SimpleCommand CmdImport => new SimpleCommand\r\n        {\r\n            ExecuteDelegate = (o) =>\r\n            {\r\n                Import();\r\n            }\r\n        };\r\n\r\n        public SimpleCommand CmdSave => new SimpleCommand\r\n        {\r\n            ExecuteDelegate = (o) =>\r\n            {\r\n                List<Model> models = new List<Model>();\r\n                foreach(var ds in DataSource)\r\n                {\r\n                    if (ds.IsChecked) models.Add(ds);\r\n                }\r\n                plugin.Framework.PostData(Services.url_add, new\r\n                {\r\n                    model = models\r\n                });\r\n                plugin.DialogResult = true;\r\n            },\r\n            CanExecuteDelegate = x =>\r\n            {\r\n                return DataSource != null;\r\n            }\r\n        };\r\n\r\n\r\n        public void DownTemp()\r\n        {\r\n            string fileName = string.Format(\"{0}{1}\",Translator.Get(\"Title\"), \".xlsx\");\r\n            string allPath = AppDomain.CurrentDomain.SetupInformation.ApplicationBase;\r\n            string path = allPath + \"\\\\Templates\\\\Import\\\\\" + fileName;\r\n            WebClient webClient = new WebClient();\r\n            SaveFileDialog dlg = new SaveFileDialog();\r\n            dlg.FileName = fileName;\r\n            if (dlg.ShowDialog() == true)\r\n            {\r\n                //获取要保存文件名的完整路径\r\n                string filename = dlg.FileName;\r\n                try\r\n                {\r\n                    webClient.DownloadFile(path, filename);\r\n                }\r\n                catch (Exception)\r\n                {\r\n                    throw;\r\n                }\r\n            }\r\n        }\r\n\r\n        " +
                 "public void Import()\r\n        {\r\n            try\r\n            {\r\n                " +
                 "OpenFileDialog open = new OpenFileDialog();\r\n                " +
                 "open.Filter = \"Excel (*.XLSX)|*.xlsx|*.XLS|*.xls\";\r\n                " +
@@ -1406,6 +1408,61 @@ namespace Project.G.Models
                 "<Import Project=\"$(MSBuildToolsPath)\\Microsoft.CSharp.targets\" />\r\n" + Extend + "\r\n" +
                 "</Project>";
             return csproject;
+        }
+        /// <summary>
+        /// [新]通用弹出框
+        /// </summary>
+        /// <returns></returns>
+        public static string GetBoxesVM_new(string ProjectName, string BoxName, string Extend = "", string url = "")
+        {
+            string s = "using DAF.Plugin.Common;\r\n" +
+                "using MES.Plugin.Common;\r\nusing System;\r\n" +
+                "using System.Collections.Generic;\r\n" +
+                "using System.Collections.ObjectModel;\r\n" +
+                "using System.Data;\r\nu" +
+                "sing System.Linq;\r\n" +
+                "using System.Text;\r\n" +
+                "using System.Threading.Tasks;\r\n\r\n" +
+                "namespace " + ProjectName + ".ViewModels\r\n{\r\n    " +
+                "class " + BoxName + "VM : WindowViewModelBase\r\n    {\r\n        " +
+                "public " + BoxName + "VM(IWindowPlugin plugin) : base(plugin)\r\n        {\r\n            " +
+                "LoadData();\r\n        }\r\n\r\n        " +
+                "#region 分页\r\n\r\n        private int _pageIndex = 1;\r\n        " +
+                "public int PageIndex\r\n        {\r\n            get { return _pageIndex; }\r\n            " +
+                "set\r\n            {\r\n                if (_pageIndex != value)\r\n                " +
+                "{\r\n                    _pageIndex = value;\r\n                    " +
+                "NotifyPropertyChanged(\"PageIndex\");\r\n                    " +
+                "LoadData();\r\n                }\r\n            }\r\n        }\r\n\r\n        " +
+                "private int _pageSize = 20;\r\n        public int PageSize\r\n        {\r\n            " +
+                "get { return _pageSize; }\r\n            set\r\n            {\r\n                " +
+                "_pageSize = value;\r\n                NotifyPropertyChanged(\"PageSize\");\r\n                " +
+                "LoadData();\r\n            }\r\n        }\r\n\r\n\r\n        private int _totalCount;\r\n        " +
+                "public int TotalCount\r\n        {\r\n            get { return _totalCount; }\r\n            " +
+                "set\r\n            {\r\n                if (_totalCount != value)\r\n                {\r\n                    " +
+                "_totalCount = value;\r\n                    NotifyPropertyChanged(\"TotalCount\");\r\n                " +
+                "}\r\n            }\r\n        }\r\n\r\n        #endregion\r\n\r\n        " +
+                "/// <summary>\r\n        /// 主数据\r\n        /// </summary>\r\n        private List<Model> _DataSource;\r\n        public List<Model> DataSource\r\n        " +
+                "{\r\n            get\r\n            {\r\n                return _DataSource;\r\n            " +
+                "}\r\n            set\r\n            {\r\n                _DataSource = value;\r\n                " +
+                "NotifyPropertyChanged(\"DataSource\");\r\n            }\r\n        }\r\n        \r\n        " +
+                "/// <summary>\r\n        /// 选中行\r\n        /// </summary>\r\n        private Model _SelectedRow;\r\n        public Model SelectedRow\r\n        {\r\n            " +
+                "get\r\n            {\r\n                return _SelectedRow;\r\n            }\r\n            " +
+                "set\r\n            {\r\n                _SelectedRow = value;\r\n                " +
+                "NotifyPropertyChanged(\"SelectedRow\");\r\n            }\r\n        }\r\n        \r\n        " +
+                "private string _Text;\r\n        public string Text\r\n        {\r\n            " +
+                "get { return _Text; }\r\n            set\r\n            {\r\n                " +
+                "_Text = value;\r\n                NotifyPropertyChanged(\"Text\");\r\n            " +
+                "}\r\n        }\r\n\r\n" +
+                Extend +
+                "        #region Command\r\n        " +
+                "public SimpleCommand CmdSearch => new SimpleCommand\r\n        {\r\n            " +
+                "ExecuteDelegate = x =>\r\n            {\r\n                LoadData();\r\n            },\r\n            " +
+                "CanExecuteDelegate = x =>\r\n            {\r\n                return true;\r\n            }\r\n        };\r\n        \r\n        public SimpleCommand CmdSave => new SimpleCommand()\r\n        {\r\n            ExecuteDelegate = x => {\r\n                this.plugin.Data = SelectedRow;\r\n            },\r\n            CanExecuteDelegate = o => {\r\n                return SelectedRow != null;\r\n            }\r\n        };\r\n        #endregion\r\n\r\n        #region 方法\r\n        " +
+                "private void LoadData()\r\n        " +
+                "{\r\n\r\n        " +
+                 url +
+                "}\r\n        #endregion\r\n    }\r\n}\r\n";
+            return s;
         }
 
         #endregion

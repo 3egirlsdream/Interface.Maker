@@ -70,6 +70,9 @@ namespace Project.G.Models
 
     public class Key_Value
     {
+        public string Key { get; set; }
+        public string Value { get; set; }
+        //兼容旧的
         public string label { get; set; }
         public int value { get; set; }
         public override string ToString()

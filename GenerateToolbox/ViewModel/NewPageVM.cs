@@ -16,12 +16,14 @@ namespace GenerateToolbox.ViewModel
         public NewPageVM()
         {
             LoadConfig();
+            EndOfMonth = DateTime.DaysInMonth(DateTime.Today.Year, DateTime.Today.Month);
+            BorderWidth = DateTime.Today.Day * (600 / EndOfMonth);
         }
 
         #region
 
-        private List<string> btns { get; set; }
-        string dir = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
+        readonly string dir = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
+        readonly string reset = "<root>\r\n    <page>\r\n        <count>1</count>\r\n    </page>\r\n    <project>\r\n        <name>\r\n            <en>Server</en>\r\n            <zh>服务</zh>\r\n        </name>\r\n        <path>\r\n            <sharemodel>E:\\MyData\\jiangxj.CN\\source\\CATL\\Service\\SharedModels</sharemodel>\r\n        </path>\r\n    </project>\r\n    <datagrid>\r\n        <ItemsSource>DataSource</ItemsSource>\r\n        <SelectedItem>SelectedRow</SelectedItem>\r\n        <PageSize>PageSize</PageSize>\r\n        <TotalCount>TotalCount</TotalCount>\r\n        <PageIndex>PageIndex</PageIndex>\r\n    </datagrid>\r\n    <datagrid>\r\n        <ItemsSource>DataSource2</ItemsSource>\r\n        <SelectedItem>SelectedRow2</SelectedItem>\r\n        <PageSize>PageSize2</PageSize>\r\n        <TotalCount>TotalCount2</TotalCount>\r\n        <PageIndex>PageIndex2</PageIndex>\r\n    </datagrid>\r\n    <datagrid>\r\n        <ItemsSource>DataSource3</ItemsSource>\r\n        <SelectedItem>SelectedRow3</SelectedItem>\r\n        <PageSize>PageSize3</PageSize>\r\n        <TotalCount>TotalCount3</TotalCount>\r\n        <PageIndex>PageIndex3</PageIndex>\r\n    </datagrid>\r\n</root>";
         /// <summary>
         /// 配置文件
         /// </summary>
@@ -36,6 +38,40 @@ namespace GenerateToolbox.ViewModel
             {
                 _config = value;
                 NotifyPropertyChanged("config");
+            }
+        }
+
+        /// <summary>
+        /// 长度
+        /// </summary>
+        private int _BorderWidth;
+        public int BorderWidth
+        {
+            get
+            {
+                return _BorderWidth;
+            }
+            set
+            {
+                _BorderWidth = value;
+                NotifyPropertyChanged("BorderWidth");
+            }
+        }
+
+        /// <summary>
+        /// 月末
+        /// </summary>
+        private int _EndOfMonth;
+        public int EndOfMonth
+        {
+            get
+            {
+                return _EndOfMonth;
+            }
+            set
+            {
+                _EndOfMonth = value;
+                NotifyPropertyChanged("EndOfMonth");
             }
         }
         #endregion
@@ -64,35 +100,35 @@ namespace GenerateToolbox.ViewModel
                                 {
                                     Strings.Write(excels[i], dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml");
                                     Strings.Write(Strings.GetIndexXamlCs(res.en), dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml.cs");
-                                    Strings.Write(Strings.GetIndexVM(res.en, "", ""), dir + "\\" + res.en + "\\ViewModels\\" + result[i].PageCode + "VM.cs");
+                                    Strings.Write(Strings.GetIndexVM(res.en, Controls.CreateWord_new(result[i]), ""), dir + "\\" + res.en + "\\ViewModels\\" + result[i].PageCode + "VM.cs");
                                 }
                                 break;
                             case "新增":
                                 {
                                     Strings.Write(excels[i], dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml");
                                     Strings.Write(Strings.GetAddPageXamlCs(res.en), dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml.cs");
-                                    Strings.Write(Strings.GetAddVM(res.en, "", ""), dir + "\\" + res.en + "\\ViewModels\\" + result[i].PageCode + "VM.cs");
+                                    Strings.Write(Strings.GetAddVM(res.en, Controls.CreateWord_new(result[i]), ""), dir + "\\" + res.en + "\\ViewModels\\" + result[i].PageCode + "VM.cs");
                                 }
                                 break;
                             case "编辑":
                                 {
                                     Strings.Write(excels[i], dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml");
                                     Strings.Write(Strings.GetEditPageXamlCs(res.en), dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml.cs");
-                                    Strings.Write(Strings.GetEditVM(res.en, "", ""), dir + "\\" + res.en + "\\ViewModels\\" + result[i].PageCode + "VM.cs");
+                                    Strings.Write(Strings.GetEditVM(res.en, Controls.CreateWord_new(result[i]), ""), dir + "\\" + res.en + "\\ViewModels\\" + result[i].PageCode + "VM.cs");
                                 }
                                 break;
                             case "导入":
                                 {
                                     Strings.Write(excels[i], dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml");
                                     Strings.Write(Strings.GetImportXamlCs(res.en), dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml.cs");
-                                    Strings.Write(Strings.GetImprotVM_new(res.en, result[i].grids, "", "", "", "", ""), dir + "\\" + res.en + "\\ViewModels\\" + result[i].PageCode + "VM.cs");
+                                    Strings.Write(Strings.GetImprotVM_new(res.en, result[i].grids, Controls.CreateWord_new(result[i]) , "", "", "", "", ""), dir + "\\" + res.en + "\\ViewModels\\" + result[i].PageCode + "VM.cs");
                                 }
                                 break;
                             default:
                                 {
                                     Strings.Write(excels[i], dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml");
                                     Strings.Write(Strings.GetBoxesXamlCs(res.en, result[i].PageCode), dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml.cs");
-                                    Strings.Write(Strings.GetBoxesVM(res.en, result[i].PageCode), dir + "\\" + res.en + "\\ViewModels\\" + result[i].PageCode + "VM.cs");
+                                    Strings.Write(Strings.GetBoxesVM_new(res.en, result[i].PageCode, Controls.CreateWord_new(result[i])), dir + "\\" + res.en + "\\ViewModels\\" + result[i].PageCode + "VM.cs");
                                 }
                                 break;
                         }
@@ -105,15 +141,28 @@ namespace GenerateToolbox.ViewModel
                     string Complie = Strings.GetComplie_new(result);
 
                     Strings.Write(Strings.GetCsproj_new(res.en, Complie, Include), dir + "\\" + res.en + "\\" + res.en + ".csproj");
-
-
+                    
                     Strings.Write(Strings.GetServices(res.en), dir + "\\" + res.en + "\\Services.cs");
+                    //两个model
+                    Strings.Write(CreateClass.LoadModel_new(result, res.en), dir + "\\" + res.en + "\\Models\\Model.cs");
+                    Strings.Write(CreateClass.LoadModel(res.en), dir + "\\" + res.en + "\\Models\\ComboxModel.cs");
+
+                    //Resource文件
+                    Strings.Write(Strings.GetResource(res.en, Resources.CreateResorce_new(Resources.AllRes_new(result))), dir + "\\" + res.en + "\\Resources\\Strings.zh-CN.xaml");//资源文件
                 }
                 catch (Exception ex)
                 {
                     Warning warning = new Warning(ex.Message);
                     warning.ShowDialog();
                 }
+            }
+        };
+
+        public SimpleCommand CmdReset => new SimpleCommand()
+        {
+            ExecuteDelegate = x =>
+            {
+                config = reset;
             }
         };
         #endregion
