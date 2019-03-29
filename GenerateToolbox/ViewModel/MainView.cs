@@ -19,7 +19,7 @@ namespace Project.G.ViewModel
         
         public MainView()
         {
-            Domain = Strings.LoadJson("a.txt");
+            //Domain = Strings.LoadJson("a.txt");
             LoadCombox();
             ShareModel = Common.SetConfig("ShareModel");
             BoxNumber = 0;
