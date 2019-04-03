@@ -1053,15 +1053,15 @@ namespace Project.G.ViewModel
                 if (Contents[i].CONTROL_CODE == "TextBox带弹出框")
                 {
                     if(models.Count > 0 && i < models.Count)
-                        s += "\t" + Controls.AddCommand(model.GetCmd(Contents[i].SEARCH_CODE), ChineseName, ProjectName ,models[t++], Contents[i]) + "\r\n";
+                        s += "\t" + Controls.AddCommand(model.GetCmd(Contents[i].SEARCH_CODE), ProjectName ,models[t++], Contents[i]) + "\r\n";
                     else
-                        s += "\t" + Controls.AddCommand(model.GetCmd(Contents[i].SEARCH_CODE), ChineseName, ProjectName, null, Contents[i]) + "\r\n";
+                        s += "\t" + Controls.AddCommand(model.GetCmd(Contents[i].SEARCH_CODE), ProjectName, null, Contents[i]) + "\r\n";
                 }
             }
 
             foreach(var ds in btn)
             {
-                s += "\t" + Controls.AddCommand(model.GetCmd(Buttons.command(ds, "")), ChineseName, ProjectName) + "\r\n";
+                s += "\t" + Controls.AddCommand(model.GetCmd(Buttons.command(ds, "")), ProjectName) + "\r\n";
             }
             return s + "#endregion\r\n";
         }
@@ -1080,9 +1080,9 @@ namespace Project.G.ViewModel
                 if (Contents[i].CONTROL_CODE == "TextBox带弹出框")
                 {
                     if (models.Count > 0)
-                        s += "\t" + Controls.AddCommand(model.GetCmd(Contents[i].SEARCH_CODE), ChineseName, ProjectName, models[t++], Contents[i]) + "\r\n";
+                        s += "\t" + Controls.AddCommand(model.GetCmd(Contents[i].SEARCH_CODE), ProjectName, models[t++], Contents[i]) + "\r\n";
                     else
-                        s += "\t" + Controls.AddCommand(model.GetCmd(Contents[i].SEARCH_CODE), ChineseName, ProjectName, null, Contents[i]) + "\r\n";
+                        s += "\t" + Controls.AddCommand(model.GetCmd(Contents[i].SEARCH_CODE), ProjectName, null, Contents[i]) + "\r\n";
                 }
             }
 

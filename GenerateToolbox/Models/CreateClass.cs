@@ -61,7 +61,7 @@ namespace Project.G.Models
             foreach (var marx in vs)
             {
                 string model = "";
-                model += "//[Excel(Width =5000, Title =\"" + marx.Value + "\")]\r\n";
+                model += "        //[Excel(Width =5000, Title =\"" + marx.Value + "\")]\r\n";
                 model += "        public string " + marx.Key.ToUpper() + " {get;set;}";
                 s += model;
             }
@@ -98,7 +98,7 @@ namespace Project.G.Models
 
         public static bool Contains(List<Key_Value> vs, Key_Value key)
         {
-            var cot = vs.Where(e => e.Key == key.Key && e.Value == key.Value).Count();
+            var cot = vs.Where(e => e.Key == key.Key).Count();
             return cot > 0 ? true : false;
         }
         

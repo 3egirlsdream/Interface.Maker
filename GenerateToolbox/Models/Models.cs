@@ -126,5 +126,6 @@ namespace Project.G.Models
         public string PageSize { get; set; }
         public string TotalCount { get; set; }
         public string PageIndex { get; set; }
+        public string IsSelectedAll { get; set; }
     }
 }

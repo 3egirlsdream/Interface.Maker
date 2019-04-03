@@ -89,6 +89,7 @@ namespace Project.G.Models
             string s = "";
             List<string> str = new List<string>();
             List<string> mark = new List<string>();
+            List<string> mark2 = new List<string>();
             foreach (var ds in Contents)
             {
                 if (str.Contains(ds.Key))
@@ -109,6 +110,16 @@ namespace Project.G.Models
                     tmp += "    <sys:String x:Key=\"Grid_" + ds.Key + "\">" + ds.Value + "</sys:String>\r\n";
                 s += tmp;
                 mark.Add(ds.Key);
+            }
+            foreach (var ds in Contents)
+            {
+                if (mark2.Contains(ds.Key))
+                    continue;
+                string tmp = "";
+                if (!String.IsNullOrEmpty(ds.Key) && !String.IsNullOrEmpty(ds.Value))
+                    tmp += "    <sys:String x:Key=\"" + ds.Key + "\">" + ds.Value + "</sys:String>\r\n";
+                s += tmp;
+                mark2.Add(ds.Key);
             }
 
             return s;

@@ -23,7 +23,7 @@ namespace GenerateToolbox.ViewModel
         #region
 
         readonly string dir = Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory);
-        readonly string reset = "<root>\r\n    <page>\r\n        <count>1</count>\r\n    </page>\r\n    <project>\r\n        <name>\r\n            <en>Server</en>\r\n            <zh>服务</zh>\r\n        </name>\r\n        <path>\r\n            <sharemodel>E:\\MyData\\jiangxj.CN\\source\\CATL\\Service\\SharedModels</sharemodel>\r\n        </path>\r\n    </project>\r\n    <datagrid>\r\n        <ItemsSource>DataSource</ItemsSource>\r\n        <SelectedItem>SelectedRow</SelectedItem>\r\n        <PageSize>PageSize</PageSize>\r\n        <TotalCount>TotalCount</TotalCount>\r\n        <PageIndex>PageIndex</PageIndex>\r\n    </datagrid>\r\n    <datagrid>\r\n        <ItemsSource>DataSource2</ItemsSource>\r\n        <SelectedItem>SelectedRow2</SelectedItem>\r\n        <PageSize>PageSize2</PageSize>\r\n        <TotalCount>TotalCount2</TotalCount>\r\n        <PageIndex>PageIndex2</PageIndex>\r\n    </datagrid>\r\n    <datagrid>\r\n        <ItemsSource>DataSource3</ItemsSource>\r\n        <SelectedItem>SelectedRow3</SelectedItem>\r\n        <PageSize>PageSize3</PageSize>\r\n        <TotalCount>TotalCount3</TotalCount>\r\n        <PageIndex>PageIndex3</PageIndex>\r\n    </datagrid>\r\n</root>";
+        readonly string reset = "<root>\r\n    <page>\r\n        <count>1</count>\r\n    </page>\r\n    <project>\r\n        <name>\r\n            <en>Server</en>\r\n            <zh>服务</zh>\r\n        </name>\r\n        <path>\r\n            <sharemodel>E:\\MyData\\jiangxj.CN\\source\\CATL\\Service\\SharedModels</sharemodel>\r\n        </path>\r\n    </project>\r\n    <datagrid>\r\n        <ItemsSource>DataSource</ItemsSource>\r\n        <SelectedItem>SelectedRow</SelectedItem>\r\n        <PageSize>PageSize</PageSize>\r\n        <TotalCount>TotalCount</TotalCount>\r\n        <PageIndex>PageIndex</PageIndex>\r\n        <IsSelectedAll>IsSelectedAll</IsSelectedAll>\r\n    </datagrid>\r\n    <datagrid>\r\n        <ItemsSource>DataSource2</ItemsSource>\r\n        <SelectedItem>SelectedRow2</SelectedItem>\r\n        <PageSize>PageSize2</PageSize>\r\n        <TotalCount>TotalCount2</TotalCount>\r\n        <PageIndex>PageIndex2</PageIndex>\r\n        <IsSelectedAll>IsSelectedAll2</IsSelectedAll>\r\n    </datagrid>\r\n    <datagrid>\r\n        <ItemsSource>DataSource3</ItemsSource>\r\n        <SelectedItem>SelectedRow3</SelectedItem>\r\n        <PageSize>PageSize3</PageSize>\r\n        <TotalCount>TotalCount3</TotalCount>\r\n        <PageIndex>PageIndex3</PageIndex>\r\n        <IsSelectedAll>IsSelectedAll3</IsSelectedAll>\r\n    </datagrid>\r\n</root>";
         /// <summary>
         /// 配置文件
         /// </summary>
@@ -91,44 +91,46 @@ namespace GenerateToolbox.ViewModel
                     CreateFile(res.en);
                     ExcelHelper helper = new ExcelHelper();
                     var result = helper.OpenExcel((int)res.count);
-                    List<string> excels = assemblyPage(res.en, result, res.datas);
+                    dynamic foo = assemblyPage(res.en, result, res.datas);
+                    List<string> excels = foo.vs;
                     for (int i = 0; i < result.Count; i++)
                     {
+                        List<DataGrids> datas = res.datas;
                         switch (result[i].Identity)
                         {
                             case "主页":
                                 {
                                     Strings.Write(excels[i], dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml");
                                     Strings.Write(Strings.GetIndexXamlCs(res.en), dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml.cs");
-                                    Strings.Write(Strings.GetIndexVM(res.en, Controls.CreateWord_new(result[i]), ""), dir + "\\" + res.en + "\\ViewModels\\" + result[i].PageCode + "VM.cs");
+                                    Strings.Write(Strings.GetIndexVM_new(res.en, Controls.GetDataGridBinding(datas.Take((int)foo.ids[i]).ToList()) + Controls.CreateWord_new(result[i]) + Strings.CreateCommand_new(result[i], res.en), ""), dir + "\\" + res.en + "\\ViewModels\\" + result[i].PageCode + "VM.cs");
                                 }
                                 break;
                             case "新增":
                                 {
                                     Strings.Write(excels[i], dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml");
                                     Strings.Write(Strings.GetAddPageXamlCs(res.en), dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml.cs");
-                                    Strings.Write(Strings.GetAddVM(res.en, Controls.CreateWord_new(result[i]), ""), dir + "\\" + res.en + "\\ViewModels\\" + result[i].PageCode + "VM.cs");
+                                    Strings.Write(Strings.GetAddVM(res.en, Controls.GetDataGridBinding(datas.Take((int)foo.ids[i]).ToList()) + Controls.CreateWord_new(result[i]), "") + Strings.CreateCommand_new(result[i], res.en), dir + "\\" + res.en + "\\ViewModels\\" + result[i].PageCode + "VM.cs");
                                 }
                                 break;
                             case "编辑":
                                 {
                                     Strings.Write(excels[i], dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml");
                                     Strings.Write(Strings.GetEditPageXamlCs(res.en), dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml.cs");
-                                    Strings.Write(Strings.GetEditVM(res.en, Controls.CreateWord_new(result[i]), ""), dir + "\\" + res.en + "\\ViewModels\\" + result[i].PageCode + "VM.cs");
+                                    Strings.Write(Strings.GetEditVM(res.en, Controls.GetDataGridBinding(datas.Take((int)foo.ids[i]).ToList()) + Controls.CreateWord_new(result[i]), "") + Strings.CreateCommand_new(result[i], res.en), dir + "\\" + res.en + "\\ViewModels\\" + result[i].PageCode + "VM.cs");
                                 }
                                 break;
                             case "导入":
                                 {
                                     Strings.Write(excels[i], dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml");
                                     Strings.Write(Strings.GetImportXamlCs(res.en), dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml.cs");
-                                    Strings.Write(Strings.GetImprotVM_new(res.en, result[i].grids, Controls.CreateWord_new(result[i]) , "", "", "", "", ""), dir + "\\" + res.en + "\\ViewModels\\" + result[i].PageCode + "VM.cs");
+                                    Strings.Write(Strings.GetImprotVM_new(res.en, result[i].grids, Controls.GetDataGridBinding(datas.Take((int)foo.ids[i]).ToList()) + Controls.CreateWord_new(result[i]) + Strings.CreateCommand_new(result[i], res.en), Import.CreateXss_new(result[i]), Import.CreateNull_new(result[i]), Import.CreateRepeat_new(result[i]), Import.CreateRepeatFunction_new(result[i]), Import.CheckImportData_new(result[i])), dir + "\\" + res.en + "\\ViewModels\\" + result[i].PageCode + "VM.cs");
                                 }
                                 break;
                             default:
                                 {
                                     Strings.Write(excels[i], dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml");
                                     Strings.Write(Strings.GetBoxesXamlCs(res.en, result[i].PageCode), dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml.cs");
-                                    Strings.Write(Strings.GetBoxesVM_new(res.en, result[i].PageCode, Controls.CreateWord_new(result[i])), dir + "\\" + res.en + "\\ViewModels\\" + result[i].PageCode + "VM.cs");
+                                    Strings.Write(Strings.GetBoxesVM_new(res.en, result[i].PageCode, Controls.GetDataGridBinding(datas.Take((int)foo.ids[i]).ToList()) + Controls.CreateWord_new(result[i])) + Strings.CreateCommand_new(result[i], res.en), dir + "\\" + res.en + "\\ViewModels\\" + result[i].PageCode + "VM.cs");
                                 }
                                 break;
                         }
@@ -177,9 +179,11 @@ namespace GenerateToolbox.ViewModel
         }
 
 
-        public List<string> assemblyPage(string projName, List<Grids> grids, List<DataGrids> datas)
+        public object assemblyPage(string projName, List<Grids> grids, List<DataGrids> datas)
         {
             List<string> vs = new List<string>();
+            int[] ids = new int[10];
+            int count = 0;
             foreach (var ds in grids)
             {
                 int t = 0;
@@ -205,7 +209,7 @@ namespace GenerateToolbox.ViewModel
                     }
                     else if (rs.CONTROL_NAME == "DATAGRID")
                     {
-                        dynamic res = strings.DataGrid(datas[ts].ItemsSource, datas[ts].SelectedItem, datas[ts].PageSize, datas[ts].TotalCount, datas[ts].PageIndex, ds.grids, j);
+                        dynamic res = strings.DataGrid(datas[ts].ItemsSource, datas[ts].SelectedItem, datas[ts].PageSize, datas[ts].TotalCount, datas[ts].PageIndex, datas[ts].IsSelectedAll, ds.grids, j);
                         ts++;
                         tmp += res.str;
                         j = res.count - 1;
@@ -218,7 +222,7 @@ namespace GenerateToolbox.ViewModel
                     }
                     
                 }
-
+                ids[count++] = ts;
 
                 string xamlCode = "";
                 if(ds.Identity == "主页")
@@ -228,7 +232,11 @@ namespace GenerateToolbox.ViewModel
                 //Strings.Write(xamlCode, dir + "\\" + projName + "\\Views\\IndexPage.xaml");
                 vs.Add(xamlCode);
             }
-            return vs;
+            return new
+            {
+                vs,
+                ids
+            };
         }
 
 

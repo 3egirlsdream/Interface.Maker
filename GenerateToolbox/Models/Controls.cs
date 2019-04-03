@@ -412,26 +412,26 @@ namespace Project.G.Models
         /// <param name="model">弹出框的数据，为了获取弹出框名 model.BOX_CODE</param>
         /// <param name="excel">获取IndexPage的查询字段</param>
         /// <returns></returns>
-        public static string AddCommand(string s, string ChineseName, string ProjectName, MyModel model = null, Excel excel = null)
+        public static string AddCommand(string s, string ProjectName, MyModel model = null, Excel excel = null)
         {
             StringBuilder str = new StringBuilder("");
             if (s == "CmdExport")
             {
-                str.Append("/// <summary>\r\n///导出\r\n/// </summary>\r\n");
+                str.Append("/// <summary>\r\n/// 导出\r\n/// </summary>\r\n");
                 str.Append("public SimpleCommand " + s.Replace("\n", "") + " => new SimpleCommand(){ExecuteDelegate = x =>{" +
-                    "ExcelHelper.Export<Model>(DataSource, \"" + ChineseName + "\");" +
+                    "ExcelHelper.Export<Model>(DataSource, Translator.Get(\"Title\") );" +
                     "},CanExecuteDelegate = o =>{return true;}};");
             }
             else if (s == "CmdImport")
             {
-                str.Append("/// <summary>\r\n///导入\r\n/// </summary>\r\n");
+                str.Append("/// <summary>\r\n/// 导入\r\n/// </summary>\r\n");
                 str.Append("public SimpleCommand " + s.Replace("\n", "") + " => new SimpleCommand(){ExecuteDelegate = x =>{" +
                     "plugin.Framework.OpenWindowPlugin(\"" + ProjectName + ".dll;" + ProjectName + ".ImportPage\",\"\");" +
                     "},CanExecuteDelegate = o =>{return true;}};");
             }
             else if (s == "CmdDelete")
             {
-                str.Append("/// <summary>\r\n///删除选中的数据\r\n/// </summary>\r\n");
+                str.Append("/// <summary>\r\n/// 删除选中的数据\r\n/// </summary>\r\n");
                 str.Append("public SimpleCommand " + s.Replace("\n", "") + " => new SimpleCommand(){ExecuteDelegate = x =>{" +
                     "var list = DataSource.Where(e => e.IsChecked).Select(e => e.ID).ToList();" +
                     "plugin.Framework.PostData(Services.url_delete, new" +
@@ -442,19 +442,19 @@ namespace Project.G.Models
             }
             else if (s == "CmdAdd")
             {
-                str.Append("/// <summary>\r\n///新增\r\n/// </summary>\r\n");
+                str.Append("/// <summary>\r\n/// 新增\r\n/// </summary>\r\n");
                 str.Append("public SimpleCommand " + s.Replace("\n", "") + " => new SimpleCommand(){ExecuteDelegate = x =>{" +
                     "plugin.Framework.OpenWindowPlugin(\"" + ProjectName + ".dll;" + ProjectName + ".Add\",\"\");" +
                     "},CanExecuteDelegate = o =>{return true;}};");
             }
             else if (s == "CmdRefresh")
             {
-                str.Append("/// <summary>\r\n///刷新\r\n/// </summary>\r\n");
+                str.Append("/// <summary>\r\n/// 刷新\r\n/// </summary>\r\n");
                 str.Append("public SimpleCommand " + s.Replace("\n", "") + " => new SimpleCommand(){ExecuteDelegate = x =>{LoadData();},CanExecuteDelegate = o =>{return true;}};");
             }
             else
             {
-                str.Append("/// <summary>\r\n///打开新窗体\r\n/// </summary>\r\n");
+                str.Append("/// <summary>\r\n/// 打开新窗体\r\n/// </summary>\r\n");
                 string ss = "public SimpleCommand " + s.Replace("\n", "") + " => new SimpleCommand(){ExecuteDelegate = x =>{";
                 if (model != null)
                 {
@@ -470,9 +470,88 @@ namespace Project.G.Models
             return Common.format(str.ToString());
         }
 
+        /// <summary>
+        /// [新]生成command
+        /// </summary>
+        /// <param name="s">名字，Cmdxxx形式</param>
+        /// <param name="model">弹出框的数据，为了获取弹出框名 model.BOX_CODE</param>
+        /// <param name="excel">获取IndexPage的查询字段</param>
+        /// <returns></returns>
+        public static string AddCommand_new(string s, string ProjectName, string code)
+        {
+            StringBuilder str = new StringBuilder("");
+            str.Append("/// <summary>\r\n///打开新窗体\r\n/// </summary>\r\n");
+            string ss = "public SimpleCommand " + s.Replace("\n", "") + " => new SimpleCommand(){ExecuteDelegate = x =>{";
+
+            ss += "var res = plugin.Framework.OpenWindowPlugin(\"" + ProjectName + ".dll;" + ProjectName + ".\",\"\");" +
+            "if(res.success){" +
+            code + " = res.data." + Reback(code) + ";" +
+            "}";
+
+            ss += "},CanExecuteDelegate = o =>{return true;}};";
+            str.Append(ss);
+            
+            return Common.format(str.ToString());
+        }
+
+        /// <summary>
+        /// 获取表格绑定字段
+        /// </summary>
+        /// <returns></returns>
+        public static string GetDataGridBinding(List<DataGrids> datas)
+        {
+            string str = "";
+            foreach(var data in datas)
+            {
+                str += " \t#region 表格绑定\r\n        /// <summary>\r\n        /// 表格主数据\r\n        /// </summary>\r\n        " +
+                                "private List<Model> _"+data.ItemsSource+";\r\n        " +
+                                "public List<Model> "+data.ItemsSource+"\r\n        {\r\n            get\r\n            {\r\n                " +
+                                "return _"+data.ItemsSource+";\r\n            }\r\n            set\r\n            {\r\n                " +
+                                "_"+data.ItemsSource+" = value;\r\n                " +
+                                "NotifyPropertyChanged(\""+data.ItemsSource+"\");\r\n            }\r\n        }\r\n\r\n\r\n\r\n\r\n        /// <summary>\r\n        /// 选中行\r\n        /// </summary>\r\n        " +
+                                "private Model _"+data.SelectedItem+";\r\n        " +
+                                "public Model "+data.SelectedItem+"\r\n        {\r\n            get\r\n            {\r\n                " +
+                                "return _"+data.SelectedItem+";\r\n            }\r\n            set\r\n            {\r\n                " +
+                                "_"+data.SelectedItem+" = value;\r\n                " +
+                                "NotifyPropertyChanged(\""+data.SelectedItem+"\");\r\n            }\r\n        }\r\n\r\n        #region 分页\r\n\r\n        " +
+                                "private int _"+data.PageIndex+" = 1;\r\n        " +
+                                "public int "+data.PageIndex+"\r\n        {\r\n            " +
+                                "get { return _"+data.PageIndex+"; }\r\n            set\r\n            {\r\n                " +
+                                "if (_"+data.PageIndex+" != value)\r\n                {\r\n                    " +
+                                "_"+data.PageIndex+" = value;\r\n                    " +
+                                "NotifyPropertyChanged(\""+data.PageIndex+"\");\r\n                    " +
+                                "LoadData();\r\n                }\r\n            }\r\n        }\r\n\r\n        " +
+                                "private int _"+data.PageSize+" = 20;\r\n        " +
+                                "public int "+data.PageSize+"\r\n        {\r\n            " +
+                                "get { return _"+data.PageSize+"; }\r\n            " +
+                                "set\r\n            {\r\n                " +
+                                "_"+data.PageSize+" = value;\r\n                " +
+                                "NotifyPropertyChanged(\""+data.PageSize+"\");\r\n                " +
+                                "LoadData();\r\n            }\r\n        }\r\n\r\n\r\n        " +
+                                "private int _"+data.TotalCount+";\r\n        " +
+                                "public int "+data.TotalCount+"\r\n        {\r\n            " +
+                                "get { return _"+data.TotalCount+"; }\r\n            " +
+                                "set\r\n            {\r\n                " +
+                                "if (_"+data.TotalCount+" != value)\r\n                {\r\n                    " +
+                                "_"+data.TotalCount+" = value;\r\n                    " +
+                                "NotifyPropertyChanged(\""+data.TotalCount+"\");\r\n                }\r\n            }\r\n        }\r\n\r\n        \t#endregion\r\n" +
+                                "\r\n\r\n\r\n        " +
+                                "private bool _"+data.IsSelectedAll+";\r\n        /// <summary>\r\n        /// 是否全部勾选\r\n        /// </summary>\r\n        " +
+                                "public bool "+data.IsSelectedAll+"\r\n        {\r\n            " +
+                                "get { return _"+data.IsSelectedAll+"; }\r\n            set\r\n            {\r\n                " +
+                                "_"+data.IsSelectedAll+" = value;\r\n                " +
+                                "foreach(var ds in " + data.ItemsSource + ")\r\n                {\r\n                    " +
+                                "ds.IsChecked = value;\r\n                }\r\n                " +
+                                "NotifyPropertyChanged(\""+data.IsSelectedAll+ "\");\r\n            }\r\n        }\r\n\r\n                \t#endregion\r\n";
+            }
+            return str;
+        }
+
 
         private static string Reback(string s)
         {
+            if (s.Contains("_"))
+                return s;
             string str = s[0].ToString();
             for (int i = 1; i < s.Length - 1; i++)
             {

@@ -200,12 +200,14 @@ namespace GenerateToolbox.Models
                 XmlNodeList PageSizes = ((XmlElement)node).GetElementsByTagName("PageSize");
                 XmlNodeList TotalCounts = ((XmlElement)node).GetElementsByTagName("TotalCount");
                 XmlNodeList PageIndexs = ((XmlElement)node).GetElementsByTagName("PageIndex");
+                XmlNodeList IsSelectedAll = ((XmlElement)node).GetElementsByTagName("IsSelectedAll");
 
                 data.ItemsSource = ItemsSources[0].InnerText;
                 data.SelectedItem = SelectedItems[0].InnerText;
                 data.PageIndex = PageIndexs[0].InnerText;
                 data.PageSize = PageSizes[0].InnerText;
                 data.TotalCount = TotalCounts[0].InnerText;
+                data.IsSelectedAll = IsSelectedAll[0].InnerText;
                 datas.Add(data);
             }
 
@@ -218,6 +220,20 @@ namespace GenerateToolbox.Models
                 sharemodel,
                 datas
             };
+        }
+
+        public static bool ExsitControlConfig(string control)
+        {
+            switch (control)
+            {
+                //case "TextBox": return true;
+                case "TextBox带弹出框": return true;
+                //case "Combox": return true;
+                //case "DatePicker": return true;
+                //case "只读TextBox": return true;
+                //case "占位控件": return true;
+                default:return false;
+            }
         }
     }
 }

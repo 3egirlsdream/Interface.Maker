@@ -1,4 +1,5 @@
-﻿using Model.Helper;
+﻿using GenerateToolbox.Models;
+using Model.Helper;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -880,7 +881,6 @@ namespace Project.G.Models
                 "namespace " + ProjectName + ".ViewModel\r\n{\r\n    " +
                 "public class ImportPageVM : WindowViewModelBase\r\n    {\r\n\r\n        " +
                 "public ImportPageVM(WindowPlugin plugin) : base(plugin)\r\n        {\r\n\r\n        }\r\n\r\n\r\n        " +
-                "/// <summary>\r\n        /// 主数据\r\n        /// </summary>\r\n        private List<Model> _DataSource;\r\n        public List<Model> DataSource\r\n        {\r\n            get\r\n            {\r\n                return _DataSource;\r\n            }\r\n            set\r\n            {\r\n                _DataSource = value;\r\n                NotifyPropertyChanged(\"DataSource\");\r\n            }\r\n        }\r\n\r\n\r\n\r\n\r\n        " +
                 Words +
                 "/// <summary>\r\n        /// 下载模板\r\n        /// </summary>\r\n        public SimpleCommand CmdDownTemp => new SimpleCommand\r\n        {\r\n            ExecuteDelegate = (o) =>\r\n            {\r\n                DownTemp();\r\n            }\r\n        };\r\n\r\n        public SimpleCommand CmdImport => new SimpleCommand\r\n        {\r\n            ExecuteDelegate = (o) =>\r\n            {\r\n                Import();\r\n            }\r\n        };\r\n\r\n        public SimpleCommand CmdSave => new SimpleCommand\r\n        {\r\n            ExecuteDelegate = (o) =>\r\n            {\r\n                List<Model> models = new List<Model>();\r\n                foreach(var ds in DataSource)\r\n                {\r\n                    if (ds.IsChecked) models.Add(ds);\r\n                }\r\n                plugin.Framework.PostData(Services.url_add, new\r\n                {\r\n                    model = models\r\n                });\r\n                plugin.DialogResult = true;\r\n            },\r\n            CanExecuteDelegate = x =>\r\n            {\r\n                return DataSource != null;\r\n            }\r\n        };\r\n\r\n\r\n        public void DownTemp()\r\n        {\r\n            string fileName = string.Format(\"{0}{1}\",Translator.Get(\"Title\"), \".xlsx\");\r\n            string allPath = AppDomain.CurrentDomain.SetupInformation.ApplicationBase;\r\n            string path = allPath + \"\\\\Templates\\\\Import\\\\\" + fileName;\r\n            WebClient webClient = new WebClient();\r\n            SaveFileDialog dlg = new SaveFileDialog();\r\n            dlg.FileName = fileName;\r\n            if (dlg.ShowDialog() == true)\r\n            {\r\n                //获取要保存文件名的完整路径\r\n                string filename = dlg.FileName;\r\n                try\r\n                {\r\n                    webClient.DownloadFile(path, filename);\r\n                }\r\n                catch (Exception)\r\n                {\r\n                    throw;\r\n                }\r\n            }\r\n        }\r\n\r\n        " +
                 "public void Import()\r\n        {\r\n            try\r\n            {\r\n                " +
@@ -1148,8 +1148,8 @@ namespace Project.G.Models
                 "xmlns:local=\"clr-namespace:"+projName+"\"\r\n    " +
                 "xmlns:mc=\"http://schemas.openxmlformats.org/markup-compatibility/2006\"\r\n    " +
                 "Title=\"{DynamicResource "+pageName+"}\"\r\n    " +
-                "Width=\"700\"\r\n    " +
-                "Height=\"480\"\r\n    " +
+                "Width=\"1024\"\r\n    " +
+                "Height=\"768\"\r\n    " +
                 "mc:Ignorable=\"d\">\r\n    " +
                 "<Window.Resources>\r\n        " +
                 "<ResourceDictionary>\r\n            " +
@@ -1202,12 +1202,12 @@ namespace Project.G.Models
         /// <param name="PageIndex"></param>
         /// <param name="grids">数据源</param>
         /// <returns></returns>
-        public object DataGrid(string ItemsSource, string SelectedItem, string PageSize, string TotalCount, string PageIndex, List<Grid> grids, int i)
+        public object DataGrid(string ItemsSource, string SelectedItem, string PageSize, string TotalCount, string PageIndex, string IsSelcetedAll, List<Grid> grids, int i)
         {
             string grid = "<DataGridTemplateColumn>\r\n" +
                             "<DataGridTemplateColumn.HeaderTemplate>\r\n" +
                                 "<DataTemplate>\r\n" +
-                                    "<CheckBox IsChecked=\"{Binding DataContext.IsSelectedAll, RelativeSource={RelativeSource AncestorType=common:PagePlugin, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}\"/>\r\n" +
+                                    "<CheckBox IsChecked=\"{Binding DataContext."+IsSelcetedAll+", RelativeSource={RelativeSource AncestorType=common:PagePlugin, Mode=FindAncestor}, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}\"/>\r\n" +
                                 "</DataTemplate>\r\n" +
                            "</DataGridTemplateColumn.HeaderTemplate>\r\n" +
                             "<DataGridTemplateColumn.CellTemplate>\r\n" +
@@ -1427,37 +1427,8 @@ namespace Project.G.Models
                 "class " + BoxName + "VM : WindowViewModelBase\r\n    {\r\n        " +
                 "public " + BoxName + "VM(IWindowPlugin plugin) : base(plugin)\r\n        {\r\n            " +
                 "LoadData();\r\n        }\r\n\r\n        " +
-                "#region 分页\r\n\r\n        private int _pageIndex = 1;\r\n        " +
-                "public int PageIndex\r\n        {\r\n            get { return _pageIndex; }\r\n            " +
-                "set\r\n            {\r\n                if (_pageIndex != value)\r\n                " +
-                "{\r\n                    _pageIndex = value;\r\n                    " +
-                "NotifyPropertyChanged(\"PageIndex\");\r\n                    " +
-                "LoadData();\r\n                }\r\n            }\r\n        }\r\n\r\n        " +
-                "private int _pageSize = 20;\r\n        public int PageSize\r\n        {\r\n            " +
-                "get { return _pageSize; }\r\n            set\r\n            {\r\n                " +
-                "_pageSize = value;\r\n                NotifyPropertyChanged(\"PageSize\");\r\n                " +
-                "LoadData();\r\n            }\r\n        }\r\n\r\n\r\n        private int _totalCount;\r\n        " +
-                "public int TotalCount\r\n        {\r\n            get { return _totalCount; }\r\n            " +
-                "set\r\n            {\r\n                if (_totalCount != value)\r\n                {\r\n                    " +
-                "_totalCount = value;\r\n                    NotifyPropertyChanged(\"TotalCount\");\r\n                " +
-                "}\r\n            }\r\n        }\r\n\r\n        #endregion\r\n\r\n        " +
-                "/// <summary>\r\n        /// 主数据\r\n        /// </summary>\r\n        private List<Model> _DataSource;\r\n        public List<Model> DataSource\r\n        " +
-                "{\r\n            get\r\n            {\r\n                return _DataSource;\r\n            " +
-                "}\r\n            set\r\n            {\r\n                _DataSource = value;\r\n                " +
-                "NotifyPropertyChanged(\"DataSource\");\r\n            }\r\n        }\r\n        \r\n        " +
-                "/// <summary>\r\n        /// 选中行\r\n        /// </summary>\r\n        private Model _SelectedRow;\r\n        public Model SelectedRow\r\n        {\r\n            " +
-                "get\r\n            {\r\n                return _SelectedRow;\r\n            }\r\n            " +
-                "set\r\n            {\r\n                _SelectedRow = value;\r\n                " +
-                "NotifyPropertyChanged(\"SelectedRow\");\r\n            }\r\n        }\r\n        \r\n        " +
-                "private string _Text;\r\n        public string Text\r\n        {\r\n            " +
-                "get { return _Text; }\r\n            set\r\n            {\r\n                " +
-                "_Text = value;\r\n                NotifyPropertyChanged(\"Text\");\r\n            " +
-                "}\r\n        }\r\n\r\n" +
                 Extend +
-                "        #region Command\r\n        " +
-                "public SimpleCommand CmdSearch => new SimpleCommand\r\n        {\r\n            " +
-                "ExecuteDelegate = x =>\r\n            {\r\n                LoadData();\r\n            },\r\n            " +
-                "CanExecuteDelegate = x =>\r\n            {\r\n                return true;\r\n            }\r\n        };\r\n        \r\n        public SimpleCommand CmdSave => new SimpleCommand()\r\n        {\r\n            ExecuteDelegate = x => {\r\n                this.plugin.Data = SelectedRow;\r\n            },\r\n            CanExecuteDelegate = o => {\r\n                return SelectedRow != null;\r\n            }\r\n        };\r\n        #endregion\r\n\r\n        #region 方法\r\n        " +
+                "#region 方法\r\n        " +
                 "private void LoadData()\r\n        " +
                 "{\r\n\r\n        " +
                  url +
@@ -1465,6 +1436,139 @@ namespace Project.G.Models
             return s;
         }
 
+        /// <summary>
+        /// [新]生成Command
+        /// </summary>
+        /// <returns></returns>
+        public static string CreateCommand_new(Grids grids, string projName)
+        {
+            List<string> vs = new List<string>(grids.strs);
+            ModelHelper model = new ModelHelper();
+            string s = "\t#region Command\r\n\t";
+            foreach (var ds in grids.grids)
+            {
+                if (!vs.Contains(ds.NAME) && ds.CONTROL_NAME == "btn")
+                    vs.Add(ds.NAME);
+            }
+            foreach(var ds in vs)
+            {
+                s += "\t" + Controls.AddCommand(model.GetCmd(Buttons.command(ds, "")), projName) + "\r\n";
+            }
+
+            foreach (var ds in grids.grids)
+            {
+                if(ds.CONTROL_NAME == "TextBox带弹出框")
+                {
+                    s += "\t" + Controls.AddCommand_new(model.GetCmd(Buttons.command(ds.CODE, "")), projName, ds.CODE) + "\r\n";
+                }
+            }
+            
+            return s + "\t#endregion\r\n";
+        }
+
+        /// <summary>
+        /// [新]生成主页VM
+        /// </summary>
+        public static string GetIndexVM_new(string _namespace, string Extend, string LoadData)
+        {
+            string vm = "using DAF.Plugin.Common;\r\nusing System;\r\n" +
+                "using System.Collections.Generic;\r\n" +
+                "using System.Linq;\r\nusing System.Text;\r\n" +
+                "using Newtonsoft.Json;\r\n" +
+                "using System.Windows.Input;\r\n" +
+                "using System.Windows.Controls;\r\n" +
+                "using System.Collections.ObjectModel;\r\n" +
+                "using MES.Plugin.Common;\r\n\r\nnamespace " + _namespace + "\r\n{\r\n    " +
+                "public class IndexPageVM : ViewModelBase\r\n    {\r\n       \r\n        " +
+                "public IndexPageVM(IDAFPlugin plugin) : base(plugin) \r\n        " +
+                "{\r\n            LoadData();\r\n        }\r\n\r\n        " +
+                Extend + "      #region 方法\r\n        " +
+                "public void LoadData()\r\n        " +
+                "{\r\n\r\n        " +
+                LoadData +
+                "}\r\n        #endregion\r\n\r\n  }\r\n}\r\n";
+            return vm;
+        }
+        /// <summary>
+        /// [新]生成新增VM
+        /// </summary>
+        public static string GetAddVM_new(string ProjectName, string Extend, string PostData = "", string IsLegal = "true")
+        {
+            string s = "using DAF.Plugin.Common;\r\n" +
+                "using System.Collections.ObjectModel;\r\n" +
+                "using System.Collections.Generic;\r\n" +
+                "namespace " + ProjectName + ".ViewModels\r\n{\r\n    " +
+                "class AddVM : WindowViewModelBase\r\n    {\r\n        \r\n        " +
+                "public AddVM(IWindowPlugin plugin) : base(plugin)\r\n        " +
+                "{\r\n            LoadData();\r\n        }\r\n\r\n        " +
+                Extend +
+                "public SimpleCommand CmdSave => new SimpleCommand()\r\n        {\r\n            " +
+                "ExecuteDelegate = x =>\r\n            {\r\n                " +
+                "if (IsLegal())\r\n                " +
+                "{\r\n                    " +
+                "plugin.Framework.PostData(Services.url_add, new{model = PostData()});\r\n" +
+                "this.plugin.DialogResult = true;\r\n                }\r\n            },\r\n            " +
+                "CanExecuteDelegate = o =>\r\n            {\r\n                " +
+                "return IsLegal();\r\n            }\r\n        };\r\n\r\n        #region 方法\r\n        " +
+                "/// <summary>\r\n        /// 初始化数据\r\n        /// </summary>\r\n        " +
+                "private void LoadData()\r\n        {\r\n            \r\n        }\r\n\r\n        " +
+                "/// <summary>\r\n        /// 保存数据\r\n        /// </summary>\r\n        " +
+                "private List<Model> PostData()\r\n        " +
+                "{\r\n\r\n        " +
+                PostData +
+                "}\r\n\r\n        " +
+                "/// <summary>\r\n        /// 校验数据\r\n        /// </summary>\r\n        /// <returns></returns>\r\n        " +
+                "private bool IsLegal()\r\n        " +
+                "{\r\n            " +
+                "return " +
+                IsLegal +
+                ";\r\n        " +
+                "}\r\n        " +
+                "#endregion\r\n\r\n    }\r\n}\r\n";
+            return s;
+        }
+        /// <summary>
+        /// [新]生成编辑VM
+        /// </summary>
+        public static string GetEditVM_new(string ProjectName, string Extend, string PostData = "", string IsLegal = "true", string LoadData = "")
+        {
+            string s = "using DAF.Plugin.Common;\r\n" +
+                "using Newtonsoft.Json;\r\n" +
+                "using System.Collections.ObjectModel;\r\n" +
+                "using System.Collections.Generic;\r\n" +
+                "namespace " + ProjectName + ".ViewModels\r\n{\r\n    " +
+                "class EditVM : WindowViewModelBase\r\n    {\r\n        \r\n        string json;" +
+                "public EditVM(IWindowPlugin plugin, string js) : base(plugin)\r\n        " +
+                "{\r\n            json = js;\r\n" +
+                "LoadData();\r\n        }\r\n\r\n        " +
+                Extend +
+                "public SimpleCommand CmdSave => new SimpleCommand()\r\n        {\r\n            " +
+                "ExecuteDelegate = x =>\r\n            {\r\n                " +
+                "if (IsLegal())\r\n                " +
+                "{\r\n                    " +
+                "plugin.Framework.PostData(Services.url_edit, new{model = PostData()});\r\n" +
+                "this.plugin.DialogResult = true;\r\n                }\r\n            },\r\n            " +
+                "CanExecuteDelegate = o =>\r\n            {\r\n                " +
+                "return IsLegal();\r\n            }\r\n        };\r\n\r\n        #region 方法\r\n        " +
+                "/// <summary>\r\n        /// 初始化数据\r\n        /// </summary>\r\n        " +
+                "private void LoadData()\r\n        {\r\n        " +
+                LoadData +
+                "    \r\n        }\r\n\r\n        " +
+                "/// <summary>\r\n        /// 保存数据\r\n        /// </summary>\r\n        " +
+                "private List<Model> PostData()\r\n        " +
+                "{\r\n\r\n        " +
+                PostData +
+                "}\r\n\r\n        " +
+                "/// <summary>\r\n        /// 校验数据\r\n        /// </summary>\r\n        /// <returns></returns>\r\n        " +
+                "private bool IsLegal()\r\n        " +
+                "{\r\n            " +
+                "return " +
+                IsLegal +
+                ";\r\n        " +
+                "}\r\n        " +
+                "#endregion\r\n\r\n    }\r\n}\r\n";
+            return s;
+        }
         #endregion
     }
 }
