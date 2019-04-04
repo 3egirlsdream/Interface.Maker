@@ -39,7 +39,7 @@
             <Border
                 Name="bd2"
                 Grid.Row="0"
-                Background="#C83C56"
+                Background="#DD335D"
                 BorderThickness="0"
                 CornerRadius="5">
                 <Grid>
@@ -85,7 +85,7 @@
                 Name="bd1"
                 Grid.Row="1"
                 Margin="0,-3,0,0"
-                Background="#C83C56"
+                Background="#DD335D"
                 BorderThickness="0" />
             <Grid Grid.Row="2" Grid.RowSpan="2">
                 <controls:MetroTabControl
@@ -216,7 +216,7 @@
                                     Width="100"
                                     Height="30"
                                     Margin="25,10,10,0"
-                                    Background="#C83C56"
+                                    Background="#DD335D"
                                     BorderThickness="0"
                                     Command="{Binding CmdGenerate}"
                                     Content="生  成"

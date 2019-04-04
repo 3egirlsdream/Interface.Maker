@@ -119,8 +119,8 @@ namespace Project.G
 
         private void Service_GotFocus(object sender, RoutedEventArgs e)
         {
-            bd1.Background = GetColor("#C83C56");
-            bd2.Background = GetColor("#C83C56");
+            bd1.Background = GetColor("#DD335D");
+            bd2.Background = GetColor("#DD335D");
         }
 
         private SolidColorBrush GetColor(string str)
