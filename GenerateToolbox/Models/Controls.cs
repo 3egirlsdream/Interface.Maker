@@ -520,14 +520,14 @@ namespace Project.G.Models
                                 "if (_"+data.PageIndex+" != value)\r\n                {\r\n                    " +
                                 "_"+data.PageIndex+" = value;\r\n                    " +
                                 "NotifyPropertyChanged(\""+data.PageIndex+"\");\r\n                    " +
-                                "LoadData();\r\n                }\r\n            }\r\n        }\r\n\r\n        " +
+                                "                }\r\n            }\r\n        }\r\n\r\n        " +
                                 "private int _"+data.PageSize+" = 20;\r\n        " +
                                 "public int "+data.PageSize+"\r\n        {\r\n            " +
                                 "get { return _"+data.PageSize+"; }\r\n            " +
                                 "set\r\n            {\r\n                " +
                                 "_"+data.PageSize+" = value;\r\n                " +
                                 "NotifyPropertyChanged(\""+data.PageSize+"\");\r\n                " +
-                                "LoadData();\r\n            }\r\n        }\r\n\r\n\r\n        " +
+                                "            }\r\n        }\r\n\r\n\r\n        " +
                                 "private int _"+data.TotalCount+";\r\n        " +
                                 "public int "+data.TotalCount+"\r\n        {\r\n            " +
                                 "get { return _"+data.TotalCount+"; }\r\n            " +

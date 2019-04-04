@@ -34,11 +34,10 @@ namespace Project.G.Models
         public static string CreateXss_new(Grids import)
         {
             string s = "";
-            for (int i = 0; i < import.grids.Count; i++)
+            var models = import.grids.Where(e => e.CONTROL_NAME == "DATAGRID").ToList();
+            for (int i = 0; i < models.Count; i++)
             {
-                if (import.grids[i].CONTROL_NAME != "DATAGRID")
-                    continue;
-                string tmp = "model." + import.grids[i].CODE + " = sheet.GetRow(i).GetCell(" + i + ") == null ? \"\" : sheet.GetRow(i).GetCell(" + i + ").ToString();\r\n\r\n                        ";
+                string tmp = "model." + models[i].CODE + " = sheet.GetRow(i).GetCell(" + i + ") == null ? \"\" : sheet.GetRow(i).GetCell(" + i + ").ToString();\r\n\r\n                        ";
                 s += tmp;
             }
             return s;
@@ -72,15 +71,14 @@ namespace Project.G.Models
         /// <returns></returns>
         public static string CreateNull_new(Grids import)
         {
+            var models = import.grids.Where(e => e.CONTROL_NAME == "DATAGRID").ToList();
             string s = "";
-            for (int i = 0; i < import.grids.Count; i++)
+            for (int i = 0; i < models.Count; i++)
             {
-                if (import.grids[i].CONTROL_NAME != "DATAGRID")
-                    continue;
                 string tmp = "";
                 if (i != 0) tmp += "else ";
-                tmp += "if (string.IsNullOrEmpty(model." + import.grids[i].CODE + "))\r\n                        {\r\n                            " +
-                "model.TextState = \"失败！\" + Translator.Get(\"Grid_" + import.grids[i].CODE + "\") + \"不能为空\";\r\n                            " +
+                tmp += "if (string.IsNullOrEmpty(model." + models[i].CODE + "))\r\n                        {\r\n                            " +
+                "model.TextState = \"失败！\" + Translator.Get(\"Grid_" + models[i].CODE + "\") + \"不能为空\";\r\n                            " +
                 "model.Color = \"Red\";\r\n              " +
                 "model.IsChecked = false;\r\n              ";
                 s += tmp + "}\r\n";
@@ -251,7 +249,7 @@ namespace Project.G.Models
             foreach (var ds in models)
             {
                 s += "x." + ds.CODE + " == model." + ds.CODE;
-                if (ds != import.grids.Last())
+                if (ds != models.Last())
                     s += "&&";
             }
             return s;

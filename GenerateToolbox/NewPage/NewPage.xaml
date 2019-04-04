@@ -24,7 +24,7 @@
                 TextWrapping="Wrap" />
             <StackPanel Grid.Row="1">
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock Text="1" Width="10" Margin="90,3,0,0" Foreground="Gray"/>
+                    <TextBlock Text="Ⅰ" Width="10" Margin="90,3,0,0" Foreground="Gray"/>
                     <Border Width="600">
                         <Border
                         Width="{Binding BorderWidth, Mode=TwoWay}"

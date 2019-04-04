@@ -196,18 +196,9 @@ namespace Project.G.Models
         /// <param name="ProjectName">项目名</param>
         /// <param name="Extend">拓展内容</param>
         /// <returns></returns>
-        public static string GetResource(string ProjectName, string Extend)
+        public static string GetResource(string ProjectName, string Extend, string key = "old")
         {
-            string resource = 
-                "<ResourceDictionary\r\nxmlns=\"http://schemas.microsoft.com/winfx/2006/xaml/presentation\"\r\n" +
-                "xmlns:x=\"http://schemas.microsoft.com/winfx/2006/xaml\"\r\n" +
-                "xmlns:sys=\"clr-namespace:System;assembly=mscorlib\">\r\n" +
-                "   <sys:String x:Key=\"Title\">"+ProjectName+"</sys:String>\r\n" +
-                "   <sys:String x:Key=\"Title_Add\">新增</sys:String>\r\n" +
-                "   <sys:String x:Key=\"Title_Edit\">编辑</sys:String>\r\n" +
-                "   <sys:String x:Key=\"Title_Import\">导入</sys:String>\r\n" +
-                "   <sys:String x:Key=\"ErrorMsg\">错误原因</sys:String>\r\n" +
-                "   <sys:String x:Key=\"Submit\">提交</sys:String>\r\n" +
+            string str = "   <sys:String x:Key=\"Submit\">提交</sys:String>\r\n" +
                 "   <sys:String x:Key=\"ModifiedBy\">修改人</sys:String>\r\n" +
                 "   <sys:String x:Key=\"Export\">导出</sys:String>\r\n" +
                 "   <sys:String x:Key=\"Refresh\">刷新</sys:String>\r\n" +
@@ -221,14 +212,25 @@ namespace Project.G.Models
                 "   <sys:String x:Key=\"Fail\">失败</sys:String>\r\n" +
                 "   <sys:String x:Key=\"Waiting\">等待</sys:String>\r\n" +
                 "   <sys:String x:Key=\"Save\">保存</sys:String>\r\n" +
-                "   <sys:String x:Key=\"Cancel\">取消</sys:String>\r\n"+
+                "   <sys:String x:Key=\"Cancel\">取消</sys:String>\r\n" +
                 "   <sys:String x:Key=\"Print\">打印</sys:String>\r\n" +
                 "   <sys:String x:Key=\"Import\">导入</sys:String>\r\n" +
                 "   <sys:String x:Key=\"Create\">生成</sys:String>\r\n" +
                 "   <sys:String x:Key=\"Edit\">编辑</sys:String>\r\n" +
                 "   <sys:String x:Key=\"Add\">新增</sys:String>\r\n" +
                 "   <sys:String x:Key=\"Delete\">删除</sys:String>\r\n" +
-                "   <sys:String x:Key=\"Forbiden\">禁用</sys:String>\r\n" +
+                "   <sys:String x:Key=\"Forbiden\">禁用</sys:String>\r\n";
+            if (key == "new") str = "";
+            string resource = 
+                "<ResourceDictionary\r\nxmlns=\"http://schemas.microsoft.com/winfx/2006/xaml/presentation\"\r\n" +
+                "xmlns:x=\"http://schemas.microsoft.com/winfx/2006/xaml\"\r\n" +
+                "xmlns:sys=\"clr-namespace:System;assembly=mscorlib\">\r\n" +
+                "   <sys:String x:Key=\"Title\">"+ProjectName+"</sys:String>\r\n" +
+                "   <sys:String x:Key=\"Title_Add\">新增</sys:String>\r\n" +
+                "   <sys:String x:Key=\"Title_Edit\">编辑</sys:String>\r\n" +
+                "   <sys:String x:Key=\"Title_Import\">导入</sys:String>\r\n" +
+                "   <sys:String x:Key=\"ErrorMsg\">错误原因</sys:String>\r\n" +
+                str +
                 "   <sys:String x:Key=\"SelectFile\">选择导入文件</sys:String>\r\n" +
                 "   <sys:String x:Key=\"DownloadTemplate\">下载导入文件模板</sys:String>\r\n" +
                 "   <sys:String x:Key=\"InvaliableColume\">不合法的列数</sys:String>\r\n" +
@@ -415,16 +417,9 @@ namespace Project.G.Models
                 "}\r\n}\r\n";
         }
 
-        public static string GetAddVM(string ProjectName, string Extend, string PostData = "", string IsLegal = "true")
+        public static string GetAddVM(string ProjectName, string Extend, string PostData = "", string IsLegal = "true", string key = "old")
         {
-            string s = "using DAF.Plugin.Common;\r\n" +
-                "using System.Collections.ObjectModel;\r\n" +
-                "using System.Collections.Generic;\r\n" +
-                "namespace " + ProjectName + ".ViewModels\r\n{\r\n    " +
-                "class AddVM : WindowViewModelBase\r\n    {\r\n        \r\n        " +
-                "public AddVM(IWindowPlugin plugin) : base(plugin)\r\n        " +
-                "{\r\n            LoadData();\r\n        }\r\n\r\n        " +
-                "#region 分页\r\n\r\n        " +
+            string str = "#region 分页\r\n\r\n        " +
                 "private int _pageIndex = 1;\r\n        " +
                 "public int PageIndex\r\n        {\r\n            " +
                 "get { return _pageIndex; }\r\n            " +
@@ -455,7 +450,16 @@ namespace Project.G.Models
                 "public Model SelectedRow\r\n        {\r\n            get\r\n            {\r\n                " +
                 "return _SelectedRow;\r\n            }\r\n            set\r\n            {\r\n                " +
                 "_SelectedRow = value;\r\n                " +
-                "NotifyPropertyChanged(\"SelectedRow\");\r\n            }\r\n        }\r\n\r\n        " +
+                "NotifyPropertyChanged(\"SelectedRow\");\r\n            }\r\n        }\r\n\r\n        ";
+            if (key == "new") str = "";
+            string s = "using DAF.Plugin.Common;\r\n" +
+                "using System.Collections.ObjectModel;\r\n" +
+                "using System.Collections.Generic;\r\n" +
+                "namespace " + ProjectName + ".ViewModels\r\n{\r\n    " +
+                "class AddVM : WindowViewModelBase\r\n    {\r\n        \r\n        " +
+                "public AddVM(IWindowPlugin plugin) : base(plugin)\r\n        " +
+                "{\r\n            LoadData();\r\n        }\r\n\r\n        " +
+                str +
                 Extend +
                 "public SimpleCommand CmdSave => new SimpleCommand()\r\n        {\r\n            " +
                 "ExecuteDelegate = x =>\r\n            {\r\n                " +
@@ -554,18 +558,9 @@ namespace Project.G.Models
                 "}\r\n}\r\n";
         }
 
-        public static string GetEditVM(string ProjectName, string Extend, string PostData = "", string IsLegal = "true", string LoadData = "")
+        public static string GetEditVM(string ProjectName, string Extend, string PostData = "", string IsLegal = "true", string LoadData = "", string key = "old")
         {
-            string s = "using DAF.Plugin.Common;\r\n" +
-                "using Newtonsoft.Json;\r\n"+
-                "using System.Collections.ObjectModel;\r\n" +
-                "using System.Collections.Generic;\r\n" +
-                "namespace " + ProjectName + ".ViewModels\r\n{\r\n    " +
-                "class EditVM : WindowViewModelBase\r\n    {\r\n        \r\n        string json;" +
-                "public EditVM(IWindowPlugin plugin, string js) : base(plugin)\r\n        " +
-                "{\r\n            json = js;\r\n" +
-                "LoadData();\r\n        }\r\n\r\n        " +
-                "#region 分页\r\n\r\n        " +
+            string str = "#region 分页\r\n\r\n        " +
                 "private int _pageIndex = 1;\r\n        " +
                 "public int PageIndex\r\n        {\r\n            " +
                 "get { return _pageIndex; }\r\n            " +
@@ -596,7 +591,18 @@ namespace Project.G.Models
                 "public Model SelectedRow\r\n        {\r\n            get\r\n            {\r\n                " +
                 "return _SelectedRow;\r\n            }\r\n            set\r\n            {\r\n                " +
                 "_SelectedRow = value;\r\n                " +
-                "NotifyPropertyChanged(\"SelectedRow\");\r\n            }\r\n        }\r\n\r\n        " +
+                "NotifyPropertyChanged(\"SelectedRow\");\r\n            }\r\n        }\r\n\r\n        ";
+            if (key == "new") str = "";
+            string s = "using DAF.Plugin.Common;\r\n" +
+                "using Newtonsoft.Json;\r\n"+
+                "using System.Collections.ObjectModel;\r\n" +
+                "using System.Collections.Generic;\r\n" +
+                "namespace " + ProjectName + ".ViewModels\r\n{\r\n    " +
+                "class EditVM : WindowViewModelBase\r\n    {\r\n        \r\n        string json;" +
+                "public EditVM(IWindowPlugin plugin, string js) : base(plugin)\r\n        " +
+                "{\r\n            json = js;\r\n" +
+                "LoadData();\r\n        }\r\n\r\n        " +
+                str +
                 Extend +
                 "public SimpleCommand CmdSave => new SimpleCommand()\r\n        {\r\n            " +
                 "ExecuteDelegate = x =>\r\n            {\r\n                " +
@@ -882,7 +888,10 @@ namespace Project.G.Models
                 "public class ImportPageVM : WindowViewModelBase\r\n    {\r\n\r\n        " +
                 "public ImportPageVM(WindowPlugin plugin) : base(plugin)\r\n        {\r\n\r\n        }\r\n\r\n\r\n        " +
                 Words +
-                "/// <summary>\r\n        /// 下载模板\r\n        /// </summary>\r\n        public SimpleCommand CmdDownTemp => new SimpleCommand\r\n        {\r\n            ExecuteDelegate = (o) =>\r\n            {\r\n                DownTemp();\r\n            }\r\n        };\r\n\r\n        public SimpleCommand CmdImport => new SimpleCommand\r\n        {\r\n            ExecuteDelegate = (o) =>\r\n            {\r\n                Import();\r\n            }\r\n        };\r\n\r\n        public SimpleCommand CmdSave => new SimpleCommand\r\n        {\r\n            ExecuteDelegate = (o) =>\r\n            {\r\n                List<Model> models = new List<Model>();\r\n                foreach(var ds in DataSource)\r\n                {\r\n                    if (ds.IsChecked) models.Add(ds);\r\n                }\r\n                plugin.Framework.PostData(Services.url_add, new\r\n                {\r\n                    model = models\r\n                });\r\n                plugin.DialogResult = true;\r\n            },\r\n            CanExecuteDelegate = x =>\r\n            {\r\n                return DataSource != null;\r\n            }\r\n        };\r\n\r\n\r\n        public void DownTemp()\r\n        {\r\n            string fileName = string.Format(\"{0}{1}\",Translator.Get(\"Title\"), \".xlsx\");\r\n            string allPath = AppDomain.CurrentDomain.SetupInformation.ApplicationBase;\r\n            string path = allPath + \"\\\\Templates\\\\Import\\\\\" + fileName;\r\n            WebClient webClient = new WebClient();\r\n            SaveFileDialog dlg = new SaveFileDialog();\r\n            dlg.FileName = fileName;\r\n            if (dlg.ShowDialog() == true)\r\n            {\r\n                //获取要保存文件名的完整路径\r\n                string filename = dlg.FileName;\r\n                try\r\n                {\r\n                    webClient.DownloadFile(path, filename);\r\n                }\r\n                catch (Exception)\r\n                {\r\n                    throw;\r\n                }\r\n            }\r\n        }\r\n\r\n        " +
+                "/// <summary>\r\n        /// 下载模板\r\n        /// </summary>\r\n        " +
+                "public SimpleCommand CmdDownTemp => new SimpleCommand\r\n        {\r\n            ExecuteDelegate = (o) =>\r\n            {\r\n                DownTemp();\r\n            }\r\n        };\r\n\r\n        " +
+                "\r\n\r\n        " +
+                "public SimpleCommand CmdSave => new SimpleCommand\r\n        {\r\n            ExecuteDelegate = (o) =>\r\n            {\r\n                List<Model> models = new List<Model>();\r\n                foreach(var ds in DataSource)\r\n                {\r\n                    if (ds.IsChecked) models.Add(ds);\r\n                }\r\n                plugin.Framework.PostData(Services.url_add, new\r\n                {\r\n                    model = models\r\n                });\r\n                plugin.DialogResult = true;\r\n            },\r\n            CanExecuteDelegate = x =>\r\n            {\r\n                return DataSource != null;\r\n            }\r\n        };\r\n\r\n\r\n        public void DownTemp()\r\n        {\r\n            string fileName = string.Format(\"{0}{1}\",Translator.Get(\"Title\"), \".xlsx\");\r\n            string allPath = AppDomain.CurrentDomain.SetupInformation.ApplicationBase;\r\n            string path = allPath + \"\\\\Templates\\\\Import\\\\\" + fileName;\r\n            WebClient webClient = new WebClient();\r\n            SaveFileDialog dlg = new SaveFileDialog();\r\n            dlg.FileName = fileName;\r\n            if (dlg.ShowDialog() == true)\r\n            {\r\n                //获取要保存文件名的完整路径\r\n                string filename = dlg.FileName;\r\n                try\r\n                {\r\n                    webClient.DownloadFile(path, filename);\r\n                }\r\n                catch (Exception)\r\n                {\r\n                    throw;\r\n                }\r\n            }\r\n        }\r\n\r\n        " +
                 "public void Import()\r\n        {\r\n            try\r\n            {\r\n                " +
                 "OpenFileDialog open = new OpenFileDialog();\r\n                " +
                 "open.Filter = \"Excel (*.XLSX)|*.xlsx|*.XLS|*.xls\";\r\n                " +
