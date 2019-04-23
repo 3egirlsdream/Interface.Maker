@@ -3,10 +3,12 @@
 ################################################################################
 /.vs
 /GenerateToolbox/bin/Debug
+/GenerateToolbox/GenerateToolbox/obj
 /GenerateToolbox/obj
 /GenerateToolbox/plugins/Creative.ODA.dll
 /GenerateToolbox/bin
 /GenerateToolbox/Models/models4.cs
 /GenerateToolbox/.vs/Project.G/v15/.suo
+/GenerateToolbox/GenerateToolbox/obj/Debug
 /GenerateToolbox/obj/Debug
 /GenerateToolbox/GenerateToolbox.csproj.user
