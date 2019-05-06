@@ -91,7 +91,7 @@
                 <controls:MetroTabControl
                     Grid.RowSpan="2"
                     Margin="0,-35,0,0"
-                    Background="Transparent">
+                    Background="Transparent" SelectedIndex="3">
                     <controls:MetroTabItem GotFocus="Service_GotFocus" Header="Service">
                         <Grid>
                             <Grid.ColumnDefinitions>
