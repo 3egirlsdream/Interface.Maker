@@ -44,7 +44,7 @@
                 CornerRadius="5">
                 <Grid>
                     <Button
-                        Style="{StaticResource BorderStyle}"
+                        Style="{StaticResource CloseBorderStyle}"
                         x:Name="CLOSE"
                         Width="13"
                         Height="13"
