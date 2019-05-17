@@ -279,7 +279,7 @@ namespace Project.G.Models
                 "</Border>\r\n       " +
                 " <Border\r\n            Grid.Row=\"1\"\r\n            Margin=\"0,0,0,0\"\r\n            " +
                 "Background=\"{DynamicResource PanelBrush}\">\r\n            " +
-                "<GroupBox Header={DynamicResource Conditions} BorderBrush=\"#D8D8D9\" BorderThickness=\"1\" Margin=\"{DynamicResource ContainerPadding}\" Padding=\"5\">" +
+                "<GroupBox Header=\"{DynamicResource Conditions}\" BorderBrush=\"#D8D8D9\" BorderThickness=\"1\" Margin=\"{DynamicResource ContainerPadding}\" Padding=\"5\">" +
                 "<Grid>\r\n                " +
                 
                 "<Grid.RowDefinitions>\r\n                    " +

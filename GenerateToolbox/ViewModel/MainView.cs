@@ -45,8 +45,23 @@ namespace Project.G.ViewModel
             }
         }
 
+        /// <summary>
+        /// 服务名
+        /// </summary>
+        private string _ServerName;
+        public string ServerName
+        {
+            get
+            {
+                return _ServerName;
+            }
+            set
+            {
+                _ServerName = value;
+                NotifyPropertyChanged("ServerName");
+            }
+        }
 
-        
         private Key_Value _Filter;
         public Key_Value Filter
         {
@@ -509,6 +524,11 @@ namespace Project.G.ViewModel
                         //type = DbType.MySql;
                         ty = SqlSugar.DbType.MySql;
                     }
+                    else if (Constraint.value == 4)
+                    {
+                        //type = DbType.MySql;
+                        ty = SqlSugar.DbType.Oracle;
+                    }
                     string json = model.GetTableJson(DBName, ty);
                     SqlText = Common.format(model.ModelCreate(json, "MeiCloud.DataAccess"));
                 }
@@ -533,6 +553,11 @@ namespace Project.G.ViewModel
                     {
                         //type = DbType.MySql;
                         ty = SqlSugar.DbType.MySql;
+                    }
+                    else if(Constraint.value == 4)
+                    {
+                        //type = DbType.MySql;
+                        ty = SqlSugar.DbType.Oracle;
                     }
                     string json = model.GetTableJson(DBName, ty);
                     return Common.format(model.ModelCreate(json, "MeiCloud.DataAccess"));
@@ -569,6 +594,7 @@ namespace Project.G.ViewModel
             Constraints.Add(new Key_Value { label = "去掉小写", value = 1 });
             Constraints.Add(new Key_Value { label = "SqlServer", value = 2 });
             Constraints.Add(new Key_Value { label = "MySql", value = 3 });
+            Constraints.Add(new Key_Value { label = "Oracle", value = 4 });
             Constraint = Constraints[0];
 
 
@@ -845,17 +871,17 @@ namespace Project.G.ViewModel
                 #endregion
 
                 #region 生成后台
-                Directory.CreateDirectory(dir + "\\" + csproj.Replace("Plugin", "ServerPlugin"));
-                Directory.CreateDirectory(dir + "\\" + csproj.Replace("Plugin", "ServerPlugin") + "\\Models");
-                Directory.CreateDirectory(dir + "\\" + csproj.Replace("Plugin", "ServerPlugin") + "\\Properties");
-                Directory.CreateDirectory(dir + "\\" + csproj.Replace("Plugin", "ServerPlugin") + "\\Domains");
-                Directory.CreateDirectory(dir + "\\" + csproj.Replace("Plugin", "ServerPlugin") + "\\Services");
+                Directory.CreateDirectory(dir + "\\" + ServerName);
+                Directory.CreateDirectory(dir + "\\" + ServerName + "\\Models");
+                Directory.CreateDirectory(dir + "\\" + ServerName + "\\Properties");
+                Directory.CreateDirectory(dir + "\\" + ServerName + "\\Domains");
+                Directory.CreateDirectory(dir + "\\" + ServerName + "\\Services");
 
-                var ls = csproj.Split('.');
-                Strings.Write(Domains.GetAssembly(ProjectName, ChineseName), dir + "\\" + csproj.Replace("Plugin", "ServerPlugin") + "\\Properties\\AssemblyInfo.cs");
-                Strings.Write(Domains.GetCsproj(csproj, LoadTables()), dir + "\\" + csproj.Replace("Plugin", "ServerPlugin") + "\\" + csproj.Replace("Plugin", "ServerPlugin") + ".csproj");
-                Strings.Write(Domains.GetDomain(csproj, Domains.GetAllUrlBody(IndexContents, 1), Domains.GetHasWordUrl(ImportBidies, 1), Domains.GetHasWrodFunction(ImportBidies), Domains.GetAllFunction(Tables, IndexContents)), dir + "\\" + csproj.Replace("Plugin", "ServerPlugin") + "\\Domains\\" + ls.Last() + "Domain.cs");
-                Strings.Write(Domains.GetService(csproj, Domains.GetAllUrlHeader(csproj, IndexContents), Domains.GetAllUrlBody(IndexContents, 1), Domains.GetAllUrlBody(IndexContents, 0), ChineseName, Domains.GetHasWordUrl(ImportBidies, 0), Domains.GetHasWordUrl(ImportBidies, 1), Domains.GetHasWordUrl(ImportBidies, 2)), dir + "\\" + csproj.Replace("Plugin", "ServerPlugin") + "\\Services\\" + ls.Last() + "Service.cs");
+                var ls = ServerName.Split('.');
+                Strings.Write(Domains.GetAssembly(ServerName, ChineseName), dir + "\\" + ServerName + "\\Properties\\AssemblyInfo.cs");
+                Strings.Write(Domains.GetCsproj(ServerName, LoadTables()), dir + "\\" + ServerName + "\\" + ServerName + ".csproj");
+                Strings.Write(Domains.GetDomain(ServerName, Domains.GetAllUrlBody(IndexContents, 1), Domains.GetHasWordUrl(ImportBidies, 1), Domains.GetHasWrodFunction(ImportBidies), Domains.GetAllFunction(Tables, IndexContents)), dir + "\\" + ServerName + "\\Domains\\" + ls.Last() + "Domain.cs");
+                Strings.Write(Domains.GetService(ServerName, Domains.GetAllUrlHeader(ServerName, IndexContents), Domains.GetAllUrlBody(IndexContents, 1), Domains.GetAllUrlBody(IndexContents, 0), ChineseName, Domains.GetHasWordUrl(ImportBidies, 0), Domains.GetHasWordUrl(ImportBidies, 1), Domains.GetHasWordUrl(ImportBidies, 2)), dir + "\\" + ServerName + "\\Services\\" + ls.Last() + "Service.cs");
                 if(ModelChecked)
                     CreateDbModel();
                 #endregion
@@ -1244,7 +1270,7 @@ namespace Project.G.ViewModel
             {
                 if (!File.Exists(ShareModel + "\\" + ds.ToUpper() + ".cs"))
                 {
-                    Strings.Write(GenerateModel(ds), dir + "\\" + ProjectName.Replace("Plugin", "ServerPlugin") + "\\Models\\" + ds.ToUpper() + ".cs");
+                    Strings.Write(GenerateModel(ds), dir + "\\" + ServerName + "\\Models\\" + ds.ToUpper() + ".cs");
                     s += ds.ToUpper() + "\r\n";
                 }
             }

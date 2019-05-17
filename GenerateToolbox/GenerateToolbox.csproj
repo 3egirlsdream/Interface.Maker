@@ -76,6 +76,9 @@
     <Reference Include="NPOI.OpenXmlFormats">
       <HintPath>plugins\NPOI.OpenXmlFormats.dll</HintPath>
     </Reference>
+    <Reference Include="Oracle.ManagedDataAccess, Version=4.122.18.3, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
+      <HintPath>..\packages\Oracle.ManagedDataAccess.18.6.0\lib\net40\Oracle.ManagedDataAccess.dll</HintPath>
+    </Reference>
     <Reference Include="SqlSugar, Version=4.9.7.2, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>E:\MyData\jiangxj.CN\source\repos\XuTooKit\packages\sqlSugar.4.9.7.2\lib\SqlSugar.dll</HintPath>
     </Reference>
@@ -104,7 +107,7 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="Xu.Common, Version=1.0.6921.17382, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Xu.Common, Version=1.0.7076.21573, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>plugins\Xu.Common.dll</HintPath>
     </Reference>

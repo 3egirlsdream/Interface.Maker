@@ -95,7 +95,7 @@
                     <controls:MetroTabItem GotFocus="Service_GotFocus" Header="Service">
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="150" />
+                                <ColumnDefinition Width="220" />
                                 <ColumnDefinition Width="150" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
@@ -130,6 +130,16 @@
                                     Margin="10"
                                     VerticalAlignment="Center"
                                     FontWeight="Bold"
+                                    Text="服务名：" />
+                                <TextBox
+                                    Width="130"
+                                    Height="30"
+                                    Margin="10,0,10,0"
+                                    Text="{Binding ServerName}" />
+                                <TextBlock
+                                    Margin="10"
+                                    VerticalAlignment="Center"
+                                    FontWeight="Bold"
                                     Text="中文名：" />
                                 <TextBox
                                     Width="130"
@@ -151,7 +161,7 @@
                                 <StackPanel>
                                     <CheckBox
                                         Name="cm"
-                                        Width="100"
+                                        Width="200"
                                         Margin="10,10,10,0"
                                         IsChecked="{Binding ModelChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                                         <TextBlock Text="生成模型" />
@@ -169,7 +179,7 @@
                                     FontWeight="Bold"
                                     Text="弹出框数：" />
                                 <TextBox
-                                    Width="130"
+                                    Width="120"
                                     Height="30"
                                     Margin="10,0,10,0"
                                     Text="{Binding BoxNumber}" />
@@ -179,8 +189,10 @@
                                     FontWeight="Bold"
                                     Text="Share Model路径：" />
                                 <TextBox
-                                    Width="130"
-                                    Height="30"
+                                    Width="200"
+                                    AcceptsReturn="True"
+                                    TextWrapping="Wrap"
+                                    Height="60"
                                     Margin="10"
                                     FontFamily="Consolas"
                                     FontSize="14"

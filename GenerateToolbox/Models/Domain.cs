@@ -15,8 +15,8 @@ namespace Project.G.Models
             string s = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<Project ToolsVersion=\"14.0\" DefaultTargets=\"Build\" " +
                 "xmlns=\"http://schemas.microsoft.com/developer/msbuild/2003\">\r\n  " +
                 "<Import Project=\"$(MSBuildExtensionsPath)\\$(MSBuildToolsVersion)\\Microsoft.Common.props\" Condition=\"Exists('$(MSBuildExtensionsPath)\\$(MSBuildToolsVersion)\\Microsoft.Common.props')\" />\r\n  <PropertyGroup>\r\n    <Configuration Condition=\" '$(Configuration)' == '' \">Debug</Configuration>\r\n    <Platform Condition=\" '$(Platform)' == '' \">AnyCPU</Platform>\r\n    <ProjectGuid>{6363F4E5-6A68-4112-AC41-B2D86C2151A0}</ProjectGuid>\r\n    <OutputType>Library</OutputType>\r\n    <AppDesignerFolder>Properties</AppDesignerFolder>\r\n    " +
-                "<RootNamespace> " + ProjectName.Replace("Plugin", "ServerPlugin") + "</RootNamespace>\r\n    " +
-                "<AssemblyName>" + ProjectName.Replace("Plugin", "ServerPlugin") + "</AssemblyName>\r\n    " +
+                "<RootNamespace> " + ProjectName + "</RootNamespace>\r\n    " +
+                "<AssemblyName>" + ProjectName + "</AssemblyName>\r\n    " +
                 "<TargetFrameworkVersion>v4.0</TargetFrameworkVersion>\r\n    " +
                 "<FileAlignment>512</FileAlignment>\r\n  " +
                 "</PropertyGroup>\r\n  " +
@@ -57,15 +57,15 @@ namespace Project.G.Models
             return s;
         }
 
-        public static string GetAssembly(string ProjectName, string ChineseName)
+        public static string GetAssembly(string ServerName, string ChineseName)
         {
             Random rnd = new Random((int)DateTime.Now.Ticks);
             int t = rnd.Next((int)DateTime.Now.Ticks < 0 ? -(int)DateTime.Now.Ticks : (int)DateTime.Now.Ticks);
             t = t % 100;
-            var ls = ProjectName.Split('.');
+            var ls = ServerName.Split('.');
             string s = "using Creative.ServerPlugin.Common;\r\n" +
                 "using System.Reflection;\r\n\r\n// 有关程序集的一般信息由以下\r\n// 控制。更改这些特性值可修改\r\n// 与程序集关联的信息。\r\n" +
-                "[assembly: AssemblyTitle(\"" + ProjectName.Replace("Plugin", "ServerPlugin") + "\")]\r\n" +
+                "[assembly: AssemblyTitle(\"" + ServerName + "\")]\r\n" +
                 "[assembly: AssemblyVersion(\"2.0.0.*\")]\r\n\r\n" +
                 "[assembly: AssemblyDescription(\"\")]\r\n\r\n" +
                 "[assembly: RESTful(Code = \"" + t + ls.Last()[0].ToString().ToUpper() + "\", UriTemplate = \"/api/" + ls.Last().ToLower() + "\", Description = \"" + ChineseName + "\")]\r\n";
