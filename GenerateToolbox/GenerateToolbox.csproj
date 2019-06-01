@@ -107,7 +107,7 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="Xu.Common, Version=1.0.7076.21573, Culture=neutral, processorArchitecture=MSIL">
+    <Reference Include="Xu.Common, Version=1.0.7076.25375, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>plugins\Xu.Common.dll</HintPath>
     </Reference>

@@ -90,7 +90,22 @@ namespace Project.G.ViewModel
             }
         }
 
-        
+        /// <summary>
+        /// 是否生成sugar模型
+        /// </summary>
+        private bool _IsSugar;
+        public bool IsSugar
+        {
+            get
+            {
+                return _IsSugar;
+            }
+            set
+            {
+                _IsSugar = value;
+                NotifyPropertyChanged("IsSugar");
+            }
+        }
 
         private string _SqlText;
         public string SqlText
@@ -530,7 +545,10 @@ namespace Project.G.ViewModel
                         ty = SqlSugar.DbType.Oracle;
                     }
                     string json = model.GetTableJson(DBName, ty);
-                    SqlText = Common.format(model.ModelCreate(json, "MeiCloud.DataAccess"));
+                    if(IsSugar)
+                        SqlText = Common.format(model.ModelCreate(json, "MeiCloud.DataAccess", "Sugar"));
+                    else
+                        SqlText = Common.format(model.ModelCreate(json, "MeiCloud.DataAccess"));
                 }
             }
             catch (Exception ex)

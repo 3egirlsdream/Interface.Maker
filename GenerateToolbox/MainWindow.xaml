@@ -88,10 +88,13 @@
                 Background="#DD335D"
                 BorderThickness="0" />
             <Grid Grid.Row="2" Grid.RowSpan="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="7*"/>
+                </Grid.ColumnDefinitions>
                 <controls:MetroTabControl
-                    Grid.RowSpan="2"
                     Margin="0,-35,0,0"
-                    Background="Transparent" SelectedIndex="3">
+                    Background="Transparent" Grid.ColumnSpan="2">
                     <controls:MetroTabItem GotFocus="Service_GotFocus" Header="Service">
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -256,6 +259,7 @@
                                     <ColumnDefinition Width="auto" />
                                     <ColumnDefinition Width="auto" />
                                     <ColumnDefinition Width="auto" />
+                                    <ColumnDefinition Width="auto" />
                                 </Grid.ColumnDefinitions>
                                 <TextBlock
                                     Grid.Column="0"
@@ -283,6 +287,11 @@
                                     Margin="10,0,0,0"
                                     ItemsSource="{Binding Constraints}"
                                     SelectedItem="{Binding Constraint, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <CheckBox 
+                                    Grid.Column="4"
+                                    Margin="10,0,0,0"
+                                    IsChecked="{Binding IsSugar, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                    >Sugar</CheckBox>
                                 <!--<StackPanel Grid.Column="3">
                                     <CheckBox Margin="10,0,0,0" IsChecked="{Binding IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                                         <TextBlock Text="去掉小写"/>
@@ -293,7 +302,7 @@
                                 </StackPanel>
                                 -->
                                 <Button
-                                    Grid.Column="4"
+                                    Grid.Column="5"
                                     Width="100"
                                     Margin="10,0,0,0"
                                     HorizontalAlignment="Left"
@@ -318,7 +327,7 @@
                         </Grid>
                     </controls:MetroTabItem>
 
-                    <controls:MetroTabItem GotFocus="Domain_GotFocus" Header="Domain">
+                    <controls:MetroTabItem GotFocus="Domain_GotFocus" Header="Domain" Visibility="Collapsed">
                         <Grid>
                             <TextBox
                                 Grid.Row="1"
@@ -333,7 +342,7 @@
                                 VerticalScrollBarVisibility="Visible" />
                         </Grid>
                     </controls:MetroTabItem>
-                    <controls:MetroTabItem GotFocus="Preview_GotFocus" Header="Preview">
+                    <controls:MetroTabItem GotFocus="Preview_GotFocus" Header="drawPro">
                         <Grid Margin="0,-3,0,0">
                             <ContentControl Name="Preview" Grid.Column="6" />
                         </Grid>
