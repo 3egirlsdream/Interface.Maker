@@ -17,7 +17,7 @@ namespace Project.G.Models
                 "<Import Project=\"$(MSBuildExtensionsPath)\\$(MSBuildToolsVersion)\\Microsoft.Common.props\" Condition=\"Exists('$(MSBuildExtensionsPath)\\$(MSBuildToolsVersion)\\Microsoft.Common.props')\" />\r\n  <PropertyGroup>\r\n    <Configuration Condition=\" '$(Configuration)' == '' \">Debug</Configuration>\r\n    <Platform Condition=\" '$(Platform)' == '' \">AnyCPU</Platform>\r\n    <ProjectGuid>{6363F4E5-6A68-4112-AC41-B2D86C2151A0}</ProjectGuid>\r\n    <OutputType>Library</OutputType>\r\n    <AppDesignerFolder>Properties</AppDesignerFolder>\r\n    " +
                 "<RootNamespace> " + ProjectName + "</RootNamespace>\r\n    " +
                 "<AssemblyName>" + ProjectName + "</AssemblyName>\r\n    " +
-                "<TargetFrameworkVersion>v4.0</TargetFrameworkVersion>\r\n    " +
+                "<TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>\r\n    " +
                 "<FileAlignment>512</FileAlignment>\r\n  " +
                 "</PropertyGroup>\r\n  " +
                 "<PropertyGroup Condition=\" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' \">\r\n    " +

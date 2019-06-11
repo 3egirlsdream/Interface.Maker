@@ -56,7 +56,7 @@ namespace Project.G.Models
                 "<AppDesignerFolder>Properties</AppDesignerFolder>\r\n    " +
                 "<RootNamespace>"+ProjectName+"</RootNamespace>\r\n    " +
                 "<AssemblyName>"+ProjectName+"</AssemblyName>\r\n    " +
-                "<TargetFrameworkVersion>v4.0</TargetFrameworkVersion>\r\n    " +
+                "<TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>\r\n    " +
                 "<FileAlignment>512</FileAlignment>\r\n    " +
                 "<Deterministic>false</Deterministic>\r\n  " +
                 "</PropertyGroup>\r\n  " +

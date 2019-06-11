@@ -99,7 +99,7 @@
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="220" />
-                                <ColumnDefinition Width="150" />
+                                <ColumnDefinition Width="250" />
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <TextBlock
@@ -213,7 +213,7 @@
                                     FontWeight="Bold"
                                     Text="表名：" />
                                 <TextBox
-                                    Width="130"
+                                    Width="230"
                                     Height="280"
                                     Margin="10,0,10,0"
                                     AcceptsReturn="True"
