@@ -20,7 +20,7 @@ namespace Project.G.Models
             string s = "using DAF.Plugin.Common;using System;using System.Collections.Generic;using System.Linq;using System.Text;namespace " + ProjectName + "{public class Model : ValidationBase{";
             s += "public string ID {get;set;}";
             s += "public string Color {get;set;}";
-            s += "public string TextState {get; set;}";
+            s += "public string TextState {get;set;}";
             foreach (var marx in lists)
             {
                 string model = "";

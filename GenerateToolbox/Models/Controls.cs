@@ -30,6 +30,7 @@ namespace Project.G.Models
                     case "DatePicker": s += CreateDatePicker(Contents[j].SEARCH_CODE); break;
                     case "占位控件": s += EmptyControl(); break;
                     case "只读TextBox": s += ReadonlyTextbox(Contents[j].SEARCH_CODE); break;
+                    case "进阶DatePicker": s += CreateControlsDatePicker(Contents[j].SEARCH_CODE); break;
                     default: break;
                 }
                 s += "</WrapPanel>";
@@ -70,6 +71,7 @@ namespace Project.G.Models
                     case "TextBox带弹出框": s += CreateTextBoxWithCommand(Contents[j].CODE); break;
                     case "Combox": s += CreateCombox(Contents[j].CODE); break;
                     case "DatePicker": s += CreateDatePicker(Contents[j].CODE); break;
+                    case "进阶DatePicker": s += CreateControlsDatePicker(Contents[j].CODE); break;
                     case "占位控件": s += EmptyControl(); break;
                     case "只读TextBox": s += ReadonlyTextbox(Contents[j].CODE); break;
                     case "btn": s += Buttons.CreateButton_Custom(Contents[j].NAME); break;
@@ -107,6 +109,7 @@ namespace Project.G.Models
                     case "Combox": s += CreateCombox(Contents[i].SEARCH_CODE); break;
                     case "DatePicker": s += CreateDatePicker(Contents[i].SEARCH_CODE); break;
                     case "占位控件": s += EmptyControl(); break;
+                    case "进阶DatePicker": s += CreateControlsDatePicker(Contents[i].SEARCH_CODE); break;
                     default: break;
                 }
 
@@ -352,6 +355,12 @@ namespace Project.G.Models
         private static string CreateDatePicker(string Binding)
         {
             string s = "<DatePicker Text=\"{Binding " + Binding + ", Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}\" Margin=\"0,0,30,0\"/>\r\n";
+            return s;
+        }
+
+        private static string CreateControlsDatePicker(string Binding)
+        {
+            string s = "<controls:DateTimePicker SelectedDate=\"{Binding " + Binding + ", Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}\" Margin=\"0,0,30,0\"/>\r\n";
             return s;
         }
 
