@@ -7,13 +7,12 @@
     xmlns:local="clr-namespace:Project.G"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="MainWindow"
-    Width="840"
-    Height="490"
+    Width="1040"
+    Height="690"
     AllowsTransparency="True"
     Background="{x:Null}"
     BorderThickness="0"
     FontFamily=".PingFang SC,Microsoft YaHei UI"
-    MouseLeftButtonDown="MoveWindow"
     WindowStartupLocation="CenterScreen"
     WindowStyle="None"
     mc:Ignorable="d">
@@ -37,6 +36,7 @@
             </Grid.RowDefinitions>
 
             <Border
+                MouseLeftButtonDown="MoveWindow"
                 Name="bd2"
                 Grid.Row="0"
                 Background="#DD335D"
@@ -82,6 +82,7 @@
                 </Grid>
             </Border>
             <Border
+                MouseLeftButtonDown="MoveWindow"
                 Name="bd1"
                 Grid.Row="1"
                 Margin="0,-3,0,0"
@@ -125,9 +126,11 @@
                                     Text="项目名：" />
                                 <TextBox
                                     Name="ProjName1"
-                                    Width="130"
+                                    AllowDrop="True"
+                                    AcceptsReturn="True"
+                                    Width="200"
                                     Height="30"
-                                    Margin="10,0,10,0"
+                                    Margin="10,10,10,0"
                                     Text="{Binding ProjectName}" />
                                 <TextBlock
                                     Margin="10"
@@ -135,9 +138,11 @@
                                     FontWeight="Bold"
                                     Text="服务名：" />
                                 <TextBox
-                                    Width="130"
+                                    AllowDrop="True"
+                                    AcceptsReturn="True"
+                                    Width="200"
                                     Height="30"
-                                    Margin="10,0,10,0"
+                                    Margin="10,10,10,0"
                                     Text="{Binding ServerName}" />
                                 <TextBlock
                                     Margin="10"
@@ -145,14 +150,16 @@
                                     FontWeight="Bold"
                                     Text="中文名：" />
                                 <TextBox
-                                    Width="130"
+                                    AllowDrop="True"
+                                    AcceptsReturn="True"
+                                    Width="200"
                                     Height="30"
-                                    Margin="10,0,10,0"
+                                    Margin="10,10,10,0"
                                     Text="{Binding ChineseName}" />
-                                <CheckBox Margin="10,10,10,0" IsChecked="{Binding AddChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                <CheckBox Margin="10,10,10,0" IsChecked="{Binding AddChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100">
                                     <TextBlock Text="新增" />
                                 </CheckBox>
-                                <CheckBox Margin="10,10,10,0" IsChecked="{Binding EditChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                <CheckBox Margin="10,10,10,0" IsChecked="{Binding EditChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="100">
                                     <TextBlock Text="编辑" />
                                 </CheckBox>
                                 <CheckBox
@@ -195,7 +202,7 @@
                                     Width="200"
                                     AcceptsReturn="True"
                                     TextWrapping="Wrap"
-                                    Height="60"
+                                    Height="140"
                                     Margin="10"
                                     FontFamily="Consolas"
                                     FontSize="14"
@@ -214,27 +221,35 @@
                                     Text="表名：" />
                                 <TextBox
                                     Width="230"
-                                    Height="280"
+                                    Height="460"
                                     Margin="10,0,10,0"
                                     AcceptsReturn="True"
                                     FontFamily="Consolas"
                                     FontSize="14"
                                     Text="{Binding Tables}"
                                     TextWrapping="Wrap" />
-                                <CheckBox
-                                    Margin="10,10,10,0"
-                                    Foreground="Gray"
-                                    IsChecked="{Binding IsExsitModel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                                    <TextBlock Text="检查模型是否存在" />
-                                </CheckBox>
+                                <StackPanel>
+                                    <CheckBox
+                                        Margin="10,10,10,0"
+                                        Foreground="Gray"
+                                        IsChecked="{Binding IsExsitModel, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                        <TextBlock Text="检查模型是否存在" />
+                                    </CheckBox>
+                                    <Label
+                                        Margin="60,0,0,0"
+                                        Content="勾选后不存在的模型不会链接"
+                                        FontSize="10"
+                                        Foreground="Gray" />
+                                </StackPanel>
                                 <Button
                                     Width="100"
                                     Height="30"
                                     Margin="25,10,10,0"
-                                    Background="#DD335D"
-                                    BorderThickness="0"
+                                    
                                     Command="{Binding CmdGenerate}"
                                     Content="生  成"
+                                    Background="#DD335D"
+                                    BorderThickness="0"
                                     FontSize="13"
                                     Foreground="White" />
                             </WrapPanel>

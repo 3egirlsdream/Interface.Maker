@@ -1,0 +1,26 @@
+﻿<Page x:Class="GenerateToolbox.DataGridSetting"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:GenerateToolbox"
+      mc:Ignorable="d" 
+      d:DesignWidth="200"
+      Title="ButtonSetting">
+
+    <Grid>
+        <StackPanel>
+            <DataGrid CanUserAddRows="True" MinHeight="100" ItemsSource="{Binding DataSource, Mode=TwoWay}" HorizontalScrollBarVisibility="Hidden" GridLinesVisibility="All">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="中文" Width="100" Binding="{Binding NAME_ZH}"/>
+                    <DataGridTextColumn Header="英文" Width="100" Binding="{Binding NAME_ENG}"/>
+                </DataGrid.Columns>
+            </DataGrid>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                <!--<Button Content="保存" Width="100" Click="Button_Click"/>-->
+                <Button Content="保存" Width="100" Command="{Binding CmdSave}"/>
+            </StackPanel>
+            
+        </StackPanel>
+    </Grid>
+</Page>

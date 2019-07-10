@@ -1,0 +1,28 @@
+﻿<UserControl x:Class="GenerateToolbox.MySidebar"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:GenerateToolbox"
+             mc:Ignorable="d" >
+    <Grid  x:Name="btn">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="auto"/>
+        </Grid.ColumnDefinitions>
+        <Border x:Name="border" Grid.Column="0"  Width="500" Height="150" BorderBrush="LightGray" BorderThickness="2" CornerRadius="0">
+        </Border>
+        <StackPanel Grid.Column="1" Width="90">
+            <StackPanel Orientation="Horizontal">
+                <Button Height="30" Width="30" Content="宽" IsEnabled="False" Background="Transparent" BorderThickness="0"/>
+                <Button Height="30" Width="30" Content="+" Background="Transparent" BorderThickness="0" Click="Button_Click"/>
+                <Button Height="30" Width="30" Content="-" Background="Transparent" BorderThickness="0" Click="Button_Click_1"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Button Height="30" Width="30" Content="高" IsEnabled="False" Background="Transparent" BorderThickness="0"/>
+                <Button Height="30" Width="30" Content="+" Background="Transparent" BorderThickness="0" Click="Button_Click_2"/>
+                <Button Height="30" Width="30" Content="-" Background="Transparent" BorderThickness="0" Click="Button_Click_3"/>
+            </StackPanel>
+        </StackPanel>
+    </Grid>
+</UserControl>

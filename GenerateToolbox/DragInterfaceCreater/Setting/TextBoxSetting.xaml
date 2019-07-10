@@ -1,0 +1,35 @@
+﻿<Page x:Class="GenerateToolbox.TextBoxSetting"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:GenerateToolbox"
+      mc:Ignorable="d" d:DesignWidth="200"
+      Title="ButtonSetting">
+
+    <Grid>
+        <StackPanel>
+            <StackPanel Orientation="Horizontal"  VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                <TextBlock Text="字段中文名 "/>
+                <TextBox Name="name_zh" Text="" Width="100"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                <TextBlock Text="字段英文名 "/>
+                <TextBox Name="name_eg"  Text="" Width="100"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                <TextBlock Text="弹出框类型 "/>
+                <ComboBox Name="combobox" Width="100" ItemsSource="{Binding pairs, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}" SelectedValuePath="Value" DisplayMemberPath="Key" />
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                <CheckBox IsChecked="{Binding IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                    是否作为API
+                </CheckBox>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
+                <Button Content="保存" Width="100" Command="{Binding CmdSave}"/>
+            </StackPanel>
+            
+        </StackPanel>
+    </Grid>
+</Page>

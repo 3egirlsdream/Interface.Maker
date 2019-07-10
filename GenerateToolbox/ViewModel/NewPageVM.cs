@@ -83,6 +83,26 @@ namespace GenerateToolbox.ViewModel
         }
         #endregion
 
+        /// <summary>
+        ///
+        /// </summary>
+        private List<Grids> _result;
+        public List<Grids> result
+        {
+            get
+            {
+                return _result;
+            }
+            set
+            {
+                _result = value;
+                NotifyPropertyChanged("result");
+            }
+        }
+
+
+
+
         #region Command
         /// <summary>
         /// 生成函数
@@ -91,82 +111,86 @@ namespace GenerateToolbox.ViewModel
         {
             ExecuteDelegate = c =>
             {
-                try
-                {
-                    Strings.Write(config, "config.xml");
-                    dynamic res = ExcelHelper.LoadXml();
-                    CreateFile(res.en);
-                    ExcelHelper helper = new ExcelHelper();
-                    var result = helper.OpenExcel((int)res.count);
-                    dynamic foo = assemblyPage(res.en, result, res.datas);
-                    List<string> excels = foo.vs;
-                    for (int i = 0; i < result.Count; i++)
-                    {
-                        List<DataGrids> datas = res.datas;
-                        switch (result[i].Identity)
-                        {
-                            case "主页":
-                                {
-                                    Strings.Write(excels[i], dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml");
-                                    Strings.Write(Strings.GetIndexXamlCs(res.en), dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml.cs");
-                                    Strings.Write(Strings.GetIndexVM_new(res.en, Controls.GetDataGridBinding(datas.Take((int)foo.ids[i]).ToList()) + Controls.CreateWord_new(result[i]) + Strings.CreateCommand_new(result[i], res.en), ""), dir + "\\" + res.en + "\\ViewModels\\" + result[i].PageCode + "VM.cs");
-                                }
-                                break;
-                            case "新增":
-                                {
-                                    Strings.Write(excels[i], dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml");
-                                    Strings.Write(Strings.GetAddPageXamlCs(res.en), dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml.cs");
-                                    Strings.Write(Strings.GetAddVM(res.en, Controls.GetDataGridBinding(datas.Take((int)foo.ids[i]).ToList()) + Controls.CreateWord_new(result[i]), "", "", "new") + Strings.CreateCommand_new(result[i], res.en), dir + "\\" + res.en + "\\ViewModels\\" + result[i].PageCode + "VM.cs");
-                                }
-                                break;
-                            case "编辑":
-                                {
-                                    Strings.Write(excels[i], dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml");
-                                    Strings.Write(Strings.GetEditPageXamlCs(res.en), dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml.cs");
-                                    Strings.Write(Strings.GetEditVM(res.en, Controls.GetDataGridBinding(datas.Take((int)foo.ids[i]).ToList()) + Controls.CreateWord_new(result[i]), "", "", "", "new") + Strings.CreateCommand_new(result[i], res.en), dir + "\\" + res.en + "\\ViewModels\\" + result[i].PageCode + "VM.cs");
-                                }
-                                break;
-                            case "导入":
-                                {
-                                    Strings.Write(excels[i], dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml");
-                                    Strings.Write(Strings.GetImportXamlCs(res.en), dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml.cs");
-                                    Strings.Write(Strings.GetImprotVM_new(res.en, result[i].grids, Controls.GetDataGridBinding(datas.Take((int)foo.ids[i]).ToList()) + Controls.CreateWord_new(result[i]) + Strings.CreateCommand_new(result[i], res.en), Import.CreateXss_new(result[i]), Import.CreateNull_new(result[i]), Import.CreateRepeat_new(result[i]), Import.CreateRepeatFunction_new(result[i]), Import.CheckImportData_new(result[i])), dir + "\\" + res.en + "\\ViewModels\\" + result[i].PageCode + "VM.cs");
-                                }
-                                break;
-                            default:
-                                {
-                                    Strings.Write(excels[i], dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml");
-                                    Strings.Write(Strings.GetBoxesXamlCs(res.en, result[i].PageCode), dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml.cs");
-                                    Strings.Write(Strings.GetBoxesVM_new(res.en, result[i].PageCode, Controls.GetDataGridBinding(datas.Take((int)foo.ids[i]).ToList()) + Controls.CreateWord_new(result[i]) + Strings.CreateCommand_new(result[i], res.en)), dir + "\\" + res.en + "\\ViewModels\\" + result[i].PageCode + "VM.cs");
-                                }
-                                break;
-                        }
-
-                    }
-
-                    //Strings.Write(Strings.GetResource(res.en, ""), dir + "\\" + res.en + "\\Resources\\Strings.zh-CN.xaml");//资源文件
-
-                    string Include = Strings.GetInclude_new(result);
-                    string Complie = Strings.GetComplie_new(result);
-
-                    Strings.Write(Strings.GetCsproj_new(res.en, Complie, Include), dir + "\\" + res.en + "\\" + res.en + ".csproj");
-                    
-                    Strings.Write(Strings.GetServices(res.en), dir + "\\" + res.en + "\\Services.cs");
-                    //两个model
-                    Strings.Write(CreateClass.LoadModel_new(result, res.en), dir + "\\" + res.en + "\\Models\\Model.cs");
-                    Strings.Write(CreateClass.LoadModel(res.en), dir + "\\" + res.en + "\\Models\\ComboxModel.cs");
-
-                    //Resource文件
-                    Strings.Write(Strings.GetResource(res.en, Resources.CreateResorce_new(Resources.AllRes_new(result)), "new"), dir + "\\" + res.en + "\\Resources\\Strings.zh-CN.xaml");//资源文件
-                }
-                catch (Exception ex)
-                {
-                    Warning warning = new Warning(ex.Message);
-                    warning.ShowDialog();
-                }
+                Genetate();
             }
         };
 
+        public void Genetate()
+        {
+            try
+            {
+                Strings.Write(config, "config.xml");
+                dynamic res = ExcelHelper.LoadXml();
+                CreateFile(res.en);
+                ExcelHelper helper = new ExcelHelper();
+                //result = helper.OpenExcel((int)res.count);
+                dynamic foo = assemblyPage(res.en, result, res.datas);
+                List<string> excels = foo.vs;
+                for (int i = 0; i < result.Count; i++)
+                {
+                    List<DataGrids> datas = res.datas;
+                    switch (result[i].Identity)
+                    {
+                        case "主页":
+                            {
+                                Strings.Write(excels[i], dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml");
+                                Strings.Write(Strings.GetIndexXamlCs(res.en), dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml.cs");
+                                Strings.Write(Strings.GetIndexVM_new(res.en, Controls.GetDataGridBinding(datas.Take((int)foo.ids[i]).ToList()) + Controls.CreateWord_new(result[i]) + Strings.CreateCommand_new(result[i], res.en), ""), dir + "\\" + res.en + "\\ViewModels\\" + result[i].PageCode + "VM.cs");
+                            }
+                            break;
+                        case "新增":
+                            {
+                                Strings.Write(excels[i], dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml");
+                                Strings.Write(Strings.GetAddPageXamlCs(res.en), dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml.cs");
+                                Strings.Write(Strings.GetAddVM(res.en, Controls.GetDataGridBinding(datas.Take((int)foo.ids[i]).ToList()) + Controls.CreateWord_new(result[i]), "", "", "new") + Strings.CreateCommand_new(result[i], res.en), dir + "\\" + res.en + "\\ViewModels\\" + result[i].PageCode + "VM.cs");
+                            }
+                            break;
+                        case "编辑":
+                            {
+                                Strings.Write(excels[i], dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml");
+                                Strings.Write(Strings.GetEditPageXamlCs(res.en), dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml.cs");
+                                Strings.Write(Strings.GetEditVM(res.en, Controls.GetDataGridBinding(datas.Take((int)foo.ids[i]).ToList()) + Controls.CreateWord_new(result[i]), "", "", "", "new") + Strings.CreateCommand_new(result[i], res.en), dir + "\\" + res.en + "\\ViewModels\\" + result[i].PageCode + "VM.cs");
+                            }
+                            break;
+                        case "导入":
+                            {
+                                Strings.Write(excels[i], dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml");
+                                Strings.Write(Strings.GetImportXamlCs(res.en), dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml.cs");
+                                Strings.Write(Strings.GetImprotVM_new(res.en, result[i].grids, Controls.GetDataGridBinding(datas.Take((int)foo.ids[i]).ToList()) + Controls.CreateWord_new(result[i]) + Strings.CreateCommand_new(result[i], res.en), Import.CreateXss_new(result[i]), Import.CreateNull_new(result[i]), Import.CreateRepeat_new(result[i]), Import.CreateRepeatFunction_new(result[i]), Import.CheckImportData_new(result[i])), dir + "\\" + res.en + "\\ViewModels\\" + result[i].PageCode + "VM.cs");
+                            }
+                            break;
+                        default:
+                            {
+                                Strings.Write(excels[i], dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml");
+                                Strings.Write(Strings.GetBoxesXamlCs(res.en, result[i].PageCode), dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml.cs");
+                                Strings.Write(Strings.GetBoxesVM_new(res.en, result[i].PageCode, Controls.GetDataGridBinding(datas.Take((int)foo.ids[i]).ToList()) + Controls.CreateWord_new(result[i]) + Strings.CreateCommand_new(result[i], res.en)), dir + "\\" + res.en + "\\ViewModels\\" + result[i].PageCode + "VM.cs");
+                            }
+                            break;
+                    }
+
+                }
+
+                //Strings.Write(Strings.GetResource(res.en, ""), dir + "\\" + res.en + "\\Resources\\Strings.zh-CN.xaml");//资源文件
+
+                string Include = Strings.GetInclude_new(result);
+                string Complie = Strings.GetComplie_new(result);
+
+                Strings.Write(Strings.GetCsproj_new(res.en, Complie, Include), dir + "\\" + res.en + "\\" + res.en + ".csproj");
+
+                Strings.Write(Strings.GetServices(res.en), dir + "\\" + res.en + "\\Services.cs");
+                //两个model
+                Strings.Write(CreateClass.LoadModel_new(result, res.en), dir + "\\" + res.en + "\\Models\\Model.cs");
+                Strings.Write(CreateClass.LoadModel(res.en), dir + "\\" + res.en + "\\Models\\ComboxModel.cs");
+
+                //Resource文件
+                Strings.Write(Strings.GetResource(res.en, Resources.CreateResorce_new(Resources.AllRes_new(result)), "new"), dir + "\\" + res.en + "\\Resources\\Strings.zh-CN.xaml");//资源文件
+            }
+            catch (Exception ex)
+            {
+                Warning warning = new Warning(ex.Message);
+                warning.ShowDialog();
+            }
+        }
         public SimpleCommand CmdReset => new SimpleCommand()
         {
             ExecuteDelegate = x =>

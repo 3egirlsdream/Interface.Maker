@@ -134,6 +134,18 @@ namespace Project.G.Models
             List<Key_Value> vs = new List<Key_Value>();
             foreach (var marx in grids)
             {
+                foreach(var btn in marx.strs)
+                {
+                    var temp = new Key_Value
+                    {
+                        Key = Buttons.command(btn, ""),
+                        Value = btn
+                    };
+                    if (!CreateClass.Contains(vs, temp))
+                    {
+                        vs.Add(temp);
+                    }
+                }
                 foreach(var ds in marx.grids)
                 {
                     if(ds.CONTROL_NAME != "NEXT_LINE")

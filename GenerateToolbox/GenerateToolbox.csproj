@@ -114,6 +114,30 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="DragInterfaceCreater\MyBorder.xaml.cs">
+      <DependentUpon>MyBorder.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DragInterfaceCreater\MyDataGrid.xaml.cs">
+      <DependentUpon>MyDataGrid.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DragInterfaceCreater\MySidebar.xaml.cs">
+      <DependentUpon>MySidebar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DragInterfaceCreater\MyTextBox.xaml.cs">
+      <DependentUpon>MyTextBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DragInterfaceCreater\Setting\ButtonSetting.xaml.cs">
+      <DependentUpon>ButtonSetting.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DragInterfaceCreater\Setting\DataGridSetting.xaml.cs">
+      <DependentUpon>DataGridSetting.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DragInterfaceCreater\Setting\TextBoxSetting.xaml.cs">
+      <DependentUpon>TextBoxSetting.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DragInterfaceCreater\ViewModels\Models.cs" />
+    <Compile Include="DragInterfaceCreater\ViewModels\MyDataGridVM.cs" />
+    <Compile Include="DragInterfaceCreater\ViewModels\MyTextBoxVM.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Models\Buttons.cs" />
     <Compile Include="Models\Connection.cs" />
@@ -144,6 +168,34 @@
     <Compile Include="UpdateDesc.xaml.cs">
       <DependentUpon>UpdateDesc.xaml</DependentUpon>
     </Compile>
+    <Page Include="DragInterfaceCreater\MyBorder.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DragInterfaceCreater\MyDataGrid.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DragInterfaceCreater\MySidebar.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DragInterfaceCreater\MyTextBox.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DragInterfaceCreater\Setting\ButtonSetting.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DragInterfaceCreater\Setting\DataGridSetting.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DragInterfaceCreater\Setting\TextBoxSetting.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

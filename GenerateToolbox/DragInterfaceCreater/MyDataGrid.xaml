@@ -1,0 +1,38 @@
+﻿<UserControl x:Class="GenerateToolbox.MyDataGrid"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:GenerateToolbox"
+             mc:Ignorable="d" >
+    <Grid  x:Name="btn">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="0"/>
+        </Grid.ColumnDefinitions>
+        <DataGrid x:Name="grid" Height="100" Grid.Column="0" BorderThickness="1" BorderBrush="LightGray">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="A"/>
+                <DataGridTextColumn Header="B"/>
+                <DataGridTextColumn Header="C"/>
+                <DataGridTextColumn Header="D"/>
+                <DataGridTextColumn Header="E"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <Grid Grid.Column="1" Visibility="Collapsed">
+            <StackPanel>
+                <WrapPanel>
+                    <TextBlock Text="高:"/>
+                    <TextBox x:Name="height" Width="80"/>
+                </WrapPanel>
+                <WrapPanel>
+                    <TextBlock Text="宽:"/>
+                    <TextBox x:Name="width" Width="80"/>
+                </WrapPanel>
+                <WrapPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Button Content="保存" Click="Button_Click"/>
+                </WrapPanel>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>
