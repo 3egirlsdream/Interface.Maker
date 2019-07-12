@@ -17,6 +17,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ViewModels;
+using Xu.Common;
 using Grid = Project.G.Models.Grid;
 
 namespace GenerateToolbox.NewPage
@@ -24,10 +25,12 @@ namespace GenerateToolbox.NewPage
     /// <summary>
     /// NewPage.xaml 的交互逻辑
     /// </summary>
+    
     public partial class NewPage : Page
     {
         NewPageVM vm;
         Point pos;
+        bool IsGenerate = false;
         public NewPage()
         {
             InitializeComponent();
@@ -37,11 +40,13 @@ namespace GenerateToolbox.NewPage
         }
         public MainWindow ParentWindow { get; set; }
 
+        int cot = 0;
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             MyBorder myBorder = new MyBorder();
             myBorder.Name = GetControlsName("BTN");
             myBorder.MouseDoubleClick += Button_MouseDown;
+            myBorder.btn.Margin = new Thickness(15 + cot++ * 100, 20, 5, 5);
             grid.Children.Add(myBorder);
         }
 
@@ -50,6 +55,7 @@ namespace GenerateToolbox.NewPage
             MyTextBox textBox = new MyTextBox();
             textBox.Name = GetControlsName("TB");
             textBox.MouseDoubleClick += TextBox_MouseDown;
+            textBox.btn.Margin = new Thickness(15, 5, 5, 5);
             grid.Children.Add(textBox);
         }
 
@@ -58,19 +64,29 @@ namespace GenerateToolbox.NewPage
             MyDataGrid datagrid = new MyDataGrid();
             datagrid.Name = GetControlsName("GRID");
             datagrid.MouseDoubleClick += DataGrid_MouseDown;
+            datagrid.btn.Margin = new Thickness(15, 5, 5, 5);
             grid.Children.Add(datagrid);
         }
 
+        int t = 0;
         private void Button_Click_3(object sender, RoutedEventArgs e)
         {
-            //Canvas canvas = new Canvas();
-            //canvas.Width = 1150;
-            //canvas.Height = 750;
-            //canvas.Name = "canvas1";
-            //father.Children.Add(canvas);
 
             MySidebar mySidebar = new MySidebar();
             mySidebar.Name = GetControlsName("BAR");
+            Thickness thickness;
+            if(t == 0)
+            {
+                thickness = new Thickness(10, 10, 0, 0);
+                t++;
+            }
+            else
+            {
+                thickness = new Thickness(10, t++ * 160 - 70, 0, 0);
+            }
+            mySidebar.btn.Margin = thickness;
+            if (t == 1)
+                mySidebar.border.Height = 60;
             grid.Children.Add(mySidebar);
         }
 
@@ -122,34 +138,47 @@ namespace GenerateToolbox.NewPage
         /// <param name="e"></param>
         private void Create(object sender, RoutedEventArgs e)
         {
-            //拿到所有边框
-            List<MySidebar> sider = new List<MySidebar>();
-            foreach (dynamic ds in grid.Children)
+            try
             {
-                string name = ds.Name as string;
-                if (name.Contains("BAR"))
+                if (!IsGenerate)
                 {
-                    sider.Add(ds);
+                    sider = new List<MySidebar>();
+                    foreach (dynamic ds in grid.Children)
+                    {
+                        string name = ds.Name as string;
+                        if (name.Contains("BAR"))
+                        {
+                            sider.Add(ds);
+                        }
+                    }
+
+                    GetData(sider);
+                    IsGenerate = true;
                 }
+                //生成界面
+                vm.IsEnabled = false;
+                //create.IsEnabled = true;
+                vm.result = grids;
+                vm.Genetate();
+
+                Warning warning = new Warning("生成成功");
+                warning.ShowDialog();
             }
-
-            var result = GetData(sider);
-
-            //生成界面
-
-            vm.result = result;
-            vm.Genetate();
-
+           catch(Exception ex)
+            {
+                Warning warning = new Warning("生成失败：" + ex.Message);
+                warning.ShowDialog();
+            }
         }
 
-
+        List<Grids> grids = new List<Grids>();
         public List<Grids> GetData(List<MySidebar> sider)
         {
-            List<Grids> grids = new List<Grids>();
+            
             Grids tmp = new Grids();
-            tmp.Identity = "主页";
-            tmp.PageCode = "IndexPage";
-            tmp.PageName = "主页";
+            tmp.Identity = vm.FilterPageType.Value.Key;
+            tmp.PageCode = vm.FilterPageType.Value.Value;
+            tmp.PageName = vm.FilterPageType.Value.Key == "普通弹出框" ? vm.BoxName : vm.FilterPageType.Value.Value;
             foreach (var ds in sider)
             {
                 //var borderMargin = getMargin(ds.RenderSize.Width, ds.RenderSize.Height, ds.ActualWidth, ds.ActualHeight);
@@ -230,9 +259,25 @@ namespace GenerateToolbox.NewPage
             grids.Add(tmp);
             return grids;
         }
+        List<MySidebar> sider;
+        private void Add_Page(object sender, RoutedEventArgs e)
+        {
+            //拿到所有边框
+            sider = new List<MySidebar>();
+            foreach (dynamic ds in grid.Children)
+            {
+                string name = ds.Name as string;
+                if (name.Contains("BAR"))
+                {
+                    sider.Add(ds);
+                }
+            }
 
-
+            GetData(sider);
+            grid.Children.Clear();
+            cot = 0;
+            t = 0;
+            vm.FilterPageType = null;
+        }
     }
-
-    
 }

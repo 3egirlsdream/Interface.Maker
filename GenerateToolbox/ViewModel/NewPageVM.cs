@@ -11,7 +11,7 @@ using Xu.Common;
 
 namespace GenerateToolbox.ViewModel
 {
-    class NewPageVM : ValidationBase
+    public class NewPageVM : ValidationBase
     {
         public NewPageVM()
         {
@@ -25,7 +25,9 @@ namespace GenerateToolbox.ViewModel
                 case "31": EndOfMonth = "XXXI"; break;
             }
             BorderWidth = DateTime.Today.Day * (600 / days);
+            LoadPegeType();
         }
+
 
         #region
 
@@ -99,6 +101,151 @@ namespace GenerateToolbox.ViewModel
                 NotifyPropertyChanged("result");
             }
         }
+
+        /// <summary>
+        ///
+        /// </summary>
+        private List<KeyValuePair<string, string>> _PageType;
+        public List<KeyValuePair<string, string>> PageType
+        {
+            get
+            {
+                return _PageType;
+            }
+            set
+            {
+                _PageType = value;
+                NotifyPropertyChanged("PageType");
+            }
+        }
+
+
+        /// <summary>
+        ///
+        /// </summary>
+        private KeyValuePair<string, string>? _FilterPageType;
+        public KeyValuePair<string, string>? FilterPageType
+        {
+            get
+            {
+                return _FilterPageType;
+            }
+            set
+            {
+
+                if (value == null || string.IsNullOrEmpty(value.Value.Key))
+                {
+                    IsEnabled = false;
+                    IsEnabledC = false;
+                }
+                    
+                else
+                {
+                    IsEnabled = true;
+                    IsEnabledC = true;
+                    if (value.Value.Key == "普通弹出框")
+                    {
+                        Visibility = "Visible";
+                        Width = 100;
+                    }
+                    else
+                    {
+                        Visibility = "Hidden";
+                        Width = 0;
+                    }
+                }
+                    
+                _FilterPageType = value;
+                NotifyPropertyChanged("FilterPageType");
+            }
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        private int _Width = 0;
+        public int Width
+        {
+            get
+            {
+                return _Width;
+            }
+            set
+            {
+                _Width = value;
+                NotifyPropertyChanged("Width");
+            }
+        }
+
+
+
+
+        /// <summary>
+        ///
+        /// </summary>
+        private string _BoxName;
+        public string BoxName
+        {
+            get
+            {
+                return _BoxName;
+            }
+            set
+            {
+                _BoxName = value;
+                NotifyPropertyChanged("BoxName");
+            }
+        }
+
+        /// <summary>
+        ///
+        /// </summary>
+        private bool _IsEnabled;
+        public bool IsEnabled
+        {
+            get
+            {
+                return _IsEnabled;
+            }
+            set
+            {
+                _IsEnabled = value;
+                NotifyPropertyChanged("IsEnabled");
+            }
+        }
+
+        private bool _IsEnabledC;
+        public bool IsEnabledC
+        {
+            get
+            {
+                return _IsEnabledC;
+            }
+            set
+            {
+                _IsEnabledC = value;
+                NotifyPropertyChanged("IsEnabledC");
+            }
+        }
+        
+        /// <summary>
+        ///
+        /// </summary>
+        private string _Visibility = "Hidden";
+        public string Visibility
+        {
+            get
+            {
+                return _Visibility;
+            }
+            set
+            {
+                _Visibility = value;
+                NotifyPropertyChanged("Visibility");
+            }
+        }
+
+
 
 
 
@@ -280,6 +427,19 @@ namespace GenerateToolbox.ViewModel
             Directory.CreateDirectory(dir + "\\" + csproj + "\\ViewModels");
             Directory.CreateDirectory(dir + "\\" + csproj + "\\Views");
         }
+
+        private void LoadPegeType()
+        {
+            PageType = new List<KeyValuePair<string, string>>
+            {
+                new KeyValuePair<string, string>("主页", "IndexPage"),
+                new KeyValuePair<string, string>("新增", "Add"),
+                new KeyValuePair<string, string>("编辑", "Edit"),
+                new KeyValuePair<string, string>("导入", "Import"),
+                new KeyValuePair<string, string>("普通弹出框", "DialogBox" + DateTime.Now.Second)
+            };
+        }
+
         #endregion
     }
 }

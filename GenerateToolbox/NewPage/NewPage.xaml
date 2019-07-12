@@ -12,47 +12,68 @@
     <Border Background="White" CornerRadius="5">
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="6*" />
                 <RowDefinition Height="*" />
+                <RowDefinition Height="10*" />
             </Grid.RowDefinitions>
-            <Grid Grid.Row="0">
+            <WrapPanel Grid.Row="0">
+                <ComboBox MinWidth="100" Margin="1" 
+                          ItemsSource="{Binding PageType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                          SelectedItem="{Binding FilterPageType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                          DisplayMemberPath="Key"/>
+                <TextBox Visibility="{Binding Visibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         Text="{Binding BoxName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         Width="{Binding Width}" Margin="1"/>
+                <Button Content="Button" Width="100" Height="30"  Click="Button_Click" 
+                        IsEnabled="{Binding IsEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                            Margin="1"
+                            Background="#4F4150"
+                                    BorderThickness="0"
+                                    FontSize="13"
+                                    Foreground="White" />
+                <Button Content="TextBox" Width="100" Height="30" Click="Button_Click_1" 
+                        IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
+                            Margin="1"
+                            Background="#4F4150"
+                                    BorderThickness="0"
+                                    FontSize="13"
+                                    Foreground="White" />
+                <Button Content="DataGrid" Width="100" Height="30" Click="Button_Click_2" 
+                        IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
+                            Margin="1"
+                            Background="#4F4150"
+                                    BorderThickness="0"
+                                    FontSize="13"
+                                    Foreground="White" />
+                <Button Content="布局" Width="100" Height="30" Click="Button_Click_3" 
+                        IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
+                            Margin="1"
+                            Background="#4F4150"
+                                    BorderThickness="0"
+                                    FontSize="13"
+                                    Foreground="White" />
+                <Button Content="添加页" Width="100" Height="30" Click="Add_Page" 
+                        IsEnabled="{Binding IsEnabled, Mode=TwoWay}"
+                            Margin="1"
+                            Background="#4F4150"
+                                    BorderThickness="0"
+                                    FontSize="13"
+                                    Foreground="White" />
+                <Button Content="生成" Width="100" Height="30" Click="Create" 
+                        Name="create"
+                        IsEnabled="{Binding IsEnabledC, Mode=TwoWay}"
+                            Margin="1"
+                            Background="#4F4150"
+                                    BorderThickness="0"
+                                    FontSize="13"
+                                    Foreground="White" />
+            </WrapPanel>
+            <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="auto"/>
                     <ColumnDefinition Width="200"/>
                 </Grid.ColumnDefinitions>
-                <StackPanel Grid.Column="1">
-                    <Button Content="Button" Width="100" Height="30"  Click="Button_Click" 
-                            Margin="1"
-                            Background="#4F4150"
-                                    BorderThickness="0"
-                                    FontSize="13"
-                                    Foreground="White" />
-                    <Button Content="TextBox" Width="100" Height="30" Click="Button_Click_1" 
-                            Margin="1"
-                            Background="#4F4150"
-                                    BorderThickness="0"
-                                    FontSize="13"
-                                    Foreground="White" />
-                    <Button Content="DataGrid" Width="100" Height="30" Click="Button_Click_2" 
-                            Margin="1"
-                            Background="#4F4150"
-                                    BorderThickness="0"
-                                    FontSize="13"
-                                    Foreground="White" />
-                    <Button Content="布局" Width="100" Height="30" Click="Button_Click_3" 
-                            Margin="1"
-                            Background="#4F4150"
-                                    BorderThickness="0"
-                                    FontSize="13"
-                                    Foreground="White" />
-                    <Button Content="生成" Width="100" Height="30" Click="Create" 
-                            Margin="1"
-                            Background="#4F4150"
-                                    BorderThickness="0"
-                                    FontSize="13"
-                                    Foreground="White" />
-                </StackPanel>
+                
 
                 <Canvas x:Name="grid" Grid.Column="0">
 

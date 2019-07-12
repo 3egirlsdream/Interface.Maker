@@ -1,4 +1,5 @@
-﻿using Microsoft.Win32;
+﻿using GenerateToolbox.ViewModel;
+using Microsoft.Win32;
 using NPOI.XSSF.UserModel;
 using Project.G.Models;
 using System;
@@ -12,8 +13,9 @@ using Xu.Common;
 
 namespace GenerateToolbox.Models
 {
-    class ExcelHelper
+    public class ExcelHelper
     {
+        
         /// <summary>
         /// 读取表格
         /// </summary>
@@ -132,7 +134,8 @@ namespace GenerateToolbox.Models
 
         }
 
-
+        public static string zh { get; set; }
+        public static string en { get; set; }
         /// <summary>
         /// 加载XML配置文件
         /// </summary>
@@ -140,8 +143,8 @@ namespace GenerateToolbox.Models
         public static object LoadXml()
         {
             int count = 0;
-            string en = "";
-            string zh = "";
+            //string en = "";
+            //string zh = "";
             string sharemodel = "";
 
             XmlDocument doc = new XmlDocument();
@@ -211,11 +214,13 @@ namespace GenerateToolbox.Models
                 datas.Add(data);
             }
 
+            CsprojName csproj = new CsprojName();
+            csproj.ShowDialog();
 
             return new
             {
                 count,
-                en,
+                en = en,
                 zh,
                 sharemodel,
                 datas

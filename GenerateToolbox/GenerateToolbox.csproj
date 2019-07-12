@@ -114,6 +114,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CsprojName.xaml.cs">
+      <DependentUpon>CsprojName.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DragInterfaceCreater\MyBorder.xaml.cs">
       <DependentUpon>MyBorder.xaml</DependentUpon>
     </Compile>
@@ -168,6 +171,10 @@
     <Compile Include="UpdateDesc.xaml.cs">
       <DependentUpon>UpdateDesc.xaml</DependentUpon>
     </Compile>
+    <Page Include="CsprojName.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="DragInterfaceCreater\MyBorder.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
