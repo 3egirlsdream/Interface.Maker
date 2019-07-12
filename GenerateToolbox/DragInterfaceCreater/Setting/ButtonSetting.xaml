@@ -10,11 +10,11 @@
     <Grid>
         <StackPanel>
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
-                <TextBlock Text="按钮名称  "/>
+                <TextBlock Text="按钮名称  " VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 <TextBox x:Name="name_zh" Text="" Width="100"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
-                <TextBlock Text="按钮字段  "/>
+                <TextBlock Text="按钮字段  " VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 <TextBox x:Name="name_eg"  Text="" Width="100"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">

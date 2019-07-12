@@ -10,15 +10,15 @@
     <Grid>
         <StackPanel>
             <StackPanel Orientation="Horizontal"  VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
-                <TextBlock Text="字段中文名 "/>
+                <TextBlock Text="字段中文名 " VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 <TextBox Name="name_zh" Text="" Width="100"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
-                <TextBlock Text="字段英文名 "/>
+                <TextBlock Text="字段英文名 " VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 <TextBox Name="name_eg"  Text="" Width="100"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
-                <TextBlock Text="弹出框类型 "/>
+                <TextBlock Text="弹出框类型 " VerticalAlignment="Center" HorizontalAlignment="Center"/>
                 <ComboBox Name="combobox" Width="100" ItemsSource="{Binding pairs, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}" SelectedValuePath="Value" DisplayMemberPath="Key" />
             </StackPanel>
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
