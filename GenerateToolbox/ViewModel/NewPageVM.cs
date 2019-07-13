@@ -376,7 +376,7 @@ namespace GenerateToolbox.ViewModel
                     var rs = ds.grids[j];
                     if (rs.CONTROL_NAME == "btn")
                     {
-                        var res = Buttons.CreateButton_new(rs.NAME);
+                        var res = Buttons.CreateButton_new(rs.NAME, rs.CODE);
                         tmp += res;
                     }
                     else if (rs.CONTROL_NAME == "NEXT_LINE")

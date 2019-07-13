@@ -4,6 +4,7 @@ using Project.G;
 using Project.G.Models;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -213,7 +214,8 @@ namespace GenerateToolbox.NewPage
                                 Grid temp = new Grid
                                 {
                                     CONTROL_NAME = "btn",
-                                    NAME = obj.tb.Text
+                                    NAME = obj.tb.Text,
+                                    CODE = obj.NAME_ENG
                                 };
                                 tmp.grids.Add(temp);
                             }
@@ -278,6 +280,12 @@ namespace GenerateToolbox.NewPage
             cot = 0;
             t = 0;
             vm.FilterPageType = null;
+        }
+
+        private void Hyperlink_Click(object sender, RoutedEventArgs e)
+        {
+            Hyperlink link = sender as Hyperlink;
+            System.Diagnostics.Process.Start("https://github.com/3egirlsdream/CodeGenerate/blob/master/README.md");
         }
     }
 }

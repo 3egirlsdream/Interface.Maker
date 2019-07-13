@@ -1451,17 +1451,23 @@ namespace Project.G.Models
         /// <returns></returns>
         public static string CreateCommand_new(Grids grids, string projName)
         {
-            List<string> vs = new List<string>(grids.strs);
+            //第一排按钮将中文转为英文
+            List<string> zhToeng = new List<string>();
+            grids.strs.ForEach(e =>
+            {
+                zhToeng.Add(Buttons.command(e, ""));
+            });
+            List<string> vs = new List<string>(zhToeng);
             ModelHelper model = new ModelHelper();
             string s = "\t#region Command\r\n\t";
             foreach (var ds in grids.grids)
             {
                 if (!vs.Contains(ds.NAME) && ds.CONTROL_NAME == "btn")
-                    vs.Add(ds.NAME);
+                    vs.Add(ds.CODE);
             }
             foreach(var ds in vs)
             {
-                s += "\t" + Controls.AddCommand(model.GetCmd(Buttons.command(ds, "")), projName) + "\r\n";
+                s += "\t" + Controls.AddCommand(model.GetCmd(ds), projName) + "\r\n";
             }
 
             foreach (var ds in grids.grids)

@@ -66,14 +66,14 @@ namespace Project.G.Models
         /// </summary>
         /// <param name="btn"></param>
         /// <returns></returns>
-        public static string CreateButton_new(string btn)
+        public static string CreateButton_new(string btn, string code)
         {
             string s = "<WrapPanel>\r\n";
 
             string style = (btn == "刷新" || btn == "保存") ? "Style=\"{DynamicResource HighLightButtonStyle}\"" : "";
-            string tmp = "<Button Content=\"{DynamicResource " + command(btn, "") + "}\" " +
+            string tmp = "<Button Content=\"{DynamicResource " + code + "}\" " +
                 "Margin=\"20,10,-5,5\" " +
-                "Command=\"{Binding " + command(btn, "Cmd") + "}\" " +
+                "Command=\"{Binding " + "Cmd" + code + "}\" " +
                 "controls:ButtonHelper.IconContent=\"{DynamicResource " + command(btn, "Icon_") + "}\" " +
                 style +
                 "/>\r\n";
