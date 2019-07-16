@@ -359,7 +359,7 @@
                     </controls:MetroTabItem>
                     <controls:MetroTabItem GotFocus="Preview_GotFocus" Header="drawPro">
                         <Grid Margin="0,-3,0,0">
-                            <ContentControl Name="Preview" Grid.Column="6" />
+                            <ContentControl Name="Preview" Grid.Row="6" />
                         </Grid>
                     </controls:MetroTabItem>
                 </controls:MetroTabControl>

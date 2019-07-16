@@ -70,7 +70,7 @@ namespace GenerateToolbox.NewPage
         }
 
         int t = 0;
-        private void Button_Click_3(object sender, RoutedEventArgs e)
+        private void Button_Click_3(/*object sender, RoutedEventArgs e*/)
         {
 
             MySidebar mySidebar = new MySidebar();
@@ -137,7 +137,7 @@ namespace GenerateToolbox.NewPage
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void Create(object sender, RoutedEventArgs e)
+        private void Create(/*object sender, RoutedEventArgs e*/)
         {
             try
             {
@@ -262,7 +262,7 @@ namespace GenerateToolbox.NewPage
             return grids;
         }
         List<MySidebar> sider;
-        private void Add_Page(object sender, RoutedEventArgs e)
+        private void Add_Page()
         {
             //拿到所有边框
             sider = new List<MySidebar>();
@@ -286,6 +286,50 @@ namespace GenerateToolbox.NewPage
         {
             Hyperlink link = sender as Hyperlink;
             System.Diagnostics.Process.Start("https://github.com/3egirlsdream/CodeGenerate/blob/master/README.md");
+        }
+
+        private void StackPanel_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            MyTextBox textBox = new MyTextBox();
+            textBox.Name = GetControlsName("TB");
+            textBox.MouseDoubleClick += TextBox_MouseDown;
+            textBox.btn.Margin = new Thickness(15, 5, 5, 5);
+            grid.Children.Add(textBox);
+        }
+
+        private void StackPanel_MouseLeftButtonDown_1(object sender, MouseButtonEventArgs e)
+        {
+            MyBorder myBorder = new MyBorder();
+            myBorder.Name = GetControlsName("BTN");
+            myBorder.MouseDoubleClick += Button_MouseDown;
+            myBorder.btn.Margin = new Thickness(15 + cot++ * 100, 20, 5, 5);
+            grid.Children.Add(myBorder);
+        }
+
+        private void StackPanel_MouseLeftButtonDown_2(object sender, MouseButtonEventArgs e)
+        {
+            MyDataGrid datagrid = new MyDataGrid();
+            datagrid.Name = GetControlsName("GRID");
+            datagrid.MouseDoubleClick += DataGrid_MouseDown;
+            datagrid.btn.Margin = new Thickness(15, 5, 5, 5);
+            grid.Children.Add(datagrid);
+        }
+
+
+        private void AddPage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Add_Page();
+        }
+
+
+        private void Create_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            Create();
+        }
+
+        private void StackPanel_MouseLeftButtonDown_3(object sender, MouseButtonEventArgs e)
+        {
+            Button_Click_3();
         }
     }
 }
