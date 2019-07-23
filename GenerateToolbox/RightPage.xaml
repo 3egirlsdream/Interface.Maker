@@ -72,6 +72,7 @@
                         Text="{Binding ConnStr, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         TextWrapping="Wrap" />
                     <Button
+                        Style="{DynamicResource SquareButtonStyle}"
                         Width="80"
                         Margin="170,10,0,0"
                         Background="#2964AB"
@@ -109,6 +110,7 @@
                         Text="{Binding SrchConnStr, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         TextWrapping="Wrap" />
                     <Button
+                        Style="{DynamicResource SquareButtonStyle}"
                         Width="80"
                         Margin="170,10,0,0"
                         Background="#2964AB"
@@ -121,6 +123,7 @@
                 </WrapPanel>
 
                 <Button
+                    Style="{DynamicResource SquareButtonStyle}"
                     Grid.Row="5"
                     Width="100"
                     VerticalAlignment="Bottom"

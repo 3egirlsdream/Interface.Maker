@@ -1076,8 +1076,11 @@ namespace Project.G.ViewModel
                 }
                 catch (Exception ex)
                 {
-                    Warning warning = new Warning(ex.Message);
-                    warning.ShowDialog();
+                    App.Current.Dispatcher.Invoke(() =>
+                    {
+                        Warning warning = new Warning(ex.Message);
+                        warning.ShowDialog();
+                    });
                     return false;
                 }
             });

@@ -247,9 +247,10 @@
                                         Foreground="Gray" />
                                 </StackPanel>
                                 <Button
+                                    Style="{DynamicResource SquareButtonStyle}"
                                     Width="100"
                                     Height="30"
-                                    Margin="25,10,10,0"
+                                    Margin="65,10,10,0"
                                     
                                     Command="{Binding CmdGenerate}"
                                     Content="生  成"
@@ -322,6 +323,7 @@
                                 </StackPanel>
                                 -->
                                 <Button
+                                    Style="{DynamicResource SquareButtonStyle}"
                                     Grid.Column="5"
                                     Width="100"
                                     Margin="10,0,0,0"
