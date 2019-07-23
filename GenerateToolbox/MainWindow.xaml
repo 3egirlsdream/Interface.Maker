@@ -39,7 +39,7 @@
                 MouseLeftButtonDown="MoveWindow"
                 Name="bd2"
                 Grid.Row="0"
-                Background="#DD335D"
+                Background="#4F4150"
                 BorderThickness="0"
                 CornerRadius="5">
                 <Grid>
@@ -86,7 +86,7 @@
                 Name="bd1"
                 Grid.Row="1"
                 Margin="0,-3,0,0"
-                Background="#DD335D"
+                Background="#4F4150"
                 BorderThickness="0" />
             <Grid Grid.Row="2" Grid.RowSpan="2">
                 <Grid.ColumnDefinitions>
@@ -96,6 +96,11 @@
                 <controls:MetroTabControl
                     Margin="0,-35,0,0"
                     Background="Transparent" Grid.ColumnSpan="2">
+                    <controls:MetroTabItem GotFocus="Preview_GotFocus" Header="Creater">
+                        <Grid Margin="0,-3,0,0">
+                            <ContentControl Name="Preview" Grid.Row="6" />
+                        </Grid>
+                    </controls:MetroTabItem>
                     <controls:MetroTabItem GotFocus="Service_GotFocus" Header="Service">
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -357,11 +362,7 @@
                                 VerticalScrollBarVisibility="Visible" />
                         </Grid>
                     </controls:MetroTabItem>
-                    <controls:MetroTabItem GotFocus="Preview_GotFocus" Header="drawPro">
-                        <Grid Margin="0,-3,0,0">
-                            <ContentControl Name="Preview" Grid.Row="6" />
-                        </Grid>
-                    </controls:MetroTabItem>
+                    
                 </controls:MetroTabControl>
             </Grid>
 
