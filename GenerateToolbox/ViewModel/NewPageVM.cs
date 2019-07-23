@@ -351,9 +351,13 @@ namespace GenerateToolbox.ViewModel
         /// <summary>
         /// 加载配置文件
         /// </summary>
-        private void LoadConfig()
+        private async void LoadConfig()
         {
-            config = Strings.LoadJson("config.xml");
+            await Task.Run(() =>
+            {
+                config = Strings.LoadJson("config.xml");
+            });
+            
         }
 
 
@@ -428,16 +432,20 @@ namespace GenerateToolbox.ViewModel
             Directory.CreateDirectory(dir + "\\" + csproj + "\\Views");
         }
 
-        private void LoadPegeType()
+        private async void LoadPegeType()
         {
-            PageType = new List<KeyValuePair<string, string>>
+            await Task.Run(() =>
             {
-                new KeyValuePair<string, string>("主页", "IndexPage"),
-                new KeyValuePair<string, string>("新增", "Add"),
-                new KeyValuePair<string, string>("编辑", "Edit"),
-                new KeyValuePair<string, string>("导入", "Import"),
-                new KeyValuePair<string, string>("普通弹出框", "DialogBox" + DateTime.Now.Second)
-            };
+                PageType = new List<KeyValuePair<string, string>>
+                {
+                    new KeyValuePair<string, string>("主页", "IndexPage"),
+                    new KeyValuePair<string, string>("新增", "Add"),
+                    new KeyValuePair<string, string>("编辑", "Edit"),
+                    new KeyValuePair<string, string>("导入", "Import"),
+                    new KeyValuePair<string, string>("普通弹出框", "DialogBox" + DateTime.Now.Second)
+                };
+            });
+
         }
 
         #endregion

@@ -165,118 +165,131 @@ namespace GenerateToolbox.NewPage
                 Warning warning = new Warning("生成成功");
                 warning.ShowDialog();
             }
-           catch(Exception ex)
+            catch (Exception ex)
             {
-                Warning warning = new Warning("生成失败：" + ex.Message);
-                warning.ShowDialog();
+                App.Current.Dispatcher.Invoke(new Action(() =>
+                {
+                    Warning warning = new Warning("生成失败：" + ex.Message);
+                    warning.ShowDialog();
+                }));
             }
         }
 
         List<Grids> grids = new List<Grids>();
-        public List<Grids> GetData(List<MySidebar> sider)
+        public async void GetData(List<MySidebar> sider)
         {
-            
-            Grids tmp = new Grids();
-            tmp.Identity = vm.FilterPageType.Value.Key;
-            tmp.PageCode = vm.FilterPageType.Value.Value;
-            tmp.PageName = vm.FilterPageType.Value.Key == "普通弹出框" ? vm.BoxName : vm.FilterPageType.Value.Value;
-            foreach (var ds in sider)
+            await Task.Run(() =>
             {
-                //var borderMargin = getMargin(ds.RenderSize.Width, ds.RenderSize.Height, ds.ActualWidth, ds.ActualHeight);
-
-                foreach (var control in grid.Children)
+                Grids tmp = new Grids();
+                tmp.Identity = vm.FilterPageType.Value.Key;
+                tmp.PageCode = vm.FilterPageType.Value.Value;
+                tmp.PageName = vm.FilterPageType.Value.Key == "普通弹出框" ? vm.BoxName : vm.FilterPageType.Value.Value;
+                foreach (var ds in sider)
                 {
-                    var type = control.GetType();
-                    if (type.Name != "MySidebar")//不包含边框元素
+                    //var borderMargin = getMargin(ds.RenderSize.Width, ds.RenderSize.Height, ds.ActualWidth, ds.ActualHeight);
+                    grid.Dispatcher.Invoke(new Action(() =>
                     {
-                        dynamic obj;
-                        switch (type.Name)
+                        foreach (var control in grid.Children)
                         {
-                            case "MyBorder": obj = control as MyBorder; break;
-                            case "MyDataGrid": obj = control as MyDataGrid; break;
-                            case "MyTextBox": obj = control as MyTextBox; break;
-                            default: obj = control as MyBorder; break;
-                        }
-
-                        //POSITION margin = getMargin(obj.RenderSize.Width, obj.RenderSize.Height, obj.ActualWidth, obj.ActualHeight);
-
-                        if (obj.btn.Margin.Top > ds.btn.Margin.Top
-                            && obj.btn.Margin.Left > ds.btn.Margin.Left
-                            && obj.btn.Margin.Top + obj.btn.ActualHeight < ds.btn.Margin.Top + ds.btn.ActualHeight
-                            && obj.btn.Margin.Left + obj.btn.ActualWidth < ds.btn.Margin.Left + ds.btn.ActualWidth)
-                        {
-                            //默认第一行全是按钮
-                            if (sider.IndexOf(ds) == 0)
-                                tmp.strs.Add(obj.tb.Text);
-                            //按钮
-                            else if (type.Name == "MyBorder")
+                            var type = control.GetType();
+                            if (type.Name != "MySidebar")//不包含边框元素
                             {
-                                Grid temp = new Grid
+                                dynamic obj;
+                                switch (type.Name)
                                 {
-                                    CONTROL_NAME = "btn",
-                                    NAME = obj.tb.Text,
-                                    CODE = obj.NAME_ENG
-                                };
-                                tmp.grids.Add(temp);
-                            }
-                            //文本框
-                            else if (type.Name == "MyTextBox")
-                            {
-                                Grid temp = new Grid
-                                {
-                                    CONTROL_NAME = obj.BOX_TYPE,
-                                    NAME = obj.tblock.Text,
-                                    CODE = obj.NAME_ENG,
-                                    IS_API = obj.IS_API
-                                };
-                                tmp.grids.Add(temp);
-                            }
-
-                            //表格
-                            else if (type.Name == "MyDataGrid")
-                            {
-                                foreach (DataGridColumn rtl in obj.grid.Columns)
-                                {
-                                    Grid temp = new Grid
-                                    {
-                                        CONTROL_NAME = "DATAGRID",
-                                        NAME = rtl.Header?.ToString(),
-                                        CODE = rtl?.SortMemberPath
-                                    };
-                                    tmp.grids.Add(temp);
+                                    case "MyBorder": obj = control as MyBorder; break;
+                                    case "MyDataGrid": obj = control as MyDataGrid; break;
+                                    case "MyTextBox": obj = control as MyTextBox; break;
+                                    default: obj = control as MyBorder; break;
                                 }
 
+                                //POSITION margin = getMargin(obj.RenderSize.Width, obj.RenderSize.Height, obj.ActualWidth, obj.ActualHeight);
+
+                                if (obj.btn.Margin.Top > ds.btn.Margin.Top
+                                    && obj.btn.Margin.Left > ds.btn.Margin.Left
+                                    && obj.btn.Margin.Top + obj.btn.ActualHeight < ds.btn.Margin.Top + ds.btn.ActualHeight
+                                    && obj.btn.Margin.Left + obj.btn.ActualWidth < ds.btn.Margin.Left + ds.btn.ActualWidth)
+                                {
+                                    //默认第一行全是按钮
+                                    if (sider.IndexOf(ds) == 0)
+                                        tmp.strs.Add(obj.tb.Text);
+                                    //按钮
+                                    else if (type.Name == "MyBorder")
+                                    {
+                                        Grid temp = new Grid
+                                        {
+                                            CONTROL_NAME = "btn",
+                                            NAME = obj.tb.Text,
+                                            CODE = obj.NAME_ENG
+                                        };
+                                        tmp.grids.Add(temp);
+                                    }
+                                    //文本框
+                                    else if (type.Name == "MyTextBox")
+                                    {
+                                        Grid temp = new Grid
+                                        {
+                                            CONTROL_NAME = obj.BOX_TYPE,
+                                            NAME = obj.tblock.Text,
+                                            CODE = obj.NAME_ENG,
+                                            IS_API = obj.IS_API
+                                        };
+                                        tmp.grids.Add(temp);
+                                    }
+
+                                    //表格
+                                    else if (type.Name == "MyDataGrid")
+                                    {
+                                        foreach (DataGridColumn rtl in obj.grid.Columns)
+                                        {
+                                            Grid temp = new Grid
+                                            {
+                                                CONTROL_NAME = "DATAGRID",
+                                                NAME = rtl.Header?.ToString(),
+                                                CODE = rtl?.SortMemberPath
+                                            };
+                                            tmp.grids.Add(temp);
+                                        }
+
+                                    }
+                                }
                             }
                         }
-                    }
+                    }));
+                    //换行
+                    Grid temp1 = new Grid
+                    {
+                        CONTROL_NAME = "NEXT_LINE"
+                    };
+                    tmp.Level++;
+                    tmp.grids.Add(temp1);
                 }
-                //换行
-                Grid temp1 = new Grid
-                {
-                    CONTROL_NAME = "NEXT_LINE"
-                };
-                tmp.Level++;
-                tmp.grids.Add(temp1);
-            }
-            grids.Add(tmp);
-            return grids;
+                grids.Add(tmp);
+            });
         }
         List<MySidebar> sider;
         private void Add_Page()
         {
             //拿到所有边框
             sider = new List<MySidebar>();
-            foreach (dynamic ds in grid.Children)
+            grid.Dispatcher.Invoke(new Action(() =>
             {
-                string name = ds.Name as string;
-                if (name.Contains("BAR"))
+                foreach (dynamic ds in grid.Children)
                 {
-                    sider.Add(ds);
+                    string name = ds.Name as string;
+                    if (name.Contains("BAR"))
+                    {
+                        sider.Add(ds);
+                    }
                 }
-            }
-
+            }));
+            
             GetData(sider);
-            grid.Children.Clear();
+            grid.Dispatcher.Invoke(new Action(() =>
+            {
+                grid.Children.Clear();
+
+            }));
             cot = 0;
             t = 0;
             vm.FilterPageType = null;
@@ -316,9 +329,12 @@ namespace GenerateToolbox.NewPage
         }
 
 
-        private void AddPage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private async void AddPage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            Add_Page();
+            await Task.Run(() =>
+            {
+                Add_Page();
+            });
         }
 
 

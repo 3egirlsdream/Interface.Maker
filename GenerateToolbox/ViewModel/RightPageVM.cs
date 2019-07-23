@@ -208,21 +208,24 @@ namespace Project.G.ViewModel
         /// <summary>
         /// 读取Json
         /// </summary>
-        public void LoadJson()
+        public async void LoadJson()
         {
-            try
+            await Task.Run(() =>
             {
-                FileStream file = new FileStream("ConnectionConditions.json", FileMode.Open);
-                StreamReader sr = new StreamReader(file, Encoding.Default);
-                string json = sr.ReadToEnd();
-                Header = JsonConvert.DeserializeObject<List<Connection>>(json);
-                //MessageBox.Show(json);
-                file.Close();
-            }
-            catch (IOException e)
-            {
-                //Console.WriteLine(e.ToString());
-            }
+                try
+                {
+                    FileStream file = new FileStream("ConnectionConditions.json", FileMode.Open);
+                    StreamReader sr = new StreamReader(file, Encoding.Default);
+                    string json = sr.ReadToEnd();
+                    Header = JsonConvert.DeserializeObject<List<Connection>>(json);
+                    //MessageBox.Show(json);
+                    file.Close();
+                }
+                catch (IOException e)
+                {
+                    //Console.WriteLine(e.ToString());
+                }
+            });
         }
 
         /// <summary>
