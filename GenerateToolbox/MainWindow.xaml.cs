@@ -71,7 +71,7 @@ namespace Project.G
             }
             ProjName.ToolTip = "项目名必须包含Plugin,否则不会生成服务端代码";
             ProjName1.ToolTip = "项目名必须包含Plugin,否则不会生成服务端代码";
-            tb3.Text = " <— 在这里输入表名(要换行),服务端可以自动链接模型！";//\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n <— 勾选后不存在的模型不会链接。";
+            //tb3.Text = " <— 在这里输入表名(要换行),服务端可以自动链接模型！";//\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n <— 勾选后不存在的模型不会链接。";
             cm.ToolTip = "勾选后会生成在右侧文本框输入的表的模型";
             vm = new MainView();
             this.DataContext = vm;

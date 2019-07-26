@@ -4,6 +4,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:GenerateToolbox"
+      xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
       mc:Ignorable="d" d:DesignWidth="200"
       Title="ButtonSetting">
 
@@ -22,12 +23,10 @@
                 <ComboBox Name="combobox" Width="100" ItemsSource="{Binding pairs, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}" SelectedValuePath="Value" DisplayMemberPath="Key" />
             </StackPanel>
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
-                <CheckBox IsChecked="{Binding IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                    是否作为API
-                </CheckBox>
+                <Controls:ToggleSwitch OnLabel="Yes" OffLabel="No"  IsChecked="{Binding IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Header="是否作为API" />
             </StackPanel>
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
-                <Button Content="保存" Width="100" Command="{Binding CmdSave}"/>
+                <Button Content="保存" Width="100" Command="{Binding CmdSave}" Style="{DynamicResource SquareButtonStyle}"/>
             </StackPanel>
             
         </StackPanel>

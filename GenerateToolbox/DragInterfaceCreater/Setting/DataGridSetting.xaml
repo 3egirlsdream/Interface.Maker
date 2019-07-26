@@ -18,7 +18,7 @@
             </DataGrid>
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
                 <!--<Button Content="保存" Width="100" Click="Button_Click"/>-->
-                <Button Content="保存" Width="100" Command="{Binding CmdSave}"/>
+                <Button Content="保存" Width="100" Command="{Binding CmdSave}" Style="{DynamicResource SquareButtonStyle}"/>
             </StackPanel>
             
         </StackPanel>

@@ -18,7 +18,7 @@
                 <TextBox x:Name="name_eg"  Text="" Width="100"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
-                <Button Content="保存" Width="100" Click="Button_Click"/>
+                <Button Content="保存" Width="100" Click="Button_Click" Style="{DynamicResource SquareButtonStyle}"/>
             </StackPanel>
             
         </StackPanel>

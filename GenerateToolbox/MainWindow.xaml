@@ -136,6 +136,7 @@
                                     Width="200"
                                     Height="30"
                                     Margin="10,10,10,0"
+                                    controls:TextBoxHelper.Watermark="英文名"
                                     Text="{Binding ProjectName}" />
                                 <TextBlock
                                     Margin="10"
@@ -147,6 +148,7 @@
                                     AcceptsReturn="True"
                                     Width="200"
                                     Height="30"
+                                    controls:TextBoxHelper.Watermark="后台服务名"
                                     Margin="10,10,10,0"
                                     Text="{Binding ServerName}" />
                                 <TextBlock
@@ -202,7 +204,7 @@
                                     Margin="10"
                                     VerticalAlignment="Center"
                                     FontWeight="Bold"
-                                    Text="Share Model路径：" />
+                                    Text="ShareModel路径：" />
                                 <TextBox
                                     Width="200"
                                     AcceptsReturn="True"
@@ -232,6 +234,7 @@
                                     FontFamily="Consolas"
                                     FontSize="14"
                                     Text="{Binding Tables}"
+                                    controls:TextBoxHelper.Watermark="输入表名(要换行),服务端可以自动链接模型"
                                     TextWrapping="Wrap" />
                                 <StackPanel>
                                     <CheckBox

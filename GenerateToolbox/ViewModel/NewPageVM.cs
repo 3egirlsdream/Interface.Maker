@@ -351,13 +351,9 @@ namespace GenerateToolbox.ViewModel
         /// <summary>
         /// 加载配置文件
         /// </summary>
-        private async void LoadConfig()
+        private void LoadConfig()
         {
-            await Task.Run(() =>
-            {
-                config = Strings.LoadJson("config.xml");
-            });
-            
+            config = Strings.LoadJson("config.xml");
         }
 
 

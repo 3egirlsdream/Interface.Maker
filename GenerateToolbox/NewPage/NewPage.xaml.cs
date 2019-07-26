@@ -347,5 +347,10 @@ namespace GenerateToolbox.NewPage
         {
             Button_Click_3();
         }
+
+        private void StackPanel_MouseLeftButtonDown_4(object sender, MouseButtonEventArgs e)
+        {
+            xmlbox.Visibility = xmlbox.Visibility ==  Visibility.Visible ? Visibility.Hidden : Visibility.Visible;
+        }
     }
 }
