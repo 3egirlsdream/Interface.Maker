@@ -124,7 +124,7 @@
                                     <Image Source="..\img\说明.png" Width="25"/>
                                 </Border>
                                 <TextBlock VerticalAlignment="Center" Margin="1">
-                                <Hyperlink  Foreground="Gray" NavigateUri="https://github.com/3egirlsdream/CodeGenerate/blob/master/README.md" Click="Hyperlink_Click">
+                                <Hyperlink Foreground="Gray" NavigateUri="https://github.com/3egirlsdream/CodeGenerate/blob/master/README.md" Click="Hyperlink_Click">
                                     操作说明
                                 </Hyperlink>
                                 </TextBlock>

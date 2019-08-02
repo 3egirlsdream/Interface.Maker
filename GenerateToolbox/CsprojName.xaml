@@ -18,7 +18,7 @@
             <TextBlock Text="项目英文" FontSize="11" Margin="5" Foreground="White"/>
             <TextBox x:Name="name_eng" Width="150" Height="30" HorizontalAlignment="Left" Margin="5,0,0,0" Background="#333337" Foreground="White"/>
         </StackPanel>
-        <Button x:Name="btn" Width="100" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,10,10" BorderThickness="0" Content="创建(C)" Click="Btn_Click" Background="#3F3F46" Foreground="White" FontSize="13" FontFamily=".PingFang SC,Microsoft YaHei UI"/>
+        <Button x:Name="btn" Width="100" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,10,10" Content="创建(C)" Click="Btn_Click" FontSize="13" FontFamily=".PingFang SC,Microsoft YaHei UI" Style="{DynamicResource SquareButtonStyle}"/>
 
     </Grid>
 </Window>

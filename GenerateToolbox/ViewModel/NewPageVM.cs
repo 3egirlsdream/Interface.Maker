@@ -268,6 +268,8 @@ namespace GenerateToolbox.ViewModel
             {
                 Strings.Write(config, "config.xml");
                 dynamic res = ExcelHelper.LoadXml();
+                if (string.IsNullOrEmpty(res.en))
+                    return;
                 CreateFile(res.en);
                 ExcelHelper helper = new ExcelHelper();
                 //result = helper.OpenExcel((int)res.count);
