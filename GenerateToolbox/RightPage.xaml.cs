@@ -14,7 +14,7 @@ namespace Project.G
         public RightPage()
         {
             InitializeComponent();
-            vm = new RightPageVM();
+            vm = new RightPageVM(this);
             this.DataContext = vm;
             this.Visibility = Visibility.Hidden;
 

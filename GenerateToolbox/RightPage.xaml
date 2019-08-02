@@ -7,7 +7,7 @@
     xmlns:local="clr-namespace:Project.G"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="RightPage"
-    d:DesignHeight="480"
+    d:DesignHeight="580"
     d:DesignWidth="300"
     mc:Ignorable="d">
     <Page.Effect>
@@ -20,6 +20,7 @@
         <ScrollViewer>
             <Grid>
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="auto" />
                     <RowDefinition Height="auto" />
                     <RowDefinition Height="auto" />
                     <RowDefinition Height="auto" />
@@ -124,9 +125,38 @@
                         Foreground="White" />
                 </WrapPanel>
 
+                <WrapPanel
+                    Grid.Row="4"
+                    Margin="15,10,15,0"
+                    Orientation="Horizontal">
+                    <TextBlock
+                        Width="200"
+                        Margin="0,0,0,10"
+                        FontWeight="Bold"
+                        Text="自动拷贝" />
+                    <TextBox Width="110" Text="{Binding SourceUrl, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Controls:TextBoxHelper.Watermark="源文件夹"/>
+                    <TextBox
+                        Width="110"
+                        Margin="30,0,0,0"
+                        Text="{Binding AimUrl, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Controls:TextBoxHelper.Watermark="目标文件夹"/>
+                    
+                    <Button
+                        Style="{DynamicResource SquareButtonStyle}"
+                        x:Name="cmdStart"
+                        Width="80"
+                        Margin="170,10,0,0"
+                        Background="#2964AB"
+                        BorderThickness="0"
+                        Command="{Binding CmdStart}"
+                        Content="启动"
+                        FontFamily="等线"
+                        FontSize="12"
+                        Foreground="White" />
+                </WrapPanel>
+
                 <Button
                     Style="{DynamicResource SquareButtonStyle}"
-                    Grid.Row="5"
+                    Grid.Row="6"
                     Width="100"
                     VerticalAlignment="Bottom"
                     Margin="0,0,0,10"

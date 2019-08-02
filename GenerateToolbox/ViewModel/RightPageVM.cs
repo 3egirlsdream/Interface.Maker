@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using Xu.Common;
@@ -15,7 +16,8 @@ namespace Project.G.ViewModel
     class RightPageVM : ValidationBase
     {
         public List<Key_Value> DbList { get; set; }
-        public RightPageVM()
+        RightPage plugin;
+        public RightPageVM(RightPage plugin)
         {
             SqlString = Common.SetConfig("SqlString");
             DbList = new List<Key_Value>();
@@ -25,6 +27,9 @@ namespace Project.G.ViewModel
             FilterDb = DbList[0];
             LoadJson();
             Item = new ObservableCollection<string>();
+            this.plugin = plugin;
+            SourceUrl = Common.SetConfig("SourceUrl");
+            AimUrl = Common.SetConfig("AimUrl");
         }
 
         #region
@@ -63,6 +68,42 @@ namespace Project.G.ViewModel
             }
         }
 
+        /// <summary>
+        /// 源文件夹
+        /// </summary>
+        private string _SourceUrl;
+        public string SourceUrl
+        {
+            get
+            {
+                return _SourceUrl;
+            }
+            set
+            {
+                _SourceUrl = value;
+                Common.SetConfig("SourceUrl", SourceUrl);
+                NotifyPropertyChanged("SourceUrl");
+            }
+        }
+
+
+        /// <summary>
+        /// 目标文件夹
+        /// </summary>
+        private string _AimUrl;
+        public string AimUrl
+        {
+            get
+            {
+                return _AimUrl;
+            }
+            set
+            {
+                _AimUrl = value;
+                Common.SetConfig("AimUrl", AimUrl);
+                NotifyPropertyChanged("AimUrl");
+            }
+        }
 
         //不知道为什么用普通的List数据不会刷新
         private ObservableCollection<string> _Item;
@@ -323,9 +364,109 @@ namespace Project.G.ViewModel
             }
         };
 
+        public SimpleCommand CmdStart => new SimpleCommand()
+        {
+            ExecuteDelegate = x => {
+                plugin.cmdStart.Content = "Running";
+                new Task(() =>
+                {
+                    while (true)
+                    {
+                        CopyDir(SourceUrl, AimUrl);
+                        Thread.Sleep(30000);
+                    }
+                    
+                }).Start();
+                
+            },
+            CanExecuteDelegate = o => {
+                return true;
+            }
+        };
 
+        static bool flag = false;
+        static Dictionary<string, DateTime> dic = new Dictionary<string, DateTime>();
+        private static void CopyDir(string srcPath, string aimPath)
+        {
+            try
+            {
+                string[] fileList = System.IO.Directory.GetFileSystemEntries(srcPath);
+                //初始化文件夹
+                if (!flag)
+                {
+                    foreach (string file in fileList)
+                    {
 
+                        // 先当作目录处理如果存在这个目录就递归Copy该目录下面的文件
+                        if (System.IO.Directory.Exists(file))
+                        {
+                            if (aimPath[aimPath.Length - 1] != System.IO.Path.DirectorySeparatorChar)
+                            {
+                                aimPath += System.IO.Path.DirectorySeparatorChar;
+                            }
+                            CopyDir(file, aimPath + System.IO.Path.GetFileName(file));
+                        }
+                        // 否则直接Copy文件
+                        else
+                        {
+                            FileInfo info = new FileInfo(file);
+                            dic[info.Name] = info.LastWriteTime;
+                            //System.IO.File.Copy(file, aimPath + System.IO.Path.GetFileName(file), true);
+                        }
+                    }
+                    flag = true;
+                }
+                // if(File)
+                // 检查目标目录是否以目录分割字符结束如果不是则添加
+                if (aimPath[aimPath.Length - 1] != System.IO.Path.DirectorySeparatorChar)
+                {
+                    aimPath += System.IO.Path.DirectorySeparatorChar;
+                }
+                // 判断目标目录是否存在如果不存在则新建
+                if (!System.IO.Directory.Exists(aimPath))
+                {
+                    System.IO.Directory.CreateDirectory(aimPath);
+                }
+                // 得到源目录的文件列表，该里面是包含文件以及目录路径的一个数组
+                // 如果你指向copy目标文件下面的文件而不包含目录请使用下面的方法
+                // string[] fileList = Directory.GetFiles（srcPath）；
+                //string[] fileList = System.IO.Directory.GetFileSystemEntries(srcPath);
+                // 遍历所有的文件和目录
+                foreach (string file in fileList)
+                {
+                    
+                    // 先当作目录处理如果存在这个目录就递归Copy该目录下面的文件
+                    if (System.IO.Directory.Exists(file))
+                    {
+                        CopyDir(file, aimPath + System.IO.Path.GetFileName(file));
+                    }
+                    // 否则直接Copy文件
+                    else
+                    {
+                        FileInfo info = new FileInfo(file);
+                        if (!dic.ContainsKey(info.Name))
+                        {
+                            System.IO.File.Copy(file, aimPath + System.IO.Path.GetFileName(file), true);
+                            dic[info.Name] = info.LastWriteTime;
+                        }
+                        else if (dic.ContainsKey(info.Name) && dic[info.Name] != info.LastWriteTime)
+                        {
+                            System.IO.File.Copy(file, aimPath + System.IO.Path.GetFileName(file), true);
+                            dic[info.Name] = info.LastWriteTime;
+                        }
+                        else
+                        {
+                            dic[info.Name] = info.LastWriteTime;
+                        }
 
-        
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw;
+            }
+        }
+
     }
 }
