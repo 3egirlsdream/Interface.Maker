@@ -1011,6 +1011,34 @@ namespace Project.G.Models
             return s + "\";";
         }
 
+        /// <summary>
+        /// 生成getall的url
+        /// </summary>
+        public static string CreateGetallUrl_new(string ProjectName, Grids model, int t = 0)
+        {
+            var foo = model.grids;//
+            var models = foo.Where(x => x.IS_API).ToList();
+            if (models.Count == 0)
+                return "";
+            var ls = ProjectName.Split('.');
+            string s = "\r\n\t\tpublic const string url_"+ model.PageCode.ToLower() +" = \"/api/" + ls.Last().ToLower() + "/" + ls.Last().ToLower() + "/"+ model.PageCode.ToLower() + "?";
+            for (int i = 0; i < models.Count(); i++)
+            {
+                string tmp = "";
+                if (i > 0) tmp += "&";
+                tmp += models[i].CODE + "={";
+                if (t == 1) tmp += i.ToString() + "}";
+                else tmp += models[i].CODE + "}";
+                s += tmp;
+            }
+            if (t == 1)
+            {
+                s += "&Start={" + Convert.ToInt32(models.Count()) + "}&Length={" + (Convert.ToInt32(models.Count()) + 1) + "}";
+            }
+            else s += "&Start={Start}&Length={Length}";
+            return s + "\";";
+        }
+
         public static string CreateDeleteUrl(string ProjectName)
         {
             var ls = ProjectName.Split('.');

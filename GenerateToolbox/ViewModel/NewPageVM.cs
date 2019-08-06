@@ -275,9 +275,14 @@ namespace GenerateToolbox.ViewModel
                 //result = helper.OpenExcel((int)res.count);
                 dynamic foo = assemblyPage(res.en, result, res.datas);
                 List<string> excels = foo.vs;
+
+                //url
+                string url = "";
+
                 for (int i = 0; i < result.Count; i++)
                 {
                     List<DataGrids> datas = res.datas;
+                    url += Strings.CreateGetallUrl_new(res.en, result[i], 1);
                     switch (result[i].Identity)
                     {
                         case "主页":
@@ -292,6 +297,7 @@ namespace GenerateToolbox.ViewModel
                                 Strings.Write(excels[i], dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml");
                                 Strings.Write(Strings.GetAddPageXamlCs(res.en), dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml.cs");
                                 Strings.Write(Strings.GetAddVM(res.en, Controls.GetDataGridBinding(datas.Take((int)foo.ids[i]).ToList()) + Controls.CreateWord_new(result[i]), "", "", "new") + Strings.CreateCommand_new(result[i], res.en), dir + "\\" + res.en + "\\ViewModels\\" + result[i].PageCode + "VM.cs");
+                                url += Strings.CreateAddUrl(res.en);
                             }
                             break;
                         case "编辑":
@@ -299,6 +305,7 @@ namespace GenerateToolbox.ViewModel
                                 Strings.Write(excels[i], dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml");
                                 Strings.Write(Strings.GetEditPageXamlCs(res.en), dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml.cs");
                                 Strings.Write(Strings.GetEditVM(res.en, Controls.GetDataGridBinding(datas.Take((int)foo.ids[i]).ToList()) + Controls.CreateWord_new(result[i]), "", "", "", "new") + Strings.CreateCommand_new(result[i], res.en), dir + "\\" + res.en + "\\ViewModels\\" + result[i].PageCode + "VM.cs");
+                                url += Strings.CreateEditUrl(res.en);
                             }
                             break;
                         case "导入":
@@ -306,6 +313,7 @@ namespace GenerateToolbox.ViewModel
                                 Strings.Write(excels[i], dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml");
                                 Strings.Write(Strings.GetImportXamlCs(res.en), dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml.cs");
                                 Strings.Write(Strings.GetImprotVM_new(res.en, result[i].grids, Controls.GetDataGridBinding(datas.Take((int)foo.ids[i]).ToList()) + Controls.CreateWord_new(result[i]) + Strings.CreateCommand_new(result[i], res.en), Import.CreateXss_new(result[i]), Import.CreateNull_new(result[i]), Import.CreateRepeat_new(result[i]), Import.CreateRepeatFunction_new(result[i]), Import.CheckImportData_new(result[i])), dir + "\\" + res.en + "\\ViewModels\\" + result[i].PageCode + "VM.cs");
+                                url += Import.CreateImportUrl_new(res.en, result[i]);
                             }
                             break;
                         default:
@@ -326,7 +334,7 @@ namespace GenerateToolbox.ViewModel
 
                 Strings.Write(Strings.GetCsproj_new(res.en, Complie, Include), dir + "\\" + res.en + "\\" + res.en + ".csproj");
 
-                Strings.Write(Strings.GetServices(res.en), dir + "\\" + res.en + "\\Services.cs");
+                Strings.Write(Strings.GetServices(res.en, url), dir + "\\" + res.en + "\\Services.cs");
                 //两个model
                 Strings.Write(CreateClass.LoadModel_new(result, res.en), dir + "\\" + res.en + "\\Models\\Model.cs");
                 Strings.Write(CreateClass.LoadModel(res.en), dir + "\\" + res.en + "\\Models\\ComboxModel.cs");
