@@ -757,6 +757,7 @@ namespace Project.G.ViewModel
         #endregion
 
         #region Command
+        [Obsolete]
         public SimpleCommand CmdCreate => new SimpleCommand()
         {
             ExecuteDelegate = x => {
@@ -934,156 +935,147 @@ namespace Project.G.ViewModel
 
         #endregion
 
-        private async void OpenExcel(int BoxNum)
+        private void OpenExcel(int BoxNum)
         {
-            await Task.Run(() =>
+            OpenFileDialog open = new OpenFileDialog
             {
-                OpenFileDialog open = new OpenFileDialog
+                Filter = "Excel (*.XLSX)|*.xlsx|all file|*.*"
+            };
+            open.ShowDialog();
+            try
+            {
+                XSSFWorkbook xss;
+                using (FileStream fs = new FileStream(open.FileName, FileMode.Open, FileAccess.Read))
                 {
-                    Filter = "Excel (*.XLSX)|*.xlsx|all file|*.*"
-                };
-                open.ShowDialog();
-                try
+                    xss = new XSSFWorkbook(fs);
+                }
+
+                boxes = new List<MyModel>();
+
+                IndexHeaders = new List<Excel>();
+                IndexContents = new List<Excel>();
+                IndexBodies = new List<Excel>();
+                Buttones = new List<string>();
+
+                AddContents = new List<Excel>();
+
+                ImportBidies = new ImportClass();
+                for (int t = 0; t < BoxNum + 4; t++)
                 {
-                    XSSFWorkbook xss;
-                    using (FileStream fs = new FileStream(open.FileName, FileMode.Open, FileAccess.Read))
+                    if (t == 0)
                     {
-                        xss = new XSSFWorkbook(fs);
-                    }
+                        XSSFSheet sheet = (XSSFSheet)xss.GetSheetAt(t);
 
-                    boxes = new List<MyModel>();
-
-                    IndexHeaders = new List<Excel>();
-                    IndexContents = new List<Excel>();
-                    IndexBodies = new List<Excel>();
-                    Buttones = new List<string>();
-
-                    AddContents = new List<Excel>();
-
-                    ImportBidies = new ImportClass();
-                    for (int t = 0; t < BoxNum + 4; t++)
-                    {
-                        if (t == 0)
+                        int cot = sheet.LastRowNum;
+                        //按钮
+                        for (int i = 1; i <= cot; i++)
                         {
-                            XSSFSheet sheet = (XSSFSheet)xss.GetSheetAt(t);
-
-                            int cot = sheet.LastRowNum;
-                            //按钮
-                            for (int i = 1; i <= cot; i++)
-                            {
-                                string btn = sheet.GetRow(i).GetCell(6) == null ? "" : sheet.GetRow(i).GetCell(6).ToString();
-                                if (String.IsNullOrEmpty(btn))
-                                    break;
-                                Buttones.Add(btn);
-                            }
-
-                            //控件、查询字段
-                            for (int i = 1; i <= cot; i++)
-                            {
-                                Excel sFC = new Excel();
-                                sFC.CONTROL_CODE = sheet.GetRow(i).GetCell(2) == null ? "" : sheet.GetRow(i).GetCell(2).ToString();
-                                sFC.SEARCH_CODE = sheet.GetRow(i).GetCell(3) == null ? "" : sheet.GetRow(i).GetCell(3).ToString();
-                                sFC.SEARCH_NAME = sheet.GetRow(i).GetCell(4) == null ? "" : sheet.GetRow(i).GetCell(4).ToString();
-                                string api = sheet.GetRow(i).GetCell(5) == null ? "" : sheet.GetRow(i).GetCell(5).ToString();
-                                sFC.IsApi = api == "YES" ? true : false;
-                                if (string.IsNullOrEmpty(sFC.CONTROL_CODE))
-                                    break;
-                                IndexContents.Add(sFC);
-                            }
-                            //表格
-                            for (int i = 1; i <= cot; i++)
-                            {
-                                Excel sFC = new Excel();
-                                sFC.GRID_CODE = sheet.GetRow(i).GetCell(0) == null ? "" : sheet.GetRow(i).GetCell(0).ToString();
-                                sFC.GRID_NAME = sheet.GetRow(i).GetCell(1) == null ? "" : sheet.GetRow(i).GetCell(1).ToString();
-                                if (String.IsNullOrEmpty(sFC.GRID_CODE) || string.IsNullOrEmpty(sFC.GRID_NAME))
-                                    break;
-                                IndexBodies.Add(sFC);
-                            }
+                            string btn = sheet.GetRow(i).GetCell(6) == null ? "" : sheet.GetRow(i).GetCell(6).ToString();
+                            if (String.IsNullOrEmpty(btn))
+                                break;
+                            Buttones.Add(btn);
                         }
-                        else if (t == 1 && AddChecked)
+
+                        //控件、查询字段
+                        for (int i = 1; i <= cot; i++)
                         {
-                            List<excel> sFCs = new List<excel>();
-                            XSSFSheet sheet = (XSSFSheet)xss.GetSheetAt(t);
-
-                            int cot = sheet.LastRowNum;
-                            //控件、查询字段
-                            for (int i = 1; i <= cot; i++)
-                            {
-                                Excel sFC = new Excel();
-                                sFC.CONTROL_CODE = sheet.GetRow(i).GetCell(0) == null ? "" : sheet.GetRow(i).GetCell(0).ToString();
-                                sFC.SEARCH_CODE = sheet.GetRow(i).GetCell(1) == null ? "" : sheet.GetRow(i).GetCell(1).ToString();
-                                sFC.SEARCH_NAME = sheet.GetRow(i).GetCell(2) == null ? "" : sheet.GetRow(i).GetCell(2).ToString();
-
-                                if (string.IsNullOrEmpty(sFC.CONTROL_CODE))
-                                    break;
-                                AddContents.Add(sFC);
-                            }
+                            Excel sFC = new Excel();
+                            sFC.CONTROL_CODE = sheet.GetRow(i).GetCell(2) == null ? "" : sheet.GetRow(i).GetCell(2).ToString();
+                            sFC.SEARCH_CODE = sheet.GetRow(i).GetCell(3) == null ? "" : sheet.GetRow(i).GetCell(3).ToString();
+                            sFC.SEARCH_NAME = sheet.GetRow(i).GetCell(4) == null ? "" : sheet.GetRow(i).GetCell(4).ToString();
+                            string api = sheet.GetRow(i).GetCell(5) == null ? "" : sheet.GetRow(i).GetCell(5).ToString();
+                            sFC.IsApi = api == "YES" ? true : false;
+                            if (string.IsNullOrEmpty(sFC.CONTROL_CODE))
+                                break;
+                            IndexContents.Add(sFC);
                         }
-                        else if (t == 3 && ImportChecked)
+                        //表格
+                        for (int i = 1; i <= cot; i++)
                         {
-                            XSSFSheet sheet = (XSSFSheet)xss.GetSheetAt(t);
-
-                            int cot = sheet.LastRowNum;
-                            for (int i = 1; i <= cot; i++)
-                            {
-                                Im im = new Im();
-                                im.GRID_CODE = sheet.GetRow(i).GetCell(0) == null ? "" : sheet.GetRow(i).GetCell(0).ToString();
-                                im.GRID_NAME = sheet.GetRow(i).GetCell(1) == null ? "" : sheet.GetRow(i).GetCell(1).ToString();
-                                if (string.IsNullOrEmpty(im.GRID_CODE) || string.IsNullOrEmpty(im.GRID_NAME))
-                                    break;
-                                ImportBidies.Body.Add(im);
-                            }
-
-                            for (int i = 1; i <= cot; i++)
-                            {
-                                string EMPTY_CODE = sheet.GetRow(i).GetCell(2) == null ? "" : sheet.GetRow(i).GetCell(2).ToString();
-                                if (string.IsNullOrEmpty(EMPTY_CODE))
-                                    break;
-                                ImportBidies.EMPTY_CODE.Add(EMPTY_CODE);
-                            }
-
-                            for (int i = 1; i <= cot; i++)
-                            {
-                                string REPEAT_CODE = sheet.GetRow(i).GetCell(3) == null ? "" : sheet.GetRow(i).GetCell(3).ToString();
-                                if (string.IsNullOrEmpty(REPEAT_CODE))
-                                    break;
-                                ImportBidies.REPEAT_CODE.Add(REPEAT_CODE);
-                            }
-                        }
-                        else if (t > 3)
-                        {
-                            XSSFSheet sheet = (XSSFSheet)xss.GetSheetAt(t);
-
-                            int cot = sheet.LastRowNum;
-                            MyModel my = new MyModel();
-                            my.BOX_NAME = sheet.GetRow(1).GetCell(0) == null ? "" : sheet.GetRow(1).GetCell(0).ToString();
-                            my.BOX_CODE = sheet.GetRow(1).GetCell(1) == null ? "" : sheet.GetRow(1).GetCell(1).ToString();
-                            my.SEARCH_CODE = sheet.GetRow(1).GetCell(4) == null ? "" : sheet.GetRow(1).GetCell(4).ToString();
-                            for (int i = 1; i <= cot; i++)
-                            {
-                                Excel excel = new Excel();
-                                excel.GRID_CODE = sheet.GetRow(i).GetCell(2) == null ? "" : sheet.GetRow(i).GetCell(2).ToString();
-                                excel.GRID_NAME = sheet.GetRow(i).GetCell(3) == null ? "" : sheet.GetRow(i).GetCell(3).ToString();
-                                if (String.IsNullOrEmpty(excel.GRID_CODE) || String.IsNullOrEmpty(excel.GRID_NAME))
-                                    break;
-                                my.Body.Add(excel);
-                            }
-                            boxes.Add(my);
+                            Excel sFC = new Excel();
+                            sFC.GRID_CODE = sheet.GetRow(i).GetCell(0) == null ? "" : sheet.GetRow(i).GetCell(0).ToString();
+                            sFC.GRID_NAME = sheet.GetRow(i).GetCell(1) == null ? "" : sheet.GetRow(i).GetCell(1).ToString();
+                            if (String.IsNullOrEmpty(sFC.GRID_CODE) || string.IsNullOrEmpty(sFC.GRID_NAME))
+                                break;
+                            IndexBodies.Add(sFC);
                         }
                     }
-                    return true;
-                }
-                catch (Exception ex)
-                {
-                    App.Current.Dispatcher.Invoke(() =>
+                    else if (t == 1 && AddChecked)
                     {
-                        Warning warning = new Warning(ex.Message);
-                        warning.ShowDialog();
-                    });
-                    return false;
+                        List<excel> sFCs = new List<excel>();
+                        XSSFSheet sheet = (XSSFSheet)xss.GetSheetAt(t);
+
+                        int cot = sheet.LastRowNum;
+                        //控件、查询字段
+                        for (int i = 1; i <= cot; i++)
+                        {
+                            Excel sFC = new Excel();
+                            sFC.CONTROL_CODE = sheet.GetRow(i).GetCell(0) == null ? "" : sheet.GetRow(i).GetCell(0).ToString();
+                            sFC.SEARCH_CODE = sheet.GetRow(i).GetCell(1) == null ? "" : sheet.GetRow(i).GetCell(1).ToString();
+                            sFC.SEARCH_NAME = sheet.GetRow(i).GetCell(2) == null ? "" : sheet.GetRow(i).GetCell(2).ToString();
+
+                            if (string.IsNullOrEmpty(sFC.CONTROL_CODE))
+                                break;
+                            AddContents.Add(sFC);
+                        }
+                    }
+                    else if (t == 3 && ImportChecked)
+                    {
+                        XSSFSheet sheet = (XSSFSheet)xss.GetSheetAt(t);
+
+                        int cot = sheet.LastRowNum;
+                        for (int i = 1; i <= cot; i++)
+                        {
+                            Im im = new Im();
+                            im.GRID_CODE = sheet.GetRow(i).GetCell(0) == null ? "" : sheet.GetRow(i).GetCell(0).ToString();
+                            im.GRID_NAME = sheet.GetRow(i).GetCell(1) == null ? "" : sheet.GetRow(i).GetCell(1).ToString();
+                            if (string.IsNullOrEmpty(im.GRID_CODE) || string.IsNullOrEmpty(im.GRID_NAME))
+                                break;
+                            ImportBidies.Body.Add(im);
+                        }
+
+                        for (int i = 1; i <= cot; i++)
+                        {
+                            string EMPTY_CODE = sheet.GetRow(i).GetCell(2) == null ? "" : sheet.GetRow(i).GetCell(2).ToString();
+                            if (string.IsNullOrEmpty(EMPTY_CODE))
+                                break;
+                            ImportBidies.EMPTY_CODE.Add(EMPTY_CODE);
+                        }
+
+                        for (int i = 1; i <= cot; i++)
+                        {
+                            string REPEAT_CODE = sheet.GetRow(i).GetCell(3) == null ? "" : sheet.GetRow(i).GetCell(3).ToString();
+                            if (string.IsNullOrEmpty(REPEAT_CODE))
+                                break;
+                            ImportBidies.REPEAT_CODE.Add(REPEAT_CODE);
+                        }
+                    }
+                    else if (t > 3)
+                    {
+                        XSSFSheet sheet = (XSSFSheet)xss.GetSheetAt(t);
+
+                        int cot = sheet.LastRowNum;
+                        MyModel my = new MyModel();
+                        my.BOX_NAME = sheet.GetRow(1).GetCell(0) == null ? "" : sheet.GetRow(1).GetCell(0).ToString();
+                        my.BOX_CODE = sheet.GetRow(1).GetCell(1) == null ? "" : sheet.GetRow(1).GetCell(1).ToString();
+                        my.SEARCH_CODE = sheet.GetRow(1).GetCell(4) == null ? "" : sheet.GetRow(1).GetCell(4).ToString();
+                        for (int i = 1; i <= cot; i++)
+                        {
+                            Excel excel = new Excel();
+                            excel.GRID_CODE = sheet.GetRow(i).GetCell(2) == null ? "" : sheet.GetRow(i).GetCell(2).ToString();
+                            excel.GRID_NAME = sheet.GetRow(i).GetCell(3) == null ? "" : sheet.GetRow(i).GetCell(3).ToString();
+                            if (String.IsNullOrEmpty(excel.GRID_CODE) || String.IsNullOrEmpty(excel.GRID_NAME))
+                                break;
+                            my.Body.Add(excel);
+                        }
+                        boxes.Add(my);
+                    }
                 }
-            });
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         
