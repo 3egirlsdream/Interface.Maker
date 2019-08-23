@@ -306,16 +306,30 @@ namespace GenerateToolbox.NewPage
             MyTextBox textBox = new MyTextBox();
             textBox.Name = GetControlsName("TB");
             textBox.MouseDoubleClick += TextBox_MouseDown;
-            textBox.btn.Margin = new Thickness(15, 5, 5, 5);
+            textBox.btn.Margin = new Thickness(20, 20, 5, 5);
             grid.Children.Add(textBox);
         }
 
+        int height = 20;
+        /// <summary>
+        /// 生成按钮
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void StackPanel_MouseLeftButtonDown_1(object sender, MouseButtonEventArgs e)
         {
             MyBorder myBorder = new MyBorder();
             myBorder.Name = GetControlsName("BTN");
             myBorder.MouseDoubleClick += Button_MouseDown;
-            myBorder.btn.Margin = new Thickness(15 + cot++ * 100, 20, 5, 5);
+            
+            myBorder.btn.Margin = new Thickness(20 + cot++ * 100, height, 5, 5);
+            //换行
+            if (cot > 10)
+            {
+                cot = 0;
+                height += 40;
+            }
+                
             grid.Children.Add(myBorder);
         }
 
@@ -324,7 +338,7 @@ namespace GenerateToolbox.NewPage
             MyDataGrid datagrid = new MyDataGrid();
             datagrid.Name = GetControlsName("GRID");
             datagrid.MouseDoubleClick += DataGrid_MouseDown;
-            datagrid.btn.Margin = new Thickness(15, 5, 5, 5);
+            datagrid.btn.Margin = new Thickness(20, 20, 5, 5);
             grid.Children.Add(datagrid);
         }
 

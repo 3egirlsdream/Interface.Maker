@@ -289,6 +289,7 @@ namespace GenerateToolbox.ViewModel
                             {
                                 Strings.Write(excels[i], dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml");
                                 Strings.Write(Strings.GetIndexXamlCs(res.en), dir + "\\" + res.en + "\\Views\\" + result[i].PageCode + ".xaml.cs");
+                                //没实现LoadData()
                                 Strings.Write(Strings.GetIndexVM_new(res.en, Controls.GetDataGridBinding(datas.Take((int)foo.ids[i]).ToList()) + Controls.CreateWord_new(result[i]) + Strings.CreateCommand_new(result[i], res.en), ""), dir + "\\" + res.en + "\\ViewModels\\" + result[i].PageCode + "VM.cs");
                             }
                             break;

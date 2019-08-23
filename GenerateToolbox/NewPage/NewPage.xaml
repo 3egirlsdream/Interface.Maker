@@ -6,6 +6,7 @@
     xmlns:local="clr-namespace:GenerateToolbox.NewPage"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="NewPage"
+    FontFamily="微软等线"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
@@ -143,14 +144,14 @@
                     </Grid.RowDefinitions>
                     <Border  Grid.Row="0">
                         <WrapPanel HorizontalAlignment="Right" Width="200">
-                            <StackPanel HorizontalAlignment="Right" Width="100" Orientation="Horizontal" MouseLeftButtonDown="AddPage_MouseLeftButtonDown" IsEnabled="{Binding IsEnabled, Mode=TwoWay}">
+                            <StackPanel HorizontalAlignment="Right" Width="100" Orientation="Horizontal" MouseLeftButtonDown="AddPage_MouseLeftButtonDown" IsEnabled="{Binding IsEnabled, Mode=TwoWay}" Background="White">
                                 <Border Width="25">
                                     <Image Source="..\img\页面.png"/>
                                 </Border>
                                 <TextBlock Text="添加页" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                             </StackPanel>
 
-                            <StackPanel HorizontalAlignment="Right" Width="70" Orientation="Horizontal" Margin="10,5,0,2" MouseLeftButtonDown="Create_MouseLeftButtonDown" IsEnabled="{Binding IsEnabled, Mode=TwoWay}">
+                            <StackPanel HorizontalAlignment="Right" Width="70" Orientation="Horizontal" Margin="10,5,0,2" MouseLeftButtonDown="Create_MouseLeftButtonDown" IsEnabled="{Binding IsEnabled, Mode=TwoWay}" Background="White">
                                 <Border Width="30">
                                     <Image Source="..\img\代码生成.png"/>
                                 </Border>

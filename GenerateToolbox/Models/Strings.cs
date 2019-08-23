@@ -1087,7 +1087,7 @@ namespace Project.G.Models
                     tmp += ", " + models[i].SEARCH_CODE;
             }
             s += tmp;
-            s += ", PageIndex * (PageIndex - 1), PageSize);\nif (res.success)\n{\nDataSource = JsonConvert.DeserializeObject<List<Model>>(Convert.ToString(res.data.data));\nTotalCount = res.data.TotalCount;\n}}catch(Exception ex){}\n";
+            s += ", PageSize * (PageIndex - 1), PageSize);\nif (res.success)\n{\nDataSource = JsonConvert.DeserializeObject<List<Model>>(Convert.ToString(res.data.data));\nTotalCount = res.data.TotalCount;\n}}catch(Exception ex){}\n";
 
             return s;
         }
