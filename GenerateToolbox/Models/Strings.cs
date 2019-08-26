@@ -1426,8 +1426,8 @@ namespace Project.G.Models
 
 
                 "<ItemGroup>\r\n " +
-                "<Compile Include=\"..\\..\\Reference Assemblies\\Release\\GlobalAssemblyInfo.cs\">\r\n      " +
-                "<Link>Properties\\GlobalAssemblyInfo.cs</Link>\r\n    " +
+                "<Compile Include=\"..\\..\\..\\SharedAssemblyFiles\\GlobalAssemblyVersion.cs\">\r\n      " +
+                "<Link>Properties\\GlobalAssemblyVersion.cs</Link>\r\n    " +
                 "</Compile>\r\n\r\n    " +
                 Link +
                 "<Compile Include=\"Services.cs\" />" +

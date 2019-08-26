@@ -278,6 +278,8 @@ namespace GenerateToolbox.ViewModel
 
                 //url
                 string url = "";
+                //生成assembly
+                Strings.Write(Strings.LoadJson("assembly.txt").Replace("NMSL", res.en), dir + "\\" + res.en + "\\Properties\\AssemblyInfo.cs");
 
                 for (int i = 0; i < result.Count; i++)
                 {
