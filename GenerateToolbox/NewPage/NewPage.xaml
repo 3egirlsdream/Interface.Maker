@@ -143,8 +143,14 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <Border  Grid.Row="0">
-                        <WrapPanel HorizontalAlignment="Right" Width="200">
-                            <StackPanel HorizontalAlignment="Right" Width="100" Orientation="Horizontal" MouseLeftButtonDown="AddPage_MouseLeftButtonDown" IsEnabled="{Binding IsEnabled, Mode=TwoWay}" Background="White">
+                        <WrapPanel HorizontalAlignment="Right" Width="250">
+                            <StackPanel HorizontalAlignment="Right" Width="80" Orientation="Horizontal" MouseLeftButtonDown="Reset_MouseLeftButtonDown" IsEnabled="{Binding IsEnabled, Mode=TwoWay}" Background="White">
+                                <Border Width="25">
+                                    <Image Source="..\img\重置.png"/>
+                                </Border>
+                                <TextBlock Text="重置" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            </StackPanel>
+                            <StackPanel HorizontalAlignment="Right" Width="80" Orientation="Horizontal" MouseLeftButtonDown="AddPage_MouseLeftButtonDown" IsEnabled="{Binding IsEnabled, Mode=TwoWay}" Background="White">
                                 <Border Width="25">
                                     <Image Source="..\img\页面.png"/>
                                 </Border>

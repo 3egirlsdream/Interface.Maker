@@ -175,121 +175,113 @@ namespace GenerateToolbox.NewPage
             }
         }
 
-        List<Grids> grids = new List<Grids>();
-        public async void GetData(List<MySidebar> sider)
+        public List<Grids> grids = new List<Grids>();
+        public void GetData(List<MySidebar> sider)
         {
-            await Task.Run(() =>
+
+            Grids tmp = new Grids();
+            tmp.Identity = vm.FilterPageType.Value.Key;
+            tmp.PageCode = vm.FilterPageType.Value.Value;
+            tmp.PageName = vm.FilterPageType.Value.Key == "普通弹出框" ? vm.BoxName : vm.FilterPageType.Value.Value;
+            foreach (var ds in sider)
             {
-                Grids tmp = new Grids();
-                tmp.Identity = vm.FilterPageType.Value.Key;
-                tmp.PageCode = vm.FilterPageType.Value.Value;
-                tmp.PageName = vm.FilterPageType.Value.Key == "普通弹出框" ? vm.BoxName : vm.FilterPageType.Value.Value;
-                foreach (var ds in sider)
+                //var borderMargin = getMargin(ds.RenderSize.Width, ds.RenderSize.Height, ds.ActualWidth, ds.ActualHeight);
+                grid.Dispatcher.Invoke(new Action(() =>
                 {
-                    //var borderMargin = getMargin(ds.RenderSize.Width, ds.RenderSize.Height, ds.ActualWidth, ds.ActualHeight);
-                    grid.Dispatcher.Invoke(new Action(() =>
+                    foreach (var control in grid.Children)
                     {
-                        foreach (var control in grid.Children)
-                        {
-                            var type = control.GetType();
-                            if (type.Name != "MySidebar")//不包含边框元素
+                        var type = control.GetType();
+                        if (type.Name != "MySidebar")//不包含边框元素
                             {
-                                dynamic obj;
-                                switch (type.Name)
-                                {
-                                    case "MyBorder": obj = control as MyBorder; break;
-                                    case "MyDataGrid": obj = control as MyDataGrid; break;
-                                    case "MyTextBox": obj = control as MyTextBox; break;
-                                    default: obj = control as MyBorder; break;
-                                }
+                            dynamic obj;
+                            switch (type.Name)
+                            {
+                                case "MyBorder": obj = control as MyBorder; break;
+                                case "MyDataGrid": obj = control as MyDataGrid; break;
+                                case "MyTextBox": obj = control as MyTextBox; break;
+                                default: obj = control as MyBorder; break;
+                            }
 
                                 //POSITION margin = getMargin(obj.RenderSize.Width, obj.RenderSize.Height, obj.ActualWidth, obj.ActualHeight);
 
                                 if (obj.btn.Margin.Top > ds.btn.Margin.Top
-                                    && obj.btn.Margin.Left > ds.btn.Margin.Left
-                                    && obj.btn.Margin.Top + obj.btn.ActualHeight < ds.btn.Margin.Top + ds.btn.ActualHeight
-                                    && obj.btn.Margin.Left + obj.btn.ActualWidth < ds.btn.Margin.Left + ds.btn.ActualWidth)
-                                {
+                                && obj.btn.Margin.Left > ds.btn.Margin.Left
+                                && obj.btn.Margin.Top + obj.btn.ActualHeight < ds.btn.Margin.Top + ds.btn.ActualHeight
+                                && obj.btn.Margin.Left + obj.btn.ActualWidth < ds.btn.Margin.Left + ds.btn.ActualWidth)
+                            {
                                     //默认第一行全是按钮
                                     if (sider.IndexOf(ds) == 0)
-                                        tmp.strs.Add(obj.tb.Text);
+                                    tmp.strs.Add(obj.tb.Text);
                                     //按钮
                                     else if (type.Name == "MyBorder")
+                                {
+                                    Grid temp = new Grid
                                     {
-                                        Grid temp = new Grid
-                                        {
-                                            CONTROL_NAME = "btn",
-                                            NAME = obj.tb.Text,
-                                            CODE = obj.NAME_ENG
-                                        };
-                                        tmp.grids.Add(temp);
-                                    }
+                                        CONTROL_NAME = "btn",
+                                        NAME = obj.tb.Text,
+                                        CODE = obj.NAME_ENG
+                                    };
+                                    tmp.grids.Add(temp);
+                                }
                                     //文本框
                                     else if (type.Name == "MyTextBox")
+                                {
+                                    Grid temp = new Grid
                                     {
-                                        Grid temp = new Grid
-                                        {
-                                            CONTROL_NAME = obj.BOX_TYPE,
-                                            NAME = obj.tblock.Text,
-                                            CODE = obj.NAME_ENG,
-                                            IS_API = obj.IS_API
-                                        };
-                                        tmp.grids.Add(temp);
-                                    }
+                                        CONTROL_NAME = obj.BOX_TYPE,
+                                        NAME = obj.tblock.Text,
+                                        CODE = obj.NAME_ENG,
+                                        IS_API = obj.IS_API
+                                    };
+                                    tmp.grids.Add(temp);
+                                }
 
                                     //表格
                                     else if (type.Name == "MyDataGrid")
+                                {
+                                    foreach (DataGridColumn rtl in obj.grid.Columns)
                                     {
-                                        foreach (DataGridColumn rtl in obj.grid.Columns)
+                                        Grid temp = new Grid
                                         {
-                                            Grid temp = new Grid
-                                            {
-                                                CONTROL_NAME = "DATAGRID",
-                                                NAME = rtl.Header?.ToString(),
-                                                CODE = rtl?.SortMemberPath
-                                            };
-                                            tmp.grids.Add(temp);
-                                        }
-
+                                            CONTROL_NAME = "DATAGRID",
+                                            NAME = rtl.Header?.ToString(),
+                                            CODE = rtl?.SortMemberPath
+                                        };
+                                        tmp.grids.Add(temp);
                                     }
+
                                 }
                             }
                         }
-                    }));
-                    //换行
-                    Grid temp1 = new Grid
-                    {
-                        CONTROL_NAME = "NEXT_LINE"
-                    };
-                    tmp.Level++;
-                    tmp.grids.Add(temp1);
-                }
-                grids.Add(tmp);
-            });
+                    }
+                }));
+                //换行
+                Grid temp1 = new Grid
+                {
+                    CONTROL_NAME = "NEXT_LINE"
+                };
+                tmp.Level++;
+                tmp.grids.Add(temp1);
+            }
+            grids.Add(tmp);
         }
         List<MySidebar> sider;
         private void Add_Page()
         {
             //拿到所有边框
             sider = new List<MySidebar>();
-            grid.Dispatcher.Invoke(new Action(() =>
+            foreach (dynamic ds in grid.Children)
             {
-                foreach (dynamic ds in grid.Children)
+                string name = ds.Name as string;
+                if (name.Contains("BAR"))
                 {
-                    string name = ds.Name as string;
-                    if (name.Contains("BAR"))
-                    {
-                        sider.Add(ds);
-                    }
+                    sider.Add(ds);
                 }
-            }));
-            
-            GetData(sider);
-            grid.Dispatcher.Invoke(new Action(() =>
-            {
-                grid.Children.Clear();
+            }
 
-            }));
+            GetData(sider);
+            grid.Children.Clear();
+
             cot = 0;
             t = 0;
             vm.FilterPageType = null;
@@ -343,12 +335,9 @@ namespace GenerateToolbox.NewPage
         }
 
 
-        private async void AddPage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void AddPage_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            await Task.Run(() =>
-            {
-                Add_Page();
-            });
+            Add_Page();
         }
 
 
@@ -365,6 +354,16 @@ namespace GenerateToolbox.NewPage
         private void StackPanel_MouseLeftButtonDown_4(object sender, MouseButtonEventArgs e)
         {
             xmlbox.Visibility = xmlbox.Visibility ==  Visibility.Visible ? Visibility.Hidden : Visibility.Visible;
+        }
+
+        private void Reset_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            grids = new List<Grids>();
+            grid.Children.Clear();
+            cot = 0;
+            t = 0;
+            vm.FilterPageType = null;
+            IsGenerate = false;
         }
     }
 }

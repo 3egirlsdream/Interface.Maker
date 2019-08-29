@@ -57,8 +57,8 @@ namespace Project.G
             left.ParentWindow = this;
             page.ParentWindow = this;
             newPage.ParentWindow = this;
-            Preview.Content = new Frame { Content = newPage };
 
+            LoadMode();
             right.Content = new Frame() { Content = page };
             right.Visibility = Visibility.Visible;
             //打开更新日志界面
@@ -113,7 +113,7 @@ namespace Project.G
                 this.WindowState = WindowState.Maximized;
             else
                 this.WindowState = WindowState.Normal;
-            
+
         }
 
         private void Service_GotFocus(object sender, RoutedEventArgs e)
@@ -150,6 +150,41 @@ namespace Project.G
             CLOSE.Background = GetColor("#4F4150");
         }
 
-       
+        private void bodyDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            Transfer();
+        }
+
+        private void Transfer()
+        {
+            bd1.Visibility = bd1.Visibility == Visibility.Collapsed ? Visibility.Visible : Visibility.Collapsed;
+            tabcontol.Visibility = tabcontol.Visibility == Visibility.Collapsed ? Visibility.Visible : Visibility.Collapsed;
+            bd2.Height = (bd2.Height - 30) <= 10 ? 70 : 35;
+            setting.Visibility = setting.Visibility == Visibility.Collapsed ? Visibility.Visible : Visibility.Collapsed;
+            if (setting.Visibility == Visibility.Collapsed)
+            {
+                zz.Content = new Frame() { Content = newPage };
+            }
+            else
+            {
+                Preview.Content = new Frame() { Content = newPage };
+            }
+        }
+
+        private void LoadMode()
+        {
+            if (Common.SetConfig("Mode") == "1")
+            {
+                bd1.Visibility = Visibility.Collapsed;
+                tabcontol.Visibility = Visibility.Collapsed;
+                bd2.Height = 70;
+                setting.Visibility = Visibility.Collapsed;
+                zz.Content = new Frame() { Content = newPage };
+            }
+            else
+            {
+                Preview.Content = new Frame { Content = newPage };
+            }
+        }
     }
 }

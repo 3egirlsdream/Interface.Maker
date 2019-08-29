@@ -54,6 +54,7 @@
                     
 
                 <WrapPanel
+                    Visibility="Collapsed"
                     Grid.Row="2"
                     Margin="15,10,15,0"
                     Orientation="Horizontal">
@@ -87,6 +88,7 @@
                         Foreground="White" />
                 </WrapPanel>
                 <WrapPanel
+                    Visibility="Collapsed"
                     Grid.Row="3"
                     Margin="15,10,15,0"
                     Orientation="Horizontal">

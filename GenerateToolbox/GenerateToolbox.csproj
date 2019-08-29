@@ -332,5 +332,8 @@
   <ItemGroup>
     <Resource Include="img\其他设置.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\重置.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

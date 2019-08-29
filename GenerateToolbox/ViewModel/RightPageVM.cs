@@ -367,6 +367,8 @@ namespace Project.G.ViewModel
         public SimpleCommand CmdStart => new SimpleCommand()
         {
             ExecuteDelegate = x => {
+                if (plugin.cmdStart.Content.ToString() == "Running")
+                    return;
                 plugin.cmdStart.Content = "Running";
                 new Task(() =>
                 {

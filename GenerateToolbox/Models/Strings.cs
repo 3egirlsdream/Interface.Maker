@@ -690,6 +690,7 @@ namespace Project.G.Models
                 "Orientation=\"Horizontal\">\r\n                " +
                 "<Button\r\n                    " +
                 "Content=\"{DynamicResource Submit}\"\r\n                    " +
+                "Command=\"{Binding CmdSave}\"\r\n                    " +
                 "Style=\"{DynamicResource HighLightButtonStyle}\" />\r\n                " +
                 "<Button\r\n                    Margin=\"{StaticResource BtnMargin}\"\r\n                    " +
                 "Content=\"{DynamicResource Cancel}\"\r\n                    IsCancel=\"True\" />\r\n            " +
