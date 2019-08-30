@@ -163,10 +163,12 @@ namespace Project.G
             setting.Visibility = setting.Visibility == Visibility.Collapsed ? Visibility.Visible : Visibility.Collapsed;
             if (setting.Visibility == Visibility.Collapsed)
             {
+                zz.Visibility = Visibility.Visible;
                 zz.Content = new Frame() { Content = newPage };
             }
             else
             {
+                zz.Visibility = Visibility.Collapsed;
                 Preview.Content = new Frame() { Content = newPage };
             }
         }
