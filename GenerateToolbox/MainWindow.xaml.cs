@@ -1,4 +1,5 @@
 ﻿using GenerateToolbox.NewPage;
+using GenerateToolbox.NotifyBox;
 using Project.G.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -75,6 +76,8 @@ namespace Project.G
             cm.ToolTip = "勾选后会生成在右侧文本框输入的表的模型";
             vm = new MainView();
             this.DataContext = vm;
+
+            RunNotifyBox();
         }
 
         public void LoadLeftPage(int t)
@@ -187,6 +190,22 @@ namespace Project.G
             {
                 Preview.Content = new Frame { Content = newPage };
             }
+        }
+
+        private async void RunNotifyBox()
+        {
+            await Task.Run(() =>
+            {
+                for (int i = 0; ; i++)
+                {
+                    if((DateTime.Now.Minute * DateTime.Now.Second * DateTime.Now.Hour) % (40 * 60) == 0)
+                        App.Current.Dispatcher.Invoke(() =>
+                        {
+                            NofifyBox page = new NofifyBox();
+                            page.ShowDialog();
+                        });
+                }
+            });
         }
     }
 }
