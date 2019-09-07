@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Management;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -77,7 +78,7 @@ namespace Project.G
             vm = new MainView();
             this.DataContext = vm;
 
-            RunNotifyBox();
+            //RunNotifyBox();
         }
 
         public void LoadLeftPage(int t)
@@ -196,9 +197,10 @@ namespace Project.G
         {
             await Task.Run(() =>
             {
-                for (int i = 0; ; i++)
+                while(true)
                 {
-                    if((DateTime.Now.Minute * DateTime.Now.Second * DateTime.Now.Hour) % (40 * 60) == 0)
+                    Thread.Sleep(1000);
+                    if((DateTime.Now.Minute == 30 || DateTime.Now.Minute == 1) && DateTime.Now.Second == 1)
                         App.Current.Dispatcher.Invoke(() =>
                         {
                             NofifyBox page = new NofifyBox();

@@ -4,14 +4,16 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GenerateToolbox.NotifyBox"
+        xmlns:gif="https://github.com/XamlAnimatedGif/XamlAnimatedGif"
         mc:Ignorable="d"
         Title="NofifyBox"
+        x:Name="window"
         WindowStyle="None"
         BorderThickness="0"
         FontFamily="微软等线 Light"
         AllowsTransparency="True"
         Height="136" Width="250">
-    <Grid>
+    <Grid x:Name="grid">
         <Button
                         Style="{StaticResource CloseBorderStyle}"
                         x:Name="CLOSE"
@@ -25,5 +27,7 @@
                         ToolTip="关闭" />
 
         <TextBlock x:Name="tb" Text="别提莫坐着了" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15" TextWrapping="Wrap"/>
+        <Image gif:AnimationBehavior.SourceUri="20150210104951657.gif" Width="20" Height="20" Margin="0,40,0,0"></Image>
+
     </Grid>
 </Window>

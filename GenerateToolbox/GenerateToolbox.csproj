@@ -105,6 +105,7 @@
     <Reference Include="System.Management" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\ControlzEx.3.0.2.4\lib\net45\System.Windows.Interactivity.dll</HintPath>
     </Reference>
@@ -120,6 +121,9 @@
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="XamlAnimatedGif, Version=1.2.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\XamlAnimatedGif.1.2.2\lib\net45\XamlAnimatedGif.dll</HintPath>
+    </Reference>
     <Reference Include="Xu.Common, Version=1.0.7076.25375, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>plugins\Xu.Common.dll</HintPath>
@@ -158,6 +162,9 @@
     <Compile Include="DragInterfaceCreater\ViewModels\MyDataGridVM.cs" />
     <Compile Include="DragInterfaceCreater\ViewModels\MyTextBoxVM.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Loading\Loading.xaml.cs">
+      <DependentUpon>Loading.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Models\Buttons.cs" />
     <Compile Include="Models\Connection.cs" />
     <Compile Include="Models\Controls.cs" />
@@ -221,6 +228,10 @@
     <Page Include="DragInterfaceCreater\Setting\TextBoxSetting.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Loading\Loading.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -344,6 +355,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="bitbug_favicon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="NotifyBox\20150210104951657.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\20150210104951657.gif" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

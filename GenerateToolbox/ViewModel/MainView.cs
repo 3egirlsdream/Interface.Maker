@@ -12,12 +12,13 @@ using Model.Helper;
 using System.Windows;
 using Xu.Common;
 using System.Threading.Tasks;
+using GenerateToolbox.Loading;
 
 namespace Project.G.ViewModel
 {
     class MainView : ValidationBase
     {
-        
+
         public MainView()
         {
             //Domain = Strings.LoadJson("a.txt");
@@ -243,7 +244,7 @@ namespace Project.G.ViewModel
             }
         }
         #endregion
-        
+
         #region Command
 
         public SimpleCommand CmdOpen => new SimpleCommand()
@@ -252,25 +253,25 @@ namespace Project.G.ViewModel
             {
                 switch (Filter.value)
                 {
-                    case 0: SqlText = OpenFile();break;
-                    case 1: OpenNotifyFile();break;
+                    case 0: SqlText = OpenFile(); break;
+                    case 1: OpenNotifyFile(); break;
                     case 2: Common.Export(Common.SetConfig("DbName").ToUpper() + ".cs", SqlText); break;
-                    case 3: AddNotify_Click();break;
-                    case 4: FormatJson();break;
-                    case 5: AddCommand();break;
-                    default: GenerateModel();break;
+                    case 3: AddNotify_Click(); break;
+                    case 4: FormatJson(); break;
+                    case 5: AddCommand(); break;
+                    default: GenerateModel(); break;
                 }
             }
         };
 
-        
 
-        
+
+
         #endregion
 
         #region 方法
 
-        
+
 
         private string OpenFile()
         {
@@ -334,7 +335,7 @@ namespace Project.G.ViewModel
                         }
                         if (sFC.name == "ID")
                             str += "primary key ";
-                        if(Constraint.value != 2)
+                        if (Constraint.value != 2)
                             str += ("COMMENT '" + sFC.desc + "' ");
                         if (i != cot) str += " ,\n";
 
@@ -447,8 +448,8 @@ namespace Project.G.ViewModel
             sr = System.Text.RegularExpressions.Regex.Replace(sr, "[\r\n\t]", "");
             SqlText = "/// <summary>\r\n///\r\n/// </summary>\r\n" + Xu.Common.Common.format(sr + '}');
         }
-        
-        
+
+
 
         private void FormatJson()
         {
@@ -519,17 +520,27 @@ namespace Project.G.ViewModel
                 return;
             }
             StringBuilder str = new StringBuilder("");
-            str.Append("public SimpleCommand "+ SqlText.Replace("\n", "") + " => new SimpleCommand(){ExecuteDelegate = x =>{},CanExecuteDelegate = o =>{return true;}};");
+            str.Append("public SimpleCommand " + SqlText.Replace("\n", "") + " => new SimpleCommand(){ExecuteDelegate = x =>{},CanExecuteDelegate = o =>{return true;}};");
             SqlText = Common.format(str.ToString());
         }
 
 
-        
 
-        private void GenerateModel()
+
+        private /*async*/ void GenerateModel()
         {
+            //Loading loading = new Loading();
             try
             {
+                //await Task.Run(() =>
+                //{
+                //     App.Current.Dispatcher.Invoke(() =>
+                //     {
+                //         loading.Show();
+                //     });
+                //});
+
+
                 if (!String.IsNullOrEmpty(DBName))
                 {
                     ModelHelper model = new ModelHelper();
@@ -546,7 +557,7 @@ namespace Project.G.ViewModel
                         ty = SqlSugar.DbType.Oracle;
                     }
                     string json = model.GetTableJson(DBName, ty);
-                    if(IsSugar)
+                    if (IsSugar)
                         SqlText = Common.format(model.ModelCreate(json, "MeiCloud.DataAccess", "Sugar"));
                     else
                         SqlText = Common.format(model.ModelCreate(json, "MeiCloud.DataAccess"));
@@ -557,6 +568,12 @@ namespace Project.G.ViewModel
                 Warning warning = new Warning(ex.Message);
                 warning.ShowDialog();
             }
+
+            //App.Current.Dispatcher.Invoke(() =>
+            //{
+            //    loading.Close();
+            //});
+
         }
 
         private string GenerateModel(string DBName)
@@ -573,7 +590,7 @@ namespace Project.G.ViewModel
                         //type = DbType.MySql;
                         ty = SqlSugar.DbType.MySql;
                     }
-                    else if(Constraint.value == 4)
+                    else if (Constraint.value == 4)
                     {
                         //type = DbType.MySql;
                         ty = SqlSugar.DbType.Oracle;
@@ -739,7 +756,7 @@ namespace Project.G.ViewModel
                 NotifyPropertyChanged("Tables");
             }
         }
-        
+
 
         private bool _ImportChecked;
         public bool ImportChecked
@@ -760,14 +777,16 @@ namespace Project.G.ViewModel
         [Obsolete]
         public SimpleCommand CmdCreate => new SimpleCommand()
         {
-            ExecuteDelegate = x => {
+            ExecuteDelegate = x =>
+            {
                 switch (FilterBox.value)
                 {
                     case 0: OpenExcel(BoxNumber); break;
                     default: break;
                 }
             },
-            CanExecuteDelegate = o => {
+            CanExecuteDelegate = o =>
+            {
                 return true;
             }
         };
@@ -776,10 +795,11 @@ namespace Project.G.ViewModel
         {
             ExecuteDelegate = x =>
             {
+                //Loading loading = new Loading();
                 try
                 {
                     OpenExcel(BoxNumber);
-
+                    //loading.Show();
                     if (CreateProj(ProjectName, "还没写"))
                     {
                         Warning warning = new Warning("生成成功！");
@@ -798,6 +818,7 @@ namespace Project.G.ViewModel
                     Warning warning = new Warning(ex.Message);
                     warning.ShowDialog();
                 }
+                //loading.Close();
             }
         };
 
@@ -860,7 +881,7 @@ namespace Project.G.ViewModel
                     Include += GetEditInclude;
                     Complie += GetEditComplie;
                 }
-                
+
                 //Import
                 if (ImportChecked)
                 {
@@ -872,11 +893,11 @@ namespace Project.G.ViewModel
                     Complie += GetImportComplie;
                 }
 
-                if(boxes.Count > 0)
+                if (boxes.Count > 0)
                 {
-                    foreach(var ds in boxes)
+                    foreach (var ds in boxes)
                     {
-                        Strings.Write(Strings.GetBoxesXaml(csproj, ds.BOX_CODE, Controls.CreateDataGrid(ds.Body), ds.SEARCH_CODE), dir + "\\" + csproj + "\\Views\\"+ds.BOX_CODE+".xaml");//Add.xaml
+                        Strings.Write(Strings.GetBoxesXaml(csproj, ds.BOX_CODE, Controls.CreateDataGrid(ds.Body), ds.SEARCH_CODE), dir + "\\" + csproj + "\\Views\\" + ds.BOX_CODE + ".xaml");//Add.xaml
                         Strings.Write(Strings.GetBoxesXamlCs(csproj, ds.BOX_CODE), dir + "\\" + csproj + "\\Views\\" + ds.BOX_CODE + ".xaml.cs");//xaml.cs
                         Strings.Write(Strings.GetBoxesVM(csproj, ds.BOX_CODE, Controls.CreateWord(ds.Body), Strings.CreateBoxUrl(csproj, ds.BOX_CODE, ds.SEARCH_CODE)), dir + "\\" + csproj + "\\ViewModels\\" + ds.BOX_CODE + "VM.cs");//AddVM
                     }
@@ -890,7 +911,7 @@ namespace Project.G.ViewModel
 
                 Strings.Write(Strings.GetServices(csproj, res), dir + "\\" + csproj + "\\Services.cs");
 
-                Domain = Strings.CreateGetallUrl(csproj, IndexContents).Replace("\r\n\t\t", "") ;
+                Domain = Strings.CreateGetallUrl(csproj, IndexContents).Replace("\r\n\t\t", "");
                 #endregion
 
                 #region 生成后台
@@ -905,18 +926,18 @@ namespace Project.G.ViewModel
                 Strings.Write(Domains.GetCsproj(ServerName, LoadTables()), dir + "\\" + ServerName + "\\" + ServerName + ".csproj");
                 Strings.Write(Domains.GetDomain(ServerName, Domains.GetAllUrlBody(IndexContents, 1), Domains.GetHasWordUrl(ImportBidies, 1), Domains.GetHasWrodFunction(ImportBidies), Domains.GetAllFunction(Tables, IndexContents)), dir + "\\" + ServerName + "\\Domains\\" + ls.Last() + "Domain.cs");
                 Strings.Write(Domains.GetService(ServerName, Domains.GetAllUrlHeader(ServerName, IndexContents), Domains.GetAllUrlBody(IndexContents, 1), Domains.GetAllUrlBody(IndexContents, 0), ChineseName, Domains.GetHasWordUrl(ImportBidies, 0), Domains.GetHasWordUrl(ImportBidies, 1), Domains.GetHasWordUrl(ImportBidies, 2)), dir + "\\" + ServerName + "\\Services\\" + ls.Last() + "Service.cs");
-                if(ModelChecked)
+                if (ModelChecked)
                     CreateDbModel();
                 #endregion
                 return true;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return false;
             }
         }
 
-        
+
 
 
         #region 保存表格数据
@@ -1078,11 +1099,11 @@ namespace Project.G.ViewModel
             }
         }
 
-        
 
 
-        
-       
+
+
+
         /// <summary>
         /// 生成Command
         /// </summary>
@@ -1096,14 +1117,14 @@ namespace Project.G.ViewModel
             {
                 if (Contents[i].CONTROL_CODE == "TextBox带弹出框")
                 {
-                    if(models.Count > 0 && i < models.Count)
-                        s += "\t" + Controls.AddCommand(model.GetCmd(Contents[i].SEARCH_CODE), ProjectName ,models[t++], Contents[i]) + "\r\n";
+                    if (models.Count > 0 && i < models.Count)
+                        s += "\t" + Controls.AddCommand(model.GetCmd(Contents[i].SEARCH_CODE), ProjectName, models[t++], Contents[i]) + "\r\n";
                     else
                         s += "\t" + Controls.AddCommand(model.GetCmd(Contents[i].SEARCH_CODE), ProjectName, null, Contents[i]) + "\r\n";
                 }
             }
 
-            foreach(var ds in btn)
+            foreach (var ds in btn)
             {
                 s += "\t" + Controls.AddCommand(model.GetCmd(Buttons.command(ds, "")), ProjectName) + "\r\n";
             }
@@ -1133,7 +1154,7 @@ namespace Project.G.ViewModel
             return s + "#endregion\r\n";
         }
 
-        
+
         /// <summary>
         /// 生成项目文件内容
         /// </summary>
@@ -1150,7 +1171,7 @@ namespace Project.G.ViewModel
                         "</Compile>\r\n" +
                         "<Compile Include=\"ViewModels\\" + ds.BOX_CODE + "VM.cs\" />\r\n";
             }
-            
+
             return s;
         }
 
@@ -1180,9 +1201,9 @@ namespace Project.G.ViewModel
             "<SubType>Code</SubType>" +
             "</Compile>\r\n" +
             "<Compile Include=\"ViewModels\\ImportPageVM.cs\" />\r\n";
-        
 
-        private const string GetImportInclude = 
+
+        private const string GetImportInclude =
             "<Page Include=\"Views\\ImportPage.xaml\">\r\n" +
             "<SubType>Designer</SubType>\r\n" +
             "<Generator>MSBuild:Compile</Generator>\r\n" +
@@ -1232,11 +1253,11 @@ namespace Project.G.ViewModel
         {
             if (String.IsNullOrEmpty(Tables))
                 return "";
-            else 
+            else
             {
                 var ds = Tables.Split(new string[] { "\r\n" }, StringSplitOptions.RemoveEmptyEntries);
                 return Strings.ModelLink(ShareModel, ds.ToList(), IsExsitModel);
-            }           
+            }
         }
         #endregion
 

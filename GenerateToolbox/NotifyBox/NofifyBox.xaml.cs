@@ -8,6 +8,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
@@ -29,7 +30,9 @@ namespace GenerateToolbox.NotifyBox
             //SetWindowPos(this.Handle, -1, 0, 0, 0, 0, 1 | 2);
             this.Loaded += Load_box;
             var str = Common.SetConfig("Content");
-            tb.Text = str;
+            //tb.Text = str;
+            var win = Screen.PrimaryScreen.Bounds;
+            window.Width = win.Width;
         }
 
         private void Load_box(object sender, RoutedEventArgs e)
@@ -38,7 +41,7 @@ namespace GenerateToolbox.NotifyBox
 
             DoubleAnimation animation = new DoubleAnimation();
             animation.From = SystemParameters.WorkArea.Right;
-            animation.To = SystemParameters.WorkArea.Right - 250;
+            animation.To = SystemParameters.WorkArea.Right - Screen.PrimaryScreen.Bounds.Width;
             animation.Duration = new Duration(TimeSpan.FromMilliseconds(500));
             page.BeginAnimation(Window.LeftProperty, animation);
         }
