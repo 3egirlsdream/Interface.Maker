@@ -6,6 +6,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Project.G"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:gif="https://github.com/XamlAnimatedGif/XamlAnimatedGif"
     Title="MainWindow"
     Width="1040"
     Height="690"
@@ -44,6 +45,14 @@
                 BorderThickness="0"
                 CornerRadius="5">
                 <Grid>
+                    <!--<Border
+                        Height="20"
+                        Margin="5,5,0,0"
+                        VerticalAlignment="Top"
+                        HorizontalAlignment="Left">
+                        <Image gif:AnimationBehavior.SourceUri=".\img\20150210104951657.gif" />
+                    </Border>-->
+                    
                     <Button
                         Style="{StaticResource CloseBorderStyle}"
                         x:Name="CLOSE"

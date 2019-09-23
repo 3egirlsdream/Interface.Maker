@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Project.G;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -22,6 +24,19 @@ namespace GenerateToolbox.Loading
         public Loading()
         {
             InitializeComponent();
+            close();
+        }
+
+        private async void close()
+        {
+            await Task.Run(() =>
+            {
+                Thread.Sleep(2000);
+                App.Current.Dispatcher.Invoke(() =>
+                {
+                    this.Close();
+                });
+            });
         }
     }
 }

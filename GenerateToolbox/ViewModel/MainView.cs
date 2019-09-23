@@ -524,23 +524,22 @@ namespace Project.G.ViewModel
             SqlText = Common.format(str.ToString());
         }
 
-
-
-
-        private /*async*/ void GenerateModel()
+        private async void Run()
         {
-            //Loading loading = new Loading();
-            try
+            await Task.Run(() =>
             {
-                //await Task.Run(() =>
-                //{
-                //     App.Current.Dispatcher.Invoke(() =>
-                //     {
-                //         loading.Show();
-                //     });
-                //});
+                App.Current.Dispatcher.Invoke(() =>
+                {
+                    Loading loading = new Loading();
+                    loading.Show();
+                });
+            });
+        }
 
-
+        private async void ModelRun()
+        {
+            await Task.Run(() =>
+            {
                 if (!String.IsNullOrEmpty(DBName))
                 {
                     ModelHelper model = new ModelHelper();
@@ -562,6 +561,19 @@ namespace Project.G.ViewModel
                     else
                         SqlText = Common.format(model.ModelCreate(json, "MeiCloud.DataAccess"));
                 }
+            });
+        }
+
+
+        private /*async*/ void GenerateModel()
+        {
+            //
+            try
+            {
+                Run();
+
+                ModelRun();
+                
             }
             catch (Exception ex)
             {
