@@ -165,7 +165,7 @@
                             </StackPanel>
                         </WrapPanel>
                     </Border>
-                    <Border Height="1" BorderThickness="2" BorderBrush="LightGray" Width="1000" Grid.Row="1"/>
+                    <Border Height="1" BorderThickness="2" BorderBrush="LightGray" Width="1500" Grid.Row="1"/>
                     <Canvas x:Name="grid" Grid.Row="2">
 
                     </Canvas>
