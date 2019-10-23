@@ -26,6 +26,8 @@ namespace GenerateToolbox
             btn.MouseLeftButtonDown += Btn_MouseLeftButtonDown;
             btn.MouseMove += Btn_MouseMove;
             btn.MouseLeftButtonUp += Btn_MouseLeftButtonUp;
+            BOX_TYPE = "TextBox";
+            NAME_ENG = "Button" + DateTime.Now.ToString("yyyyMMddHHmmss");
         }
         Point pos = new Point();
         private void Btn_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

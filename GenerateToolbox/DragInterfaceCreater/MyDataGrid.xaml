@@ -12,11 +12,12 @@
         </Grid.ColumnDefinitions>
         <DataGrid x:Name="grid" Height="100" Grid.Column="0" BorderThickness="1" BorderBrush="LightGray">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="A"/>
-                <DataGridTextColumn Header="B"/>
-                <DataGridTextColumn Header="C"/>
-                <DataGridTextColumn Header="D"/>
-                <DataGridTextColumn Header="E"/>
+                <DataGridTextColumn Header="序号" Binding="{Binding SEQ}"/>
+                <DataGridTextColumn Header="列A" Binding="{Binding ColumnA}"/>
+                <DataGridTextColumn Header="列B" Binding="{Binding ColumnB}"/>
+                <DataGridTextColumn Header="列C" Binding="{Binding ColumnC}"/>
+                <DataGridTextColumn Header="列D" Binding="{Binding ColumnD}"/>
+                <DataGridTextColumn Header="列E" Binding="{Binding ColumnE}"/>
             </DataGrid.Columns>
         </DataGrid>
         <Grid Grid.Column="1" Visibility="Collapsed">

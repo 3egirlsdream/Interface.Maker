@@ -12,8 +12,8 @@
         <StackPanel>
             <DataGrid CanUserAddRows="True" MinHeight="100" ItemsSource="{Binding DataSource, Mode=TwoWay}" HorizontalScrollBarVisibility="Hidden" GridLinesVisibility="All">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="中文" Width="100" Binding="{Binding NAME_ZH}"/>
-                    <DataGridTextColumn Header="英文" Width="100" Binding="{Binding NAME_ENG}"/>
+                    <DataGridTextColumn Header="中文" Width="100" Binding="{Binding NAME_ZH, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <DataGridTextColumn Header="英文" Width="120" Binding="{Binding NAME_ENG}"/>
                 </DataGrid.Columns>
             </DataGrid>
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">

@@ -1259,7 +1259,8 @@ namespace Project.G.Models
             {
                 if (grids[i].CONTROL_NAME == "NEXT_LINE")
                     break;
-                string tmp = "<DataGridTemplateColumn Width=\"150\" HeaderStyle=\"{DynamicResource DataGridColumnHeader_Center}\" CellStyle=\"{DynamicResource DataGridCell_Center}\">\r\n" +
+                string width = grids[i].CODE == "SEQ" ? "50" : "150";
+                string tmp = "<DataGridTemplateColumn MinWidth=\"" + width + "\" Width=\"auto\" HeaderStyle=\"{DynamicResource DataGridColumnHeader_Center}\" CellStyle=\"{DynamicResource DataGridCell_Center}\">\r\n" +
                             "<DataGridTemplateColumn.Header>\r\n" +
                                 "<TextBlock Text=\"{DynamicResource Grid_" + grids[i].CODE + "}\"/>\r\n" +
                             "</DataGridTemplateColumn.Header>\r\n" +

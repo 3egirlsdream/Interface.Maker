@@ -26,7 +26,7 @@ namespace GenerateToolbox.NewPage
     /// <summary>
     /// NewPage.xaml 的交互逻辑
     /// </summary>
-    
+
     public partial class NewPage : Page
     {
         NewPageVM vm;
@@ -76,7 +76,7 @@ namespace GenerateToolbox.NewPage
             MySidebar mySidebar = new MySidebar();
             mySidebar.Name = GetControlsName("BAR");
             Thickness thickness;
-            if(t == 0)
+            if (t == 0)
             {
                 thickness = new Thickness(10, 10, 0, 0);
                 t++;
@@ -192,7 +192,7 @@ namespace GenerateToolbox.NewPage
                     {
                         var type = control.GetType();
                         if (type.Name != "MySidebar")//不包含边框元素
-                            {
+                        {
                             dynamic obj;
                             switch (type.Name)
                             {
@@ -202,18 +202,18 @@ namespace GenerateToolbox.NewPage
                                 default: obj = control as MyBorder; break;
                             }
 
-                                //POSITION margin = getMargin(obj.RenderSize.Width, obj.RenderSize.Height, obj.ActualWidth, obj.ActualHeight);
+                            //POSITION margin = getMargin(obj.RenderSize.Width, obj.RenderSize.Height, obj.ActualWidth, obj.ActualHeight);
 
-                                if (obj.btn.Margin.Top > ds.btn.Margin.Top
-                                && obj.btn.Margin.Left > ds.btn.Margin.Left
-                                && obj.btn.Margin.Top + obj.btn.ActualHeight < ds.btn.Margin.Top + ds.btn.ActualHeight
-                                && obj.btn.Margin.Left + obj.btn.ActualWidth < ds.btn.Margin.Left + ds.btn.ActualWidth)
+                            if (obj.btn.Margin.Top > ds.btn.Margin.Top
+                            && obj.btn.Margin.Left > ds.btn.Margin.Left
+                            && obj.btn.Margin.Top + obj.btn.ActualHeight < ds.btn.Margin.Top + ds.btn.ActualHeight
+                            && obj.btn.Margin.Left + obj.btn.ActualWidth < ds.btn.Margin.Left + ds.btn.ActualWidth)
                             {
-                                    //默认第一行全是按钮
-                                    if (sider.IndexOf(ds) == 0)
+                                //默认第一行全是按钮
+                                if (sider.IndexOf(ds) == 0)
                                     tmp.strs.Add(obj.tb.Text);
-                                    //按钮
-                                    else if (type.Name == "MyBorder")
+                                //按钮
+                                else if (type.Name == "MyBorder")
                                 {
                                     Grid temp = new Grid
                                     {
@@ -223,8 +223,8 @@ namespace GenerateToolbox.NewPage
                                     };
                                     tmp.grids.Add(temp);
                                 }
-                                    //文本框
-                                    else if (type.Name == "MyTextBox")
+                                //文本框
+                                else if (type.Name == "MyTextBox")
                                 {
                                     Grid temp = new Grid
                                     {
@@ -236,8 +236,8 @@ namespace GenerateToolbox.NewPage
                                     tmp.grids.Add(temp);
                                 }
 
-                                    //表格
-                                    else if (type.Name == "MyDataGrid")
+                                //表格
+                                else if (type.Name == "MyDataGrid")
                                 {
                                     foreach (DataGridColumn rtl in obj.grid.Columns)
                                     {
@@ -313,7 +313,7 @@ namespace GenerateToolbox.NewPage
             MyBorder myBorder = new MyBorder();
             myBorder.Name = GetControlsName("BTN");
             myBorder.MouseDoubleClick += Button_MouseDown;
-            
+
             myBorder.btn.Margin = new Thickness(20 + cot++ * 100, height, 5, 5);
             //换行
             if (cot > 10)
@@ -321,7 +321,7 @@ namespace GenerateToolbox.NewPage
                 cot = 0;
                 height += 40;
             }
-                
+
             grid.Children.Add(myBorder);
         }
 
@@ -353,7 +353,7 @@ namespace GenerateToolbox.NewPage
 
         private void StackPanel_MouseLeftButtonDown_4(object sender, MouseButtonEventArgs e)
         {
-            xmlbox.Visibility = xmlbox.Visibility ==  Visibility.Visible ? Visibility.Hidden : Visibility.Visible;
+            xmlbox.Visibility = xmlbox.Visibility == Visibility.Visible ? Visibility.Hidden : Visibility.Visible;
         }
 
         private void Reset_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
