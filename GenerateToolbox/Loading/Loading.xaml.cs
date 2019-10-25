@@ -32,11 +32,11 @@ namespace GenerateToolbox.Loading
             await Task.Run(() =>
             {
                 Thread.Sleep(2000);
-                App.Current.Dispatcher.Invoke(() =>
+                Application.Current.Dispatcher.Invoke(() =>
                 {
-                    this.Close();
+                    Close();
                 });
-            });
+            }).ConfigureAwait(true);
         }
     }
 }

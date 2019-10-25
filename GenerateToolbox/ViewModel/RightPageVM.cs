@@ -264,6 +264,7 @@ namespace Project.G.ViewModel
                 }
                 catch (IOException e)
                 {
+                    throw e;
                     //Console.WriteLine(e.ToString());
                 }
             });
@@ -466,7 +467,7 @@ namespace Project.G.ViewModel
             }
             catch (Exception e)
             {
-                throw;
+                throw e;
             }
         }
 

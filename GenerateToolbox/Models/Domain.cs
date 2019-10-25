@@ -11,6 +11,8 @@ namespace Project.G.Models
     {
         public static string GetCsproj(string ProjectName, string Link = "")
         {
+            if (string.IsNullOrEmpty(ProjectName))
+                return "";
             var ls = ProjectName.Split('.');
             string s = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<Project ToolsVersion=\"14.0\" DefaultTargets=\"Build\" " +
                 "xmlns=\"http://schemas.microsoft.com/developer/msbuild/2003\">\r\n  " +
@@ -59,6 +61,9 @@ namespace Project.G.Models
 
         public static string GetAssembly(string ServerName, string ChineseName)
         {
+            if (string.IsNullOrEmpty(ServerName))
+                return "";
+
             Random rnd = new Random((int)DateTime.Now.Ticks);
             int t = rnd.Next((int)DateTime.Now.Ticks < 0 ? -(int)DateTime.Now.Ticks : (int)DateTime.Now.Ticks);
             t = t % 100;
@@ -72,7 +77,7 @@ namespace Project.G.Models
             return s;
         }
         
-        public static string GetDomain(string ProjectName, string getall_url, string Hasword = "", string HaswordFunction = "", string GetAllFunction = "")
+        public static string GetDomain(string ProjectName = ".", string getall_url = "", string Hasword = "", string HaswordFunction = "", string GetAllFunction = "")
         {
             var ls = ProjectName.Split('.');
             string s = "using Creative.ODA;\r\nusing MeiCloud.DataAccess;\r\nusing Newtonsoft.Json.Linq;\r\nusing Newtonsoft.Json;\r\nusing System;\r\nusing System.Collections.Generic;\r\nusing System.Linq;\r\n\r\nnamespace MeiCloud.Middleware.Services\r\n{\r\n    /// <summary>\r\n    /// 交易控制台服务\r\n    /// </summary>\r\n    " +
@@ -136,6 +141,9 @@ namespace Project.G.Models
 
         public static string GetService(string ProjectName, string getall_url_header, string getall_url_body, string getall_url_param, string ChineseName, string HasWord1 = "", string HasWord2 = "", string HasWord3 = "")
         {
+            if (ProjectName == null || getall_url_header == null)
+                return "";
+
             var ls = ProjectName.Split('.');
             string s = "using Creative.ServerPlugin.Common;\r\nusing MeiCloud.Middleware.Common;\r\nusing Newtonsoft.Json;\r\nusing Newtonsoft.Json.Linq;\r\nusing System;\r\nusing System.Collections.Generic;\r\n\r\n" +
                 "namespace MeiCloud.Middleware.Services\r\n{\r\n    " +
@@ -151,7 +159,7 @@ namespace Project.G.Models
                 "public void Delete(JToken jt)\r\n        {\r\n            " + ls.Last() + "Domain.Delete(jt);\r\n        }\r\n\r\n        /// <summary>\r\n        /// 新增\r\n        /// </summary>\r\n        " +
                 "[RESTful(UriTemplate = \"/add\", Method = RequestMethod.POST, Code = \"004\")]\r\n        " +
                 "public void Add(JToken jt)\r\n        {\r\n            " + ls.Last() + "Domain.Add(jt, this.OrgId, this.EnterpriseId, this.CurrentUserName);\r\n        }\r\n";
-            if(HasWord1 != "")
+            if(!string.IsNullOrEmpty(HasWord1))
             {
                  s += "//判断导入数据是否存在\r\n\t\t[RESTful(UriTemplate = \""+HasWord1+"\", Method = RequestMethod.GET, Code = \"005\")]\r\n        " +
                 "public object HasWord("+HasWord2+")\r\n        {\r\n            return " + ls.Last() + "Domain.HasWord("+HasWord3+" this.OrgId, this.EnterpriseId, this.CurrentUserName);\r\n        }\r\n    }\r\n}\r\n";
@@ -161,10 +169,12 @@ namespace Project.G.Models
 
         public static string GetAllUrlHeader(string ProjectName, List<Excel> models)
         {
+            if (ProjectName == null)
+                return "";
             models = models.Where(x => x.IsApi).ToList();
             var ls = ProjectName.Split('.');
             string s = "getall?" + models[0].SEARCH_CODE + "={" + models[0].SEARCH_CODE + "}";
-            for (int i = 1; i < models.Count(); i++)
+            for (int i = 1; i < models.Count; i++)
             {
                 string tmp = "&" + models[i].SEARCH_CODE + "={";
                 tmp += models[i].SEARCH_CODE + "}";
@@ -186,7 +196,7 @@ namespace Project.G.Models
             string s = "";
             if(t == 1) s += "string " + models[0].SEARCH_CODE;
             else s += models[0].SEARCH_CODE + ", ";
-            for (int i = 1; i < models.Count(); i++)
+            for (int i = 1; i < models.Count; i++)
             {
                 string tmp = "";
                 if (t == 1) tmp += ", string " + models[i].SEARCH_CODE;
@@ -199,12 +209,12 @@ namespace Project.G.Models
         //生成检测重复的url
         public static string GetHasWordUrl(ImportClass import, int t = 0)
         {
-            if (import == null || (import.REPEAT_CODE.Count() == 0 && import.EMPTY_CODE.Count() == 0 && import.Body.Count() == 0))
+            if (import == null || (import.REPEAT_CODE.Count == 0 && import.EMPTY_CODE.Count == 0 && import.Body.Count == 0))
                 return "";
             if(t == 0)//带/Hasword
             {
                 string s = "/hasword?";
-                for (int i = 0; i < import.REPEAT_CODE.Count(); i++)
+                for (int i = 0; i < import.REPEAT_CODE.Count; i++)
                 {
                     ModelHelper model = new ModelHelper();
                     string tmp = "";
@@ -218,7 +228,7 @@ namespace Project.G.Models
             {
                 ModelHelper model = new ModelHelper();
                 string s = "string " + model.Col(import.REPEAT_CODE[0]).Replace("Col", "");
-                for (int i = 1; i < import.REPEAT_CODE.Count(); i++)
+                for (int i = 1; i < import.REPEAT_CODE.Count; i++)
                 {
                     string tmp = ", string " + model.Col(import.REPEAT_CODE[i]).Replace("Col", "");
                     s += tmp;
@@ -228,7 +238,7 @@ namespace Project.G.Models
             else //不带string 
             {
                 string s = "";
-                for (int i = 0; i < import.REPEAT_CODE.Count(); i++)
+                for (int i = 0; i < import.REPEAT_CODE.Count; i++)
                 {
                     ModelHelper model = new ModelHelper();
                     string tmp = model.Col(import.REPEAT_CODE[i]).Replace("Col", "") + ", ";
@@ -241,6 +251,8 @@ namespace Project.G.Models
         //生成函数体
         public static string GetHasWrodFunction(ImportClass import)
         {
+            if (import == null)
+                return "";
             string s = "";
             foreach (var ds in import.REPEAT_CODE)
             {

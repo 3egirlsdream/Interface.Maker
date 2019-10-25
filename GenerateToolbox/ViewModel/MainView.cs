@@ -528,19 +528,19 @@ namespace Project.G.ViewModel
         {
             await Task.Run(() =>
             {
-                App.Current.Dispatcher.Invoke(() =>
+                Application.Current.Dispatcher.Invoke(() =>
                 {
                     Loading loading = new Loading();
                     loading.Show();
                 });
-            });
+            }).ConfigureAwait(true);
         }
 
         private async void ModelRun()
         {
             await Task.Run(() =>
             {
-                if (!String.IsNullOrEmpty(DBName))
+                if (!string.IsNullOrEmpty(DBName))
                 {
                     ModelHelper model = new ModelHelper();
                     //DbType type = DbType.SqlServer;
@@ -560,8 +560,10 @@ namespace Project.G.ViewModel
                         SqlText = Common.format(model.ModelCreate(json, "MeiCloud.DataAccess", "Sugar"));
                     else
                         SqlText = Common.format(model.ModelCreate(json, "MeiCloud.DataAccess"));
+
+                    SqlText = SqlText.Replace("\nusing Creative.ODA;", "");
                 }
-            });
+            }).ConfigureAwait(true);
         }
 
 
@@ -652,7 +654,7 @@ namespace Project.G.ViewModel
                 CreateBox = new List<Key_Value>();
                 CreateBox.Add(new Key_Value { label = "生成弹出框", value = 0 });
                 FilterBox = CreateBox[0];
-            });
+            }).ConfigureAwait(true);
         }
         #endregion
 
@@ -943,7 +945,7 @@ namespace Project.G.ViewModel
                 #endregion
                 return true;
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }

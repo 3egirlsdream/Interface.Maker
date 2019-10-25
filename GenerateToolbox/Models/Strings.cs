@@ -23,7 +23,7 @@ namespace Project.G.Models
                 file.Close();
                 return json;
             }
-            catch (IOException ex)
+            catch (IOException)
             {
                 return null;
                 //Console.WriteLine(e.ToString());

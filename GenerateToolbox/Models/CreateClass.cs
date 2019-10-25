@@ -17,6 +17,8 @@ namespace Project.G.Models
         /// <returns></returns>
         public static string LoadModel(List<Excel> lists, string ProjectName)
         {
+            if (lists == null)
+                return "";
             string s = "using DAF.Plugin.Common;using System;using System.Collections.Generic;using System.Linq;using System.Text;namespace " + ProjectName + "{public class Model : ValidationBase{";
             s += "public string ID {get;set;}";
             s += "public string Color {get;set;}";
@@ -37,6 +39,8 @@ namespace Project.G.Models
         /// </summary>
         public static string LoadModel_new(List<Grids> lists, string projName)
         {
+            if (lists == null)
+                return "";
             List<Key_Value> vs = new List<Key_Value>();
             foreach(var grid in lists)
             {

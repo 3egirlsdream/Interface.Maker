@@ -201,13 +201,13 @@ namespace Project.G
                 {
                     Thread.Sleep(1000);
                     if((DateTime.Now.Minute == 30 || DateTime.Now.Minute == 1) && DateTime.Now.Second == 1)
-                        App.Current.Dispatcher.Invoke(() =>
+                        Application.Current.Dispatcher.Invoke(() =>
                         {
                             NofifyBox page = new NofifyBox();
                             page.ShowDialog();
                         });
                 }
-            });
+            }).ConfigureAwait(true);
         }
     }
 }
