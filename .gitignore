@@ -3,6 +3,7 @@
 ################################################################################
 /.vs
 /GenerateToolbox/bin/Debug
+/GenerateToolbox/Tookit
 /GenerateToolbox/GenerateToolbox/obj
 /GenerateToolbox/obj
 /GenerateToolbox/plugins/Creative.ODA.dll
