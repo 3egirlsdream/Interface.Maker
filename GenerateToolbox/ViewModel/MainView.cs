@@ -625,36 +625,33 @@ namespace Project.G.ViewModel
         /// <summary>
         /// 加载下拉框
         /// </summary>
-        private async void LoadCombox()
+        private void LoadCombox()
         {
-            await Task.Run(() =>
-            {
-                DBName = Common.SetConfig("DBName");
-                ListButton = new List<Key_Value>();
-                ListButton.Add(new Key_Value { label = "生成SQL", value = 0 });
-                ListButton.Add(new Key_Value { label = "打开MODEL", value = 1 });
-                ListButton.Add(new Key_Value { label = "导出", value = 2 });
-                ListButton.Add(new Key_Value { label = "添加监视", value = 3 });
-                ListButton.Add(new Key_Value { label = "格式化JSON", value = 4 });
-                ListButton.Add(new Key_Value { label = "添加Command", value = 5 });
-                ListButton.Add(new Key_Value { label = "生成模型", value = 6 });
-                Filter = ListButton[3];
+            DBName = Common.SetConfig("DBName");
+            ListButton = new List<Key_Value>();
+            ListButton.Add(new Key_Value { label = "生成SQL", value = 0 });
+            ListButton.Add(new Key_Value { label = "打开MODEL", value = 1 });
+            ListButton.Add(new Key_Value { label = "导出", value = 2 });
+            ListButton.Add(new Key_Value { label = "添加监视", value = 3 });
+            ListButton.Add(new Key_Value { label = "格式化JSON", value = 4 });
+            ListButton.Add(new Key_Value { label = "添加Command", value = 5 });
+            ListButton.Add(new Key_Value { label = "生成模型", value = 6 });
+            Filter = ListButton[3];
 
-                ////
-                Constraints = new List<Key_Value>();
-                Constraints.Add(new Key_Value { label = "", value = 0 });
-                Constraints.Add(new Key_Value { label = "去掉小写", value = 1 });
-                Constraints.Add(new Key_Value { label = "SqlServer", value = 2 });
-                Constraints.Add(new Key_Value { label = "MySql", value = 3 });
-                Constraints.Add(new Key_Value { label = "Oracle", value = 4 });
-                Constraint = Constraints[0];
+            ////
+            Constraints = new List<Key_Value>();
+            Constraints.Add(new Key_Value { label = "", value = 0 });
+            Constraints.Add(new Key_Value { label = "去掉小写", value = 1 });
+            Constraints.Add(new Key_Value { label = "SqlServer", value = 2 });
+            Constraints.Add(new Key_Value { label = "MySql", value = 3 });
+            Constraints.Add(new Key_Value { label = "Oracle", value = 4 });
+            Constraint = Constraints[0];
 
 
-                ////
-                CreateBox = new List<Key_Value>();
-                CreateBox.Add(new Key_Value { label = "生成弹出框", value = 0 });
-                FilterBox = CreateBox[0];
-            }).ConfigureAwait(true);
+            ////
+            CreateBox = new List<Key_Value>();
+            CreateBox.Add(new Key_Value { label = "生成弹出框", value = 0 });
+            FilterBox = CreateBox[0];
         }
         #endregion
 

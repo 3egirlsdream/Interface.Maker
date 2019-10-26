@@ -44,7 +44,7 @@
                 </StackPanel>
                 <TextBox
                     Grid.Row="1"
-                    Height="50"
+                    Height="100"
                     Margin="15,0,25,0"
                     Background="#E6E6E6"
                     Text="{Binding SqlString}"
