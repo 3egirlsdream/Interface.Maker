@@ -111,6 +111,13 @@
                                 <TextBlock Text="表格" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                             </StackPanel>
 
+                            <StackPanel Width="100" Background="#F4F6FB" Orientation="Horizontal" Margin="10,5,0,0" MouseLeftButtonDown="StackPanel_MouseLeftButtonDown_5" IsEnabled="{Binding IsEnabled, Mode=TwoWay}">
+                                <Border Width="30">
+                                    <Image Source="..\img\底部.png"/>
+                                </Border>
+                                <TextBlock Text="footer" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            </StackPanel>
+
                             <TextBlock Margin="10,5,0,0" Width="200" Text="其他设置" FontSize="14" FontFamily="微软雅黑 Light" VerticalAlignment="Center"/>
                             <StackPanel Width="100" Background="#F4F6FB" Orientation="Horizontal" Margin="10,5,0,0" MouseLeftButtonDown="StackPanel_MouseLeftButtonDown_4">
                                 <Border Width="25">

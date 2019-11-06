@@ -405,6 +405,11 @@ namespace GenerateToolbox.ViewModel
                         tmp += res.str;
                         j = res.count - 1;
                     }
+                    else if(rs.CONTROL_NAME == "FOOTER")
+                    {
+                        dynamic res = Controls.AddFooter();
+                        tmp += res;
+                    }
                     else
                     {
                         dynamic res = Controls.CreateContents_new(ds.grids, j);
@@ -419,7 +424,11 @@ namespace GenerateToolbox.ViewModel
                 if(ds.Identity == "主页")
                     xamlCode = strings.PageXaml(projName, ds.PageCode, xaml);
                 else
+                {
+                    xaml = xaml.Replace("RelativeSource={RelativeSource AncestorType=common:PagePlugin, Mode=FindAncestor}", "RelativeSource={RelativeSource AncestorType=common:WindowPlugin, Mode=FindAncestor}");//全选替换 否则不能全选
                     xamlCode = strings.WindowXaml(projName, ds.PageCode, xaml);
+                }
+                    
                 //Strings.Write(xamlCode, dir + "\\" + projName + "\\Views\\IndexPage.xaml");
                 vs.Add(xamlCode);
             }

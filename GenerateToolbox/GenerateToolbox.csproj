@@ -145,6 +145,9 @@
     <Compile Include="DragInterfaceCreater\MyDataGrid.xaml.cs">
       <DependentUpon>MyDataGrid.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DragInterfaceCreater\MyFooter.xaml.cs">
+      <DependentUpon>MyFooter.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DragInterfaceCreater\MySidebar.xaml.cs">
       <DependentUpon>MySidebar.xaml</DependentUpon>
     </Compile>
@@ -208,6 +211,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="DragInterfaceCreater\MyDataGrid.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DragInterfaceCreater\MyFooter.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -363,6 +370,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="img\20150210104951657.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\底部.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -10,7 +10,7 @@
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
-        <Border x:Name="border" Grid.Column="0"  Width="500" Height="150" BorderBrush="LightGray" BorderThickness="2" CornerRadius="0" Background="White">
+        <Border x:Name="border" Grid.Column="0"  Width="500" Height="150" BorderBrush="LightGray" BorderThickness="2" CornerRadius="0" Background="Transparent">
         </Border>
         <StackPanel Grid.Column="1" Width="90">
             <StackPanel Orientation="Horizontal">

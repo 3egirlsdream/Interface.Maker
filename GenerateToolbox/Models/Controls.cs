@@ -74,6 +74,7 @@ namespace Project.G.Models
                     case "进阶DatePicker": s += CreateControlsDatePicker(Contents[j].CODE); break;
                     case "占位控件": s += EmptyControl(); break;
                     case "只读TextBox": s += ReadonlyTextbox(Contents[j].CODE); break;
+                    case "SearchBox":s += CreateSearchBox(Contents[j].CODE); break;
                     case "btn": s += Buttons.CreateButton_Custom(Contents[j].NAME); break;
                     default: break;
                 }
@@ -85,6 +86,21 @@ namespace Project.G.Models
                 str = s,
                 count = j
             };
+        }
+
+        /// <summary>
+        /// 生成底部确定取消框
+        /// </summary>
+        /// <returns></returns>
+        public static string AddFooter()
+        {
+            var str = "<Border Grid.ColumnSpan=\"2\" Style=\"{DynamicResource BottomControlPanelStyle}\" FlowDirection=\"RightToLeft\">"
+                + "<StackPanel Orientation=\"Horizontal\">"
+                + "<Button Content=\"{DynamicResource Cancel}\" IsCancel=\"True\" Margin=\"{DynamicResource BtnMargin}\"/>"
+                + "<Button Content=\"{DynamicResource Save}\" Margin=\"{DynamicResource BtnMargin}\" Style=\"{DynamicResource HighLightButtonStyle}\" Command=\"{Binding CmdSave}\" />"
+                + "</StackPanel>"
+                + "</Border>";
+            return str;
         }
 
 
@@ -299,6 +315,20 @@ namespace Project.G.Models
                 "controls:TextBoxHelper.Watermark=\"{DynamicResource " + Binding + "_Watermark}\" " +
                 "Margin=\"0,0,30,0\" />\r\n";
             return s;
+        }
+
+        /// <summary>
+        /// 生成搜索框代码
+        /// </summary>
+        /// <returns></returns>
+        private static string CreateSearchBox(string Binding)
+        {
+            var t = "<TextBox Text=\"{Binding " + Binding + ", Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}\" controls:TextBoxHelper.ButtonCommand=\"{Binding CmdSearch}\" Style=\"{StaticResource SearchMetroTextBox}\" controls:TextBoxHelper.Watermark=\"{DynamicResource " + Binding + "_Watermark}\" Margin=\"0,0,30,0\">"
+                          + "<TextBox.InputBindings>"
+                         + "<KeyBinding Command=\"{Binding CmdSearch}\" Key=\"Enter\"/>"
+                        + "</TextBox.InputBindings>"
+                       + "</TextBox>";
+            return t;
         }
 
         private static string ReadonlyTextbox(string Binding)

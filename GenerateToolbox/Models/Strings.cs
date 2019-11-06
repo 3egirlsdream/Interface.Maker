@@ -230,6 +230,8 @@ namespace Project.G.Models
                 "   <sys:String x:Key=\"Title_Edit\">编辑</sys:String>\r\n" +
                 "   <sys:String x:Key=\"Title_Import\">导入</sys:String>\r\n" +
                 "   <sys:String x:Key=\"ErrorMsg\">错误原因</sys:String>\r\n" +
+                "   <sys:String x:Key=\"Save\">保存</sys:String>\r\n" +
+                "   <sys:String x:Key=\"Cancel\">取消</sys:String>\r\n" +
                 str +
                 "   <sys:String x:Key=\"SelectFile\">选择导入文件</sys:String>\r\n" +
                 "   <sys:String x:Key=\"DownloadTemplate\">下载导入文件模板</sys:String>\r\n" +

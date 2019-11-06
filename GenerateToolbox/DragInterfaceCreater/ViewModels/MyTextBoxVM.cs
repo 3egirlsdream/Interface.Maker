@@ -94,7 +94,8 @@ namespace GenerateToolbox.ViewModels
                 new KeyValuePair<string, string>("Combox", "Combox"),
                 new KeyValuePair<string, string>("DatePicker", "DatePicker"),
                 new KeyValuePair<string, string>("进阶DatePicker", "进阶DatePicker"),
-                new KeyValuePair<string, string>("只读TextBox", "只读TextBox")
+                new KeyValuePair<string, string>("只读TextBox", "只读TextBox"),
+                new KeyValuePair<string, string>("SearchBox", "SearchBox")
             };
 
             SelectedItem = pairs[0];

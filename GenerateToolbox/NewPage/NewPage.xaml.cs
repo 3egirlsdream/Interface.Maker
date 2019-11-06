@@ -147,7 +147,7 @@ namespace GenerateToolbox.NewPage
                     foreach (dynamic ds in grid.Children)
                     {
                         string name = ds.Name as string;
-                        if (name.Contains("BAR"))
+                        if (!string.IsNullOrEmpty(name) && name.Contains("BAR"))
                         {
                             sider.Add(ds);
                         }
@@ -199,6 +199,7 @@ namespace GenerateToolbox.NewPage
                                 case "MyBorder": obj = control as MyBorder; break;
                                 case "MyDataGrid": obj = control as MyDataGrid; break;
                                 case "MyTextBox": obj = control as MyTextBox; break;
+                                case "MyFooter": obj = control as MyFooter;break;
                                 default: obj = control as MyBorder; break;
                             }
 
@@ -250,6 +251,14 @@ namespace GenerateToolbox.NewPage
                                         tmp.grids.Add(temp);
                                     }
 
+                                }
+                                else if(type.Name == "MyFooter")
+                                {
+                                    Grid temp = new Grid
+                                    {
+                                        CONTROL_NAME = "FOOTER"
+                                    };
+                                    tmp.grids.Add(temp);
                                 }
                             }
                         }
@@ -364,6 +373,14 @@ namespace GenerateToolbox.NewPage
             t = 0;
             vm.FilterPageType = null;
             IsGenerate = false;
+        }
+
+        private void StackPanel_MouseLeftButtonDown_5(object sender, MouseButtonEventArgs e)
+        {
+            MyFooter footer = new MyFooter();
+            //footer.MouseDoubleClick += TextBox_MouseDown;
+            footer.btn.Margin = new Thickness(20, 20, 5, 5);
+            grid.Children.Add(footer);
         }
     }
 }
