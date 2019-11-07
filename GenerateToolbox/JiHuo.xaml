@@ -20,8 +20,8 @@
             <TextBox Name="tb1" Margin="3" BorderThickness="0" AcceptsReturn="True" TextWrapping="Wrap"/>
         </Grid>
         <StackPanel Grid.Column="2">
-            <Button Margin="10,35,10,10" Content="获取" Click="Button_Click"/>
-            <Button Margin="10,20,10,10" Content="激活" Click="Button_Click_1"/>
+            <Button Margin="10,35,10,10" Content="获取" Click="Button_Click" Style="{DynamicResource SquareButtonStyle}" BorderThickness="1"/>
+            <Button Margin="10,20,10,10" Content="激活" Click="Button_Click_1" Style="{DynamicResource SquareButtonStyle}" Background="#404671" BorderThickness="1" Foreground="White"/>
         </StackPanel>
     </Grid>
 </Window>

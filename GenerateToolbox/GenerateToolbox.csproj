@@ -166,7 +166,6 @@
     <Compile Include="DragInterfaceCreater\ViewModels\Models.cs" />
     <Compile Include="DragInterfaceCreater\ViewModels\MyDataGridVM.cs" />
     <Compile Include="DragInterfaceCreater\ViewModels\MyTextBoxVM.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Loading\Loading.xaml.cs">
       <DependentUpon>Loading.xaml</DependentUpon>
     </Compile>

@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.28803.352
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenerateToolbox", "GenerateToolbox\GenerateToolbox.csproj", "{467370DC-4B81-4615-B647-DF823AE7C080}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xu.Common", "..\XuTooKit\Xu.Common\Xu.Common.csproj", "{12F7624E-2161-4FAA-8E3C-BB50006F0B7E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xu.Common", "Xu.Common\Xu.Common.csproj", "{12F7624E-2161-4FAA-8E3C-BB50006F0B7E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
