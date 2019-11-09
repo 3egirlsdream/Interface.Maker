@@ -373,5 +373,10 @@
   <ItemGroup>
     <Resource Include="img\底部.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\1.png" />
+    <Resource Include="img\右翻页.png" />
+    <Resource Include="img\左翻页.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

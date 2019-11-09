@@ -6,11 +6,11 @@
              xmlns:local="clr-namespace:GenerateToolbox"
              mc:Ignorable="d" >
     <Grid  x:Name="btn">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="0"/>
-        </Grid.ColumnDefinitions>
-        <DataGrid x:Name="grid" Height="100" Grid.Column="0" BorderThickness="1" BorderBrush="LightGray">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+        <DataGrid x:Name="grid" Height="100" Grid.Row="0" BorderThickness="1" BorderBrush="LightGray">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="序号" Binding="{Binding SEQ}"/>
                 <DataGridTextColumn Header="列A" Binding="{Binding ColumnA}"/>
@@ -20,20 +20,17 @@
                 <DataGridTextColumn Header="列E" Binding="{Binding ColumnE}"/>
             </DataGrid.Columns>
         </DataGrid>
-        <Grid Grid.Column="1" Visibility="Collapsed">
-            <StackPanel>
-                <WrapPanel>
-                    <TextBlock Text="高:"/>
-                    <TextBox x:Name="height" Width="80"/>
-                </WrapPanel>
-                <WrapPanel>
-                    <TextBlock Text="宽:"/>
-                    <TextBox x:Name="width" Width="80"/>
-                </WrapPanel>
-                <WrapPanel VerticalAlignment="Center" HorizontalAlignment="Center">
-                    <Button Content="保存" Click="Button_Click"/>
-                </WrapPanel>
-            </StackPanel>
-        </Grid>
+        <Border Grid.Row="1" Width="auto" Background="WhiteSmoke" BorderThickness="1" BorderBrush="LightGray">
+            <Grid>
+                <Border HorizontalAlignment="Left">
+                    <Image Source="..\img\1.png" />
+                </Border>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Image Source="..\img\左翻页.png" />
+                    <TextBlock Text="1/1" VerticalAlignment="Center" Foreground="LightGray"/>
+                    <Image Source="..\img\右翻页.png"/>
+                </StackPanel>
+            </Grid>
+        </Border>
     </Grid>
 </UserControl>

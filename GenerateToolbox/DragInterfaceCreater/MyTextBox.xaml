@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:local="clr-namespace:GenerateToolbox"
              mc:Ignorable="d" >
     <Grid  x:Name="btn">
@@ -11,7 +12,13 @@
                 <TextBlock Name="tblock"  Text="文本框" FontFamily="微软雅黑 Light" VerticalAlignment="Center" HorizontalAlignment="Center" />
             </Border>
 
-            <TextBox x:Name="tb" Width="180" Height="30" BorderBrush="LightGray" BorderThickness="1" IsReadOnly="True" IsEnabled="False"/>
+            <TextBox x:Name="tb" Width="180" Height="30" BorderBrush="LightGray" BorderThickness="1" IsReadOnly="True" IsEnabled="False" Visibility="Visible"/>
+            <ComboBox x:Name="combox" Width="180" Height="30" BorderBrush="LightGray" BorderThickness="1" IsReadOnly="True" IsEnabled="False" Visibility="Collapsed"/>
+            <DatePicker x:Name="datepicker" Width="180" Height="30" BorderBrush="LightGray" BorderThickness="1" IsEnabled="False" Visibility="Collapsed"/>
+            <TextBox x:Name="metrotb" Width="180" Height="30" BorderBrush="LightGray" BorderThickness="1" IsReadOnly="True" IsEnabled="False" controls:TextBoxHelper.ButtonContent="2" Style="{DynamicResource MetroButtonTextBox}" Visibility="Collapsed"/>
+            <TextBox x:Name="searchtb" Width="180" Height="30" BorderBrush="LightGray" BorderThickness="1" IsReadOnly="True" IsEnabled="False" Style="{DynamicResource SearchMetroTextBox}" Visibility="Collapsed"/>
+            <controls:DateTimePicker x:Name="datetimepicker" Width="180" Height="30" BorderBrush="LightGray" BorderThickness="1" IsEnabled="False" Visibility="Collapsed"/>
+
         </WrapPanel>
         
     </Grid>

@@ -51,6 +51,7 @@ namespace GenerateToolbox.ViewModels
             {
                 _SelectedItem = value;
                 NotifyPropertyChanged("SelectedItem");
+                Save();
             }
         }
         private bool isChecked;
@@ -71,11 +72,7 @@ namespace GenerateToolbox.ViewModels
         {
             ExecuteDelegate = x =>
             {
-                myTextBox.NAME_ENG = page.name_eg.Text;
-                myTextBox.tblock.Text = page.name_zh.Text;
-                myTextBox.IS_API = IsChecked;
-                myTextBox.BOX_TYPE = SelectedItem.Value;
-
+                Save();
                 page.Visibility = Visibility.Hidden;
                 page.ParentWindow.ccp.Visibility = Visibility.Hidden;
             },
@@ -84,6 +81,40 @@ namespace GenerateToolbox.ViewModels
                 return true;
             }
         };
+
+        private void Save()
+        {
+            myTextBox.NAME_ENG = page.name_eg.Text;
+            myTextBox.tblock.Text = page.name_zh.Text;
+            myTextBox.IS_API = IsChecked;
+            myTextBox.BOX_TYPE = SelectedItem.Value;
+            ConfirmControl(myTextBox.BOX_TYPE);
+        }
+
+        private void ConfirmControl(string control)
+        {
+            string[] vs = { "TextBox", "TextBox带弹出框", "Combox",  "DatePicker", "进阶DatePicker", "只读TextBox", "TextBox", "SearchBox"};
+            
+            foreach (var ds in vs)
+            {
+                dynamic type;
+                switch (ds)
+                {
+                    case "Combox": type = myTextBox.combox as ComboBox; break;
+                    //case "TextBox": type = myTextBox.tb as TextBox; break;
+                    case "TextBox带弹出框": type = myTextBox.metrotb as TextBox; break;
+                    case "DatePicker": type = myTextBox.datepicker as DatePicker; break;
+                    case "进阶DatePicker": type = myTextBox.datetimepicker as MahApps.Metro.Controls.DateTimePicker; break;
+                    case "SearchBox": type = myTextBox.searchtb as TextBox; break;
+                    default: type = myTextBox.tb as TextBox; break;
+                }
+
+                if (ds == control)
+                    type.Visibility = Visibility.Visible;
+                else
+                    type.Visibility = Visibility.Collapsed;
+            }
+        }
 
         private void LoadComboBox()
         {

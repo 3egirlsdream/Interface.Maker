@@ -61,10 +61,5 @@ namespace GenerateToolbox
             tmp.ReleaseMouseCapture();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            grid.Height = Convert.ToInt32(height.Text);
-            grid.Width = Convert.ToInt32(width.Text);
-        }
     }
 }
