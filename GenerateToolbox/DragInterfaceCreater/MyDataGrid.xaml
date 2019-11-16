@@ -10,7 +10,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
-        <DataGrid x:Name="grid" Height="100" Grid.Row="0" BorderThickness="1" BorderBrush="LightGray">
+        <DataGrid x:Name="grid" Height="100" Grid.Row="0" BorderThickness="1" BorderBrush="LightGray" Background="Transparent">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="序号" Binding="{Binding SEQ}"/>
                 <DataGridTextColumn Header="列A" Binding="{Binding ColumnA}"/>

@@ -8,17 +8,17 @@
       d:DesignWidth="200"
       Title="ButtonSetting">
 
-    <Grid>
+    <Grid Background="Transparent">
         <StackPanel>
             <DataGrid CanUserAddRows="True" MinHeight="100" ItemsSource="{Binding DataSource, Mode=TwoWay}" HorizontalScrollBarVisibility="Hidden" GridLinesVisibility="All">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="中文" Width="100" Binding="{Binding NAME_ZH, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    <DataGridTextColumn Header="英文" Width="120" Binding="{Binding NAME_ENG}"/>
+                    <DataGridTextColumn Header="名称" Width="100" Binding="{Binding NAME_ZH, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <DataGridTextColumn Header="编码" Width="100" Binding="{Binding NAME_ENG}"/>
                 </DataGrid.Columns>
             </DataGrid>
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
                 <!--<Button Content="保存" Width="100" Click="Button_Click"/>-->
-                <Button Content="保存" Width="100" Command="{Binding CmdSave}" Style="{DynamicResource SquareButtonStyle}"/>
+                <Button Content="保存" Width="100" Command="{Binding CmdSave}" Style="{DynamicResource SquareButtonStyle}" Background="Transparent"/>
             </StackPanel>
             
         </StackPanel>

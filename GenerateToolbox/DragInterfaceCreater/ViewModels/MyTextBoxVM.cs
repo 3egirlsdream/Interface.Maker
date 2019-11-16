@@ -73,8 +73,7 @@ namespace GenerateToolbox.ViewModels
             ExecuteDelegate = x =>
             {
                 Save();
-                page.Visibility = Visibility.Hidden;
-                page.ParentWindow.ccp.Visibility = Visibility.Hidden;
+                page.Visibility = Visibility.Collapsed;
             },
             CanExecuteDelegate = o =>
             {
@@ -101,7 +100,8 @@ namespace GenerateToolbox.ViewModels
                 switch (ds)
                 {
                     case "Combox": type = myTextBox.combox as ComboBox; break;
-                    //case "TextBox": type = myTextBox.tb as TextBox; break;
+                    case "TextBox": type = myTextBox.tb as TextBox; break;
+                    case "只读TextBox": type = myTextBox.tbline as StackPanel; break;
                     case "TextBox带弹出框": type = myTextBox.metrotb as TextBox; break;
                     case "DatePicker": type = myTextBox.datepicker as DatePicker; break;
                     case "进阶DatePicker": type = myTextBox.datetimepicker as MahApps.Metro.Controls.DateTimePicker; break;

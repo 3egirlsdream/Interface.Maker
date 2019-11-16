@@ -18,7 +18,10 @@
             <TextBox x:Name="metrotb" Width="180" Height="30" BorderBrush="LightGray" BorderThickness="1" IsReadOnly="True" IsEnabled="False" controls:TextBoxHelper.ButtonContent="2" Style="{DynamicResource MetroButtonTextBox}" Visibility="Collapsed"/>
             <TextBox x:Name="searchtb" Width="180" Height="30" BorderBrush="LightGray" BorderThickness="1" IsReadOnly="True" IsEnabled="False" Style="{DynamicResource SearchMetroTextBox}" Visibility="Collapsed"/>
             <controls:DateTimePicker x:Name="datetimepicker" Width="180" Height="30" BorderBrush="LightGray" BorderThickness="1" IsEnabled="False" Visibility="Collapsed"/>
-
+            <StackPanel x:Name="tbline" Visibility="Collapsed">
+                <TextBox Width="180" Height="29" BorderBrush="LightGray" BorderThickness="0" IsReadOnly="True" IsEnabled="False"/>
+                <Border BorderThickness="1" BorderBrush="LightGray" Width="180" Height="1"/>
+            </StackPanel>
         </WrapPanel>
         
     </Grid>

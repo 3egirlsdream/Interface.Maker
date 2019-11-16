@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:GenerateToolbox"
              mc:Ignorable="d" >
     <Grid>
-        <Border Name="btn" Height="30" Width="90" Background="White" CornerRadius="0" BorderThickness="1" BorderBrush="LightGray">
+        <Border Name="btn" Height="30" Width="90" Background="Transparent" CornerRadius="0" BorderThickness="1" BorderBrush="LightGray">
             <TextBlock x:Name="tb" VerticalAlignment="Center" HorizontalAlignment="Center" Text="按钮" FontFamily="微软雅黑 Light" FontSize="14" Foreground="Gray" FontWeight="Bold"/>
         </Border>
     </Grid>

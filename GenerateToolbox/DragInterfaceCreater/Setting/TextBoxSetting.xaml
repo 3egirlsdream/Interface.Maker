@@ -8,25 +8,25 @@
       mc:Ignorable="d" d:DesignWidth="200"
       Title="ButtonSetting">
 
-    <Grid>
+    <Grid Background="Transparent">
         <StackPanel>
             <StackPanel Orientation="Horizontal"  VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
-                <TextBlock Text="字段中文名 " VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                <TextBox Name="name_zh" Text="" Width="100"/>
+                <TextBlock Text="字段名称 " VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <TextBox Name="name_zh" Text="" Width="100" Background="Transparent"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
-                <TextBlock Text="字段英文名 " VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                <TextBox Name="name_eg"  Text="" Width="100"/>
+                <TextBlock Text="字段编码 " VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <TextBox Name="name_eg"  Text="" Width="100" Background="Transparent"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
                 <TextBlock Text="弹出框类型 " VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                <ComboBox Name="combobox" Width="100" ItemsSource="{Binding pairs, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}" SelectedValuePath="Value" DisplayMemberPath="Key" />
+                <ComboBox Background="Transparent" Name="combobox" Width="100" ItemsSource="{Binding pairs, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}" SelectedValuePath="Value" DisplayMemberPath="Key" />
             </StackPanel>
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
                 <Controls:ToggleSwitch OnLabel="Yes" OffLabel="No"  IsChecked="{Binding IsChecked, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Header="是否作为API" />
             </StackPanel>
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
-                <Button Content="保存" Width="100" Command="{Binding CmdSave}" Style="{DynamicResource SquareButtonStyle}"/>
+                <Button Content="保存" Width="100" Command="{Binding CmdSave}" Style="{DynamicResource SquareButtonStyle}" Background="Transparent"/>
             </StackPanel>
             
         </StackPanel>

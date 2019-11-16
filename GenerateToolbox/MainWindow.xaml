@@ -20,14 +20,13 @@
     <Window.Effect>
         <DropShadowEffect
             BlurRadius="30"
-            Opacity="0.4"
-            ShadowDepth="0" />
+            Opacity="1"
+            ShadowDepth="0.1" />
     </Window.Effect>
     <Border
         Name="border1"
-        Background="White"
+        Background="#FFF"
         BorderThickness="0"
-        CornerRadius="5"
         Opacity="1">
         <Grid>
             <Grid.RowDefinitions>
@@ -41,9 +40,8 @@
                 MouseLeftButtonDown="MoveWindow"
                 Name="bd2"
                 Grid.Row="0"
-                Background="#4F4150"
-                BorderThickness="0"
-                CornerRadius="5">
+                Background="#333333"
+                BorderThickness="0">
                 <Grid>
                     <!--<Border
                         Height="20"
@@ -99,7 +97,7 @@
                 Name="bd1"
                 Grid.Row="1"
                 Margin="0,-3,0,0"
-                Background="#4F4150"
+                Background="#333333"
                 BorderThickness="0" />
             <Grid Grid.Row="2" Grid.RowSpan="2">
                 <Grid.ColumnDefinitions>

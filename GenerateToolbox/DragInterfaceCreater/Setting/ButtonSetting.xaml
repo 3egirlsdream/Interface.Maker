@@ -7,18 +7,18 @@
       mc:Ignorable="d"  d:DesignWidth="200"
       Title="ButtonSetting">
 
-    <Grid>
+    <Grid Background="Transparent">
         <StackPanel>
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
                 <TextBlock Text="按钮名称  " VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                <TextBox x:Name="name_zh" Text="" Width="100"/>
+                <TextBox x:Name="name_zh" Text="" Width="100" Background="Transparent"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
-                <TextBlock Text="按钮字段  " VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                <TextBox x:Name="name_eg"  Text="" Width="100"/>
+                <TextBlock Text="按钮编码  " VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                <TextBox x:Name="name_eg"  Text="" Width="100" Background="Transparent"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">
-                <Button Content="保存" Width="100" Click="Button_Click" Style="{DynamicResource SquareButtonStyle}"/>
+                <Button Content="保存" Width="100" Click="Button_Click" Style="{DynamicResource SquareButtonStyle}" Background="Transparent"/>
             </StackPanel>
             
         </StackPanel>

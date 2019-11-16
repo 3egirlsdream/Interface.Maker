@@ -38,7 +38,6 @@ namespace GenerateToolbox
             myborder.NAME_ENG = name_eg.Text;
             myborder.tb.Text = name_zh.Text;
             this.Visibility = Visibility.Hidden;
-            ParentWindow.ccp.Visibility = Visibility.Hidden;
         }
     }
 }
