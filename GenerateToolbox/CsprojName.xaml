@@ -14,9 +14,9 @@
     <Grid Background="#1E1E1E">
         <StackPanel>
             <TextBlock Text="项目名称" FontSize="11" Margin="5" Foreground="White"/>
-            <TextBox x:Name="name_zh" Width="150" Height="30" HorizontalAlignment="Left" Margin="5,0,0,0" Background="#333337" Foreground="White"/>
+            <TextBox x:Name="name_zh" Width="150" Height="30" HorizontalAlignment="Left" Margin="5,0,0,0" Background="#333337" Foreground="White" BorderThickness="0"/>
             <TextBlock Text="项目英文" FontSize="11" Margin="5" Foreground="White"/>
-            <TextBox x:Name="name_eng" Width="150" Height="30" HorizontalAlignment="Left" Margin="5,0,0,0" Background="#333337" Foreground="White"/>
+            <TextBox x:Name="name_eng" Width="150" Height="30" HorizontalAlignment="Left" Margin="5,0,0,0" Background="#333337" Foreground="White" BorderThickness="0"/>
         </StackPanel>
         <Button x:Name="btn" Width="100" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,10,10" Content="创建(C)" Click="Btn_Click" FontSize="13" FontFamily=".PingFang SC,Microsoft YaHei UI" Style="{DynamicResource SquareButtonStyle}"/>
 

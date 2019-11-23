@@ -32,7 +32,6 @@ namespace GenerateToolbox
 
             vm = new MyDataGridVM(name, this);
             this.DataContext = vm;
-
         }
 
         public NewPage.NewPage ParentWindow { get; set; }

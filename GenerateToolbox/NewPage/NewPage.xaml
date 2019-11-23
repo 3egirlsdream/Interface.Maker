@@ -10,7 +10,7 @@
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-    <Border Background="#252526" BorderThickness="1" BorderBrush="#252526">
+    <Border Background="#fafafa" BorderThickness="1" BorderBrush="#fafafa">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="0" />
@@ -70,7 +70,7 @@
                     <ColumnDefinition Width="205"/>
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Column="0">
-                    <Border BorderThickness="0" BorderBrush="LightGray" Background="#252526">
+                    <Border BorderThickness="0" BorderBrush="LightGray" Background="#fafafa">
                         <Border.Effect>
                             <DropShadowEffect BlurRadius="30" Opacity="0.5" ShadowDepth="100" />
                         </Border.Effect>
@@ -155,10 +155,10 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"/>
-                        <ColumnDefinition Width="210"/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="*" MaxWidth="350"/>
                     </Grid.ColumnDefinitions>
-                    <Border  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Background="#252526">
+                    <Border  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Background="#f0f1f2">
                         <Border.Effect>
                             <DropShadowEffect BlurRadius="30" Opacity="1" ShadowDepth="100" />
                         </Border.Effect>
@@ -167,29 +167,29 @@
                                 <Border Width="25">
                                     <Image Source="..\img\重置.png"/>
                                 </Border>
-                                <TextBlock Text="重置" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White"/>
+                                <TextBlock Text="重置" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                             </StackPanel>
                             <StackPanel HorizontalAlignment="Right" Width="80" Orientation="Horizontal" MouseLeftButtonDown="AddPage_MouseLeftButtonDown" IsEnabled="{Binding IsEnabled, Mode=TwoWay}" Background="Transparent">
                                 <Border Width="25">
                                     <Image Source="..\img\页面.png"/>
                                 </Border>
-                                <TextBlock Text="添加页" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White"/>
+                                <TextBlock Text="添加页" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" />
                             </StackPanel>
 
                             <StackPanel HorizontalAlignment="Right" Width="70" Orientation="Horizontal" Margin="10,5,0,2" MouseLeftButtonDown="Create_MouseLeftButtonDown" IsEnabled="{Binding IsEnabled, Mode=TwoWay}" Background="Transparent">
                                 <Border Width="30">
                                     <Image Source="..\img\代码生成.png"/>
                                 </Border>
-                                <TextBlock Text="生成" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="White"/>
+                                <TextBlock Text="生成" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                             </StackPanel>
                         </WrapPanel>
                     </Border>
                     <Border  Height="0" BorderThickness="2" BorderBrush="LightGray" Width="2500" Grid.Row="1" Grid.ColumnSpan="2"/>
-                    <Canvas x:Name="grid" Grid.Row="2" Grid.Column="0" Background="#1E1E1E">
+                    <Canvas x:Name="grid" Grid.Row="2" Grid.Column="0" Background="#fafafa">
 
                     </Canvas>
-                    <Grid x:Name="ccp" Grid.Row="2" Grid.Column="1" Background="#1E1E1E">
-                        <Border  Padding="2" Background="#1E1E1E">
+                    <Grid x:Name="ccp" Grid.Row="2" Grid.Column="1" Background="#fafafa">
+                        <Border  Padding="2" Background="#fafafa">
                             <ContentControl x:Name="cc"></ContentControl>
                         </Border>
 

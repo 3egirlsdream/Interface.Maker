@@ -15,13 +15,13 @@
         <StackPanel Grid.Column="1" Width="90">
             <StackPanel Orientation="Horizontal">
                 <Button Height="30" Width="30" Content="宽" IsEnabled="False" Background="Transparent" BorderThickness="0" Style="{DynamicResource SquareButtonStyle}"/>
-                <Button Height="30" Width="30" Content="+" Foreground="White" Background="Transparent" BorderThickness="0" Style="{DynamicResource SquareButtonStyle}" Click="Button_Click"/>
-                <Button Height="30" Width="30" Content="-" Foreground="White" Background="Transparent" BorderThickness="0" Style="{DynamicResource SquareButtonStyle}" Click="Button_Click_1"/>
+                <Button Height="30" Width="30" Content="+" Background="Transparent" BorderThickness="0" Style="{DynamicResource SquareButtonStyle}" Click="Button_Click"/>
+                <Button Height="30" Width="30" Content="-" Background="Transparent" BorderThickness="0" Style="{DynamicResource SquareButtonStyle}" Click="Button_Click_1"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
                 <Button Height="30" Width="30" Content="高" IsEnabled="False" Background="Transparent" BorderThickness="0" Style="{DynamicResource SquareButtonStyle}"/>
-                <Button Height="30" Width="30" Content="+" Foreground="White" Background="Transparent" BorderThickness="0" Click="Button_Click_2" Style="{DynamicResource SquareButtonStyle}"/>
-                <Button Height="30" Width="30" Content="-" Foreground="White" Background="Transparent" BorderThickness="0" Click="Button_Click_3" Style="{DynamicResource SquareButtonStyle}"/>
+                <Button Height="30" Width="30" Content="+"  Background="Transparent" BorderThickness="0" Click="Button_Click_2" Style="{DynamicResource SquareButtonStyle}"/>
+                <Button Height="30" Width="30" Content="-" Background="Transparent" BorderThickness="0" Click="Button_Click_3" Style="{DynamicResource SquareButtonStyle}"/>
             </StackPanel>
         </StackPanel>
     </Grid>

@@ -145,8 +145,8 @@ namespace Project.G
 
         private void Preview_GotFocus(object sender, RoutedEventArgs e)
         {
-            bd1.Background = GetColor("#333333");
-            bd2.Background = GetColor("#333333");
+            bd1.Background = GetColor("#fafafa");
+            bd2.Background = GetColor("#fafafa");
         }
 
         private void CLOSE_MouseEnter(object sender, MouseEventArgs e)

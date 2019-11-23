@@ -40,7 +40,7 @@
                 MouseLeftButtonDown="MoveWindow"
                 Name="bd2"
                 Grid.Row="0"
-                Background="#333333"
+                Background="#fafafa"
                 BorderThickness="0">
                 <Grid>
                     <!--<Border
@@ -97,7 +97,7 @@
                 Name="bd1"
                 Grid.Row="1"
                 Margin="0,-3,0,0"
-                Background="#333333"
+                Background="#fafafa"
                 BorderThickness="0" />
             <Grid Grid.Row="2" Grid.RowSpan="2">
                 <Grid.ColumnDefinitions>

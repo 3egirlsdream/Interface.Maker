@@ -75,7 +75,7 @@ namespace Project.G.Models
                     case "占位控件": s += EmptyControl(); break;
                     case "只读TextBox": s += ReadonlyTextbox(Contents[j].CODE); break;
                     case "SearchBox":s += CreateSearchBox(Contents[j].CODE); break;
-                    case "btn": s += Buttons.CreateButton_Custom(Contents[j].NAME); break;
+                    case "btn": s += Buttons.CreateButton_Custom(Contents[j].NAME, Contents[j].CODE); break;
                     default: break;
                 }
                 s += "</WrapPanel>\r\n";
