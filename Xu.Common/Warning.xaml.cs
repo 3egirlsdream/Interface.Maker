@@ -21,6 +21,12 @@ namespace Xu.Common
         public Warning(warn TYPE) {
             InitializeComponent();
         }
+
+        public static void ShowMsg(string ex)
+        {
+            Warning warning = new Warning(ex);
+            warning.ShowDialog();
+        }
         
         private void CLOSE_MouseDown(object sender, MouseButtonEventArgs e)
         {
@@ -30,6 +36,15 @@ namespace Xu.Common
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+    }
+
+    public class Dialog
+    {
+        public static void ShowMsg(string ex)
+        {
+            Warning warning = new Warning(ex);
+            warning.ShowDialog();
         }
     }
 }

@@ -10,10 +10,10 @@
 
     <Grid Background="White">
         <StackPanel>
-            <DataGrid x:Name="dg" CanUserAddRows="True" MinHeight="100" ItemsSource="{Binding DataSource, Mode=TwoWay}" HorizontalScrollBarVisibility="Hidden" GridLinesVisibility="All">
+            <DataGrid x:Name="dg" CanUserAddRows="True" MinHeight="100" ItemsSource="{Binding DataSource, Mode=TwoWay}" HorizontalScrollBarVisibility="Hidden" GridLinesVisibility="All" AutoGenerateColumns="False">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Header="名称" Width="100" Binding="{Binding NAME_ZH, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    <DataGridTextColumn Header="编码" Width="100" Binding="{Binding NAME_ENG}"/>
+                    <DataGridTextColumn Header="名称" Width="*" Binding="{Binding NAME_ZH, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <DataGridTextColumn Header="编码" Width="*" Binding="{Binding NAME_ENG}"/>
                 </DataGrid.Columns>
             </DataGrid>
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">

@@ -17,3 +17,8 @@
 /Xu.Common/obj/Debug/Warning.g.cs
 /Xu.Common/obj/Debug/Warning.baml
 *.cache
+*.txt
+*.CopyComplete
+/Xu.Common/obj/Debug/Xu.Common.g.resources
+/Xu.Common/obj/Debug/Xu.Common.pdb
+/Xu.Common/obj/Debug/Xu.Common.dll
