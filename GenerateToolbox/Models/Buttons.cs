@@ -93,7 +93,7 @@ namespace Project.G.Models
         public static string CreateButton_Custom(string btn, string code)
         {
             string s = "<WrapPanel>\r\n";
-            var newChar = code.ToUpper();
+            var newChar = code?.ToUpper();
             code = string.IsNullOrEmpty(code) ? btn : code.ToLower().Replace(code[0], newChar[0]);
             string style = (btn == "刷新" || btn == "保存" || btn == "查询") ? "Style=\"{DynamicResource HighLightButtonStyle}\"" : "";
             string tmp = "<Button Content=\"{DynamicResource " + code.ToUpper() + "}\" " +

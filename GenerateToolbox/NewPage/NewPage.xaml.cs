@@ -26,7 +26,6 @@ namespace GenerateToolbox.NewPage
     /// <summary>
     /// NewPage.xaml 的交互逻辑
     /// </summary>
-
     public partial class NewPage : Page
     {
         NewPageVM vm;
