@@ -87,6 +87,7 @@ namespace GenerateToolbox.NewPage
             mySidebar.btn.Margin = thickness;
             if (t == 1)
                 mySidebar.border.Height = 60;
+            Canvas.SetZIndex(mySidebar, -1);
             grid.Children.Add(mySidebar);
         }
 
@@ -329,7 +330,6 @@ namespace GenerateToolbox.NewPage
                 cot = 0;
                 height += 40;
             }
-
             grid.Children.Add(myBorder);
         }
 

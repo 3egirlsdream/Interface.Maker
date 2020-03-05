@@ -17,7 +17,6 @@
                 <RowDefinition Height="10*" />
             </Grid.RowDefinitions>
             <WrapPanel Grid.Row="0">
-                
                 <Button Content="Button" Width="100" Height="30"  Click="Button_Click" 
                         IsEnabled="{Binding IsEnabled, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                             Margin="1"
