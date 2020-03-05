@@ -12,10 +12,13 @@
         FontFamily="微软等线 Light"
         AllowsTransparency="True"
         Background="Transparent"
-        Height="40"
-        Width="40"
+        Height="55"
+        Width="50"
         Title="Loading">
     <Grid>
-        <Image gif:AnimationBehavior.SourceUri="../img/20150210104951657.gif" Width="30" Height="30"></Image>
+        <StackPanel>
+            <Image gif:AnimationBehavior.SourceUri="../img/20150210104951657.gif" Width="30" Height="30" Margin="5"></Image>
+            <TextBlock x:Name="tb" Text="加载中···" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="10"/>
+        </StackPanel>
     </Grid>
 </Window>

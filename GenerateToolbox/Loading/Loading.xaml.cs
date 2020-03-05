@@ -24,19 +24,61 @@ namespace GenerateToolbox.Loading
         public Loading()
         {
             InitializeComponent();
-            close();
+            //close();
+        }
+        private string Text { get; set; }
+        public Loading(string text)
+        {
+            InitializeComponent();
+            Text = text;
+            //TextChange(Text);
+            //close();
         }
 
-        private async void close()
+        public async void ShowWindow()
+        {
+            await Task.Run(() =>
+            {
+                //Thread.Sleep(2000);
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    Show();
+                });
+            }).ConfigureAwait(true);
+        }
+
+        private async void TextChange(string text)
+        {
+            await Task.Run(() =>
+            {
+                Application.Current.Dispatcher.Invoke(() =>
+                {
+                    while (true) 
+                    {
+                        Thread.Sleep(1000);
+                        text += "·";
+                        if(text.ToCharArray().Count(c=>c == '·') > 3)
+                        {
+                            text = text.Replace("·", "");
+                        }
+                        this.tb.Text = text;
+                    }
+                });
+            });
+        }
+
+
+        public async void Shutdown()
         {
             await Task.Run(() =>
             {
                 Thread.Sleep(2000);
                 Application.Current.Dispatcher.Invoke(() =>
                 {
-                    Close();
+                    Visibility = Visibility.Collapsed;
                 });
             }).ConfigureAwait(true);
         }
+
     }
 }

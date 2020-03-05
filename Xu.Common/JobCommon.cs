@@ -241,22 +241,29 @@ namespace Model.Helper
                 IsAutoCloseConnection = true,//自动释放数据务，如果存在事务，在事务结束后释放
                 InitKeyType = InitKeyType.Attribute //从实体特性中读取主键自增列信息
             });
-
-            DataTable list = new DataTable();
-            if (type == SqlSugar.DbType.MySql) {
-                list = db.Queryable<Models>().Where(e => e.TABLE_NAME == TableName).ToDataTable();
-            }//
-            else if(type == SqlSugar.DbType.SqlServer)
+            try
             {
-                list = db.Queryable<INFORMATION_SCHEMA>().Where(e=>e.TABLE_NAME == TableName).ToDataTable();
-                list.Columns["CHARACTER_MAXIMUM_LENGTH"].ColumnName = "COLUMN_TYPE";
+                DataTable list = new DataTable();
+                if (type == SqlSugar.DbType.MySql)
+                {
+                    list = db.Queryable<Models>().Where(e => e.TABLE_NAME == TableName).ToDataTable();
+                }//
+                else if (type == SqlSugar.DbType.SqlServer)
+                {
+                    list = db.Queryable<INFORMATION_SCHEMA>().Where(e => e.TABLE_NAME == TableName).ToDataTable();
+                    list.Columns["CHARACTER_MAXIMUM_LENGTH"].ColumnName = "COLUMN_TYPE";
+                }
+                else if (type == SqlSugar.DbType.Oracle)
+                {
+                    list = db.Queryable<USER_TAB_COLUMNS>().Where(e => e.TABLE_NAME == TableName.ToUpper()).ToDataTable();
+                    list.Columns["NULLABLE"].ColumnName = "IS_NULLABLE";
+                }
+                return JsonConvert.SerializeObject(list);
             }
-            else if(type == SqlSugar.DbType.Oracle)
+            catch(Exception ex)
             {
-                list = db.Queryable<USER_TAB_COLUMNS>().Where(e => e.TABLE_NAME == TableName.ToUpper()).ToDataTable();
-                list.Columns["NULLABLE"].ColumnName = "IS_NULLABLE";
+                throw ex;
             }
-            return JsonConvert.SerializeObject(list);
         }
 
         public string GetTableJson(string TableName, SqlSugar.DbType type, string ConnString)

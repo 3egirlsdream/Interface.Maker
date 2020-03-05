@@ -523,14 +523,13 @@ namespace Project.G.ViewModel
             str.Append("public SimpleCommand " + SqlText.Replace("\n", "") + " => new SimpleCommand(){ExecuteDelegate = x =>{},CanExecuteDelegate = o =>{return true;}};");
             SqlText = Common.format(str.ToString());
         }
-
+        static Loading loading = new Loading();
         private async void Run()
         {
             await Task.Run(() =>
             {
                 Application.Current.Dispatcher.Invoke(() =>
                 {
-                    Loading loading = new Loading();
                     loading.Show();
                 });
             }).ConfigureAwait(true);
@@ -562,6 +561,7 @@ namespace Project.G.ViewModel
                         SqlText = Common.format(model.ModelCreate(json, "MeiCloud.DataAccess"));
 
                     SqlText = SqlText.Replace("\nusing Creative.ODA;", "");
+                    loading.Shutdown();
                 }
             }).ConfigureAwait(true);
         }

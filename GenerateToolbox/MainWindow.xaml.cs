@@ -38,13 +38,13 @@ namespace Project.G
             /*
              * 不启用激活校验
              */
-            //if (Common.Key() != Common.SetConfig("Password"))
-            //{
-            //    JiHuo ji = new JiHuo();
-            //    ji.ShowDialog();
-            //    if (Common.Key() != Common.SetConfig("Password"))
-            //        this.Close();
-            //}
+            if (Common.Key() != Common.SetConfig("Password"))
+            {
+                JiHuo ji = new JiHuo();
+                ji.ShowDialog();
+                if (Common.Key() != Common.SetConfig("Password"))
+                    this.Close();
+            }
 
             //if (Common.SetConfig("Date") == "0")
             //{
@@ -98,7 +98,8 @@ namespace Project.G
 
         private void CloseWindow(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            //this.Close();
+            System.Environment.Exit(0);
         }
 
         private void Setting(object sender, MouseButtonEventArgs e)
