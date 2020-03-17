@@ -27,7 +27,7 @@ namespace Project.G.ViewModel
             BoxNumber = 0;
         }
 
-        #region Model Part
+        #region Model Part Words
         public List<Key_Value> ListButton { get; set; }
         public List<Key_Value> Constraints { get; set; }
         public List<Key_Value> CreateBox { get; set; }
@@ -245,7 +245,7 @@ namespace Project.G.ViewModel
         }
         #endregion
 
-        #region Command
+        #region Model Command
 
         public SimpleCommand CmdOpen => new SimpleCommand()
         {
@@ -269,9 +269,7 @@ namespace Project.G.ViewModel
 
         #endregion
 
-        #region 方法
-
-
+        #region Model部分方法
 
         private string OpenFile()
         {
@@ -449,8 +447,6 @@ namespace Project.G.ViewModel
             SqlText = "/// <summary>\r\n///\r\n/// </summary>\r\n" + Xu.Common.Common.format(sr + '}');
         }
 
-
-
         private void FormatJson()
         {
             if (String.IsNullOrEmpty(SqlText))
@@ -523,18 +519,7 @@ namespace Project.G.ViewModel
             str.Append("public SimpleCommand " + SqlText.Replace("\n", "") + " => new SimpleCommand(){ExecuteDelegate = x =>{},CanExecuteDelegate = o =>{return true;}};");
             SqlText = Common.format(str.ToString());
         }
-        static Loading loading = new Loading();
-        private async void Run()
-        {
-            await Task.Run(() =>
-            {
-                Application.Current.Dispatcher.Invoke(() =>
-                {
-                    loading.Show();
-                });
-            }).ConfigureAwait(true);
-        }
-
+       
         private async void ModelRun()
         {
             await Task.Run(() =>
@@ -544,15 +529,16 @@ namespace Project.G.ViewModel
                     ModelHelper model = new ModelHelper();
                     //DbType type = DbType.SqlServer;
                     SqlSugar.DbType ty = SqlSugar.DbType.SqlServer;
-                    if (Constraint.value == 3)
+                    switch (Constraint.value)
                     {
-                        //type = DbType.MySql;
-                        ty = SqlSugar.DbType.MySql;
-                    }
-                    else if (Constraint.value == 4)
-                    {
-                        //type = DbType.MySql;
-                        ty = SqlSugar.DbType.Oracle;
+                        case 3:
+                            //type = DbType.MySql;
+                            ty = SqlSugar.DbType.MySql;
+                            break;
+                        case 4:
+                            //type = DbType.MySql;
+                            ty = SqlSugar.DbType.Oracle;
+                            break;
                     }
                     string json = model.GetTableJson(DBName, ty);
                     if (IsSugar)
@@ -561,7 +547,7 @@ namespace Project.G.ViewModel
                         SqlText = Common.format(model.ModelCreate(json, "MeiCloud.DataAccess"));
 
                     SqlText = SqlText.Replace("\nusing Creative.ODA;", "");
-                    loading.Shutdown();
+                    Loading.Framework.HideLoading();
                 }
             }).ConfigureAwait(true);
         }
@@ -572,7 +558,7 @@ namespace Project.G.ViewModel
             //
             try
             {
-                Run();
+                Loading.Framework.ShowLoading();
 
                 ModelRun();
                 
@@ -599,15 +585,16 @@ namespace Project.G.ViewModel
                     ModelHelper model = new ModelHelper();
                     //DbType type = DbType.SqlServer;
                     SqlSugar.DbType ty = SqlSugar.DbType.SqlServer;
-                    if (Constraint.value == 3)
+                    switch (Constraint.value)
                     {
-                        //type = DbType.MySql;
-                        ty = SqlSugar.DbType.MySql;
-                    }
-                    else if (Constraint.value == 4)
-                    {
-                        //type = DbType.MySql;
-                        ty = SqlSugar.DbType.Oracle;
+                        case 3:
+                            //type = DbType.MySql;
+                            ty = SqlSugar.DbType.MySql;
+                            break;
+                        case 4:
+                            //type = DbType.MySql;
+                            ty = SqlSugar.DbType.Oracle;
+                            break;
                     }
                     string json = model.GetTableJson(DBName, ty);
                     return Common.format(model.ModelCreate(json, "MeiCloud.DataAccess"));
