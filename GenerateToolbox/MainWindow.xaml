@@ -17,6 +17,7 @@
     WindowStartupLocation="CenterScreen"
     WindowStyle="None"
     mc:Ignorable="d">
+    
     <Window.Effect>
         <DropShadowEffect
             BlurRadius="30"

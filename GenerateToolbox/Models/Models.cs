@@ -14,6 +14,7 @@ namespace Project.G.Models
         public string type { get; set; }
         public string isNull { get; set; }
         public string defaultContext { get; set; }
+        public int length { get; set; }
     }
 
     public class Excel

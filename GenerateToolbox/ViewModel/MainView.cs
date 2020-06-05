@@ -13,6 +13,7 @@ using System.Windows;
 using Xu.Common;
 using System.Threading.Tasks;
 using GenerateToolbox.Loading;
+using GenerateToolbox.Models;
 
 namespace Project.G.ViewModel
 {
@@ -276,32 +277,33 @@ namespace Project.G.ViewModel
             OpenFileDialog open = new OpenFileDialog();
             open.Filter = "Excel (*.XLSX)|*.xlsx|all file|*.*";
             open.ShowDialog();
-            if (true)
+
+            try
             {
-                try
+                XSSFWorkbook xss;
+                using (FileStream fs = new FileStream(open.FileName, FileMode.Open, FileAccess.Read))
                 {
-                    XSSFWorkbook xss;
-                    using (FileStream fs = new FileStream(open.FileName, FileMode.Open, FileAccess.Read))
-                    {
-                        xss = new XSSFWorkbook(fs);
-                    }
+                    xss = new XSSFWorkbook(fs);
+                }
 
-                    List<excel> sFCs = new List<excel>();
-                    XSSFSheet sheet = (XSSFSheet)xss.GetSheetAt(0);
+                List<excel> sFCs = new List<excel>();
+                XSSFSheet sheet = (XSSFSheet)xss.GetSheetAt(0);
 
-                    //if (sheet.GetRow(0).Cells.Count != 7)
-                    //{
-                    //    //Invaliable
-                    //    MessageBox.Show(Translator.Get("InvaliableColume"));
-                    //    return;
-                    //}
-                    string[] url = open.FileName.Split('\\');
-
-                    string[] name = url.Last().Split(' ');
-                    string str = "CREATE TABLE " + name[0] + "(";
-                    int cot = sheet.LastRowNum;
+                
+                string[] url = open.FileName.Split('\\');
+                string comment = "";
+                string[] name = url.Last().Split(' ');
+                string str = "CREATE TABLE " + name[0].Replace(".xlsx", "") + "(\r\n";
+                int cot = sheet.LastRowNum;
+                if (Constraint.label == "Oracle")
+                {
+                    str += Excel2Sql.Excel2Oracle(sheet, name[0].Replace(".xlsx", ""), cot, ref comment);
+                }
+                else
+                {
                     for (int i = 1; i <= cot; i++)
                     {
+
                         excel sFC = new excel();
                         sFC.name = sheet.GetRow(i).GetCell(0) == null ? "" : sheet.GetRow(i).GetCell(0).ToString();
                         if (sFC.name.Length == 0 || sFC.name == "" || sFC.name == null)
@@ -338,16 +340,17 @@ namespace Project.G.ViewModel
                         if (i != cot) str += " ,\n";
 
                     }
-                    str += ")";
-
-                    return str;
                 }
-                catch (Exception ex)
-                {
-                    Warning warning = new Warning(ex.Message);
-                    warning.ShowDialog();
-                }
+                str += ");\r\n";
+                str += comment;
+                return str.Replace("  ", " ").Replace(" ,", ",");
             }
+            catch (Exception ex)
+            {
+                Warning warning = new Warning(ex.Message);
+                warning.ShowDialog();
+            }
+
             return "";
         }
 
