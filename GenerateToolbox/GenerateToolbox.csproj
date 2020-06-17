@@ -139,6 +139,9 @@
     <Compile Include="CsprojName.xaml.cs">
       <DependentUpon>CsprojName.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DragInterfaceCreater\CustomControl.xaml.cs">
+      <DependentUpon>CustomControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DragInterfaceCreater\MyBorder.xaml.cs">
       <DependentUpon>MyBorder.xaml</DependentUpon>
     </Compile>
@@ -156,6 +159,9 @@
     </Compile>
     <Compile Include="DragInterfaceCreater\Setting\ButtonSetting.xaml.cs">
       <DependentUpon>ButtonSetting.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="DragInterfaceCreater\Setting\CustomSetting.xaml.cs">
+      <DependentUpon>CustomSetting.xaml</DependentUpon>
     </Compile>
     <Compile Include="DragInterfaceCreater\Setting\DataGridSetting.xaml.cs">
       <DependentUpon>DataGridSetting.xaml</DependentUpon>
@@ -184,12 +190,15 @@
     <Compile Include="Models\Import.cs" />
     <Compile Include="Models\Resources.cs" />
     <Compile Include="Models\Strings.cs" />
+    <Compile Include="Models\UserControls.cs" />
     <Compile Include="NewPage\NewPage.xaml.cs">
       <DependentUpon>NewPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="NotifyBox\NofifyBox.xaml.cs">
       <DependentUpon>NofifyBox.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Resources\ButtonEx.cs" />
+    <Compile Include="Resources\TabItemClose.cs" />
     <Compile Include="RightPage.xaml.cs">
       <DependentUpon>RightPage.xaml</DependentUpon>
     </Compile>
@@ -203,6 +212,10 @@
       <DependentUpon>UpdateDesc.xaml</DependentUpon>
     </Compile>
     <Page Include="CsprojName.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DragInterfaceCreater\CustomControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -229,6 +242,10 @@
     <Page Include="DragInterfaceCreater\Setting\ButtonSetting.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="DragInterfaceCreater\Setting\CustomSetting.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="DragInterfaceCreater\Setting\DataGridSetting.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -265,6 +282,10 @@
     <Page Include="NotifyBox\NofifyBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Resources\Button.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="RightPage.xaml">
       <SubType>Designer</SubType>
@@ -317,6 +338,7 @@
     <Resource Include="img\setting.png" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="img\关闭.png" />
     <Resource Include="Tookit\Update.txt" />
   </ItemGroup>
   <ItemGroup>
@@ -378,6 +400,21 @@
     <Resource Include="img\1.png" />
     <Resource Include="img\右翻页.png" />
     <Resource Include="img\左翻页.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\组件.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Components\文本框.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Components\按钮.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

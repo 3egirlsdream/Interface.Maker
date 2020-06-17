@@ -1617,5 +1617,12 @@ namespace Project.G.Models
             return s;
         }
         #endregion
+
+        public static string formatString(string str, List<string> param)
+        {
+            var s = string.Format(str, string.Join(", ", param));
+
+            return s.Replace("{{", "{").Replace("}}", "}");
+        }
     }
 }

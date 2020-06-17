@@ -23,9 +23,9 @@ namespace GenerateToolbox.DragInterfaceCreater
         public CustomControl()
         {
             InitializeComponent();
-            ccgrid.MouseLeftButtonDown += Btn_MouseLeftButtonDown;
-            ccgrid.MouseMove += Btn_MouseMove;
-            ccgrid.MouseLeftButtonUp += Btn_MouseLeftButtonUp;
+            btn.MouseLeftButtonDown += Btn_MouseLeftButtonDown;
+            btn.MouseMove += Btn_MouseMove;
+            btn.MouseLeftButtonUp += Btn_MouseLeftButtonUp;
         }
         Point pos = new Point();
         private void Btn_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
@@ -51,8 +51,8 @@ namespace GenerateToolbox.DragInterfaceCreater
         private void Btn_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             Grid tmp = (Grid)sender;
-            int xx = (int)(ccgrid.Margin.Left / 10);
-            int yy = (int)(ccgrid.Margin.Top / 10);
+            int xx = (int)(btn.Margin.Left / 10);
+            int yy = (int)(btn.Margin.Top / 10);
             //MessageBox.Show(xx + " " + yy);
             tmp.Margin = new Thickness(xx * 10, yy * 10, 0, 0);
             tmp.ReleaseMouseCapture();

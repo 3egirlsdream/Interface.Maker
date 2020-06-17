@@ -52,7 +52,7 @@ namespace GenerateToolbox.NewPage
                     myControl.Name = GetControlsName("myControl");
                     myControl.MouseDoubleClick += (m, n)=>
                     {
-                        UserControls.Control().CreateProperties(name);
+                        UserControls.Control().CreateProperties(myControl.Name, name);
                         //var obj = m as FrameworkElement;
                         //DataGridSetting dataGridSetting = new DataGridSetting(obj);
                         //dataGridSetting.ParentWindow = this;
@@ -60,7 +60,7 @@ namespace GenerateToolbox.NewPage
                         ccp.Visibility = Visibility;
                         cc.Visibility = Visibility.Visible;
                     };
-                    myControl.ccgrid.Margin = new Thickness(15, 20, 5, 5);
+                    myControl.btn.Margin = new Thickness(15, 20, 5, 5);
                     grid.Children.Add(myControl);
                 });
             });
@@ -181,13 +181,12 @@ namespace GenerateToolbox.NewPage
                         }
                     }
 
-                    GetData(sider);
+                    vm.result = GetData(sider);
                     IsGenerate = true;
                 }
                 //生成界面
                 vm.IsEnabled = false;
                 //create.IsEnabled = true;
-                vm.result = grids;
                 vm.Genetate(vm.result);
 
                 Warning warning = new Warning("生成成功");
@@ -203,10 +202,10 @@ namespace GenerateToolbox.NewPage
             }
         }
 
-        public List<Grids> grids = new List<Grids>();
-        public void GetData(List<MySidebar> sider)
+        //public 
+        public List<Grids> GetData(List<MySidebar> sider)
         {
-
+            List<Grids> grids = new List<Grids>();
             Grids tmp = new Grids();
             tmp.Identity = vm.FilterPageType.Value.Key;
             tmp.PageCode = vm.FilterPageType.Value.Value;
@@ -228,7 +227,7 @@ namespace GenerateToolbox.NewPage
                                 case "MyDataGrid": obj = control as MyDataGrid; break;
                                 case "MyTextBox": obj = control as MyTextBox; break;
                                 case "MyFooter": obj = control as MyFooter;break;
-                                default: obj = control as MyBorder; break;
+                                default: obj = control as CustomControl; break;
                             }
 
                             //POSITION margin = getMargin(obj.RenderSize.Width, obj.RenderSize.Height, obj.ActualWidth, obj.ActualHeight);
@@ -288,6 +287,15 @@ namespace GenerateToolbox.NewPage
                                     };
                                     tmp.grids.Add(temp);
                                 }
+                                else if(type.Name == "CustomControl")//通用控件
+                                {
+                                    Grid temp = new Grid
+                                    {
+                                        CONTROL_NAME = "CustomControl",
+                                        NAME = obj.Name
+                                    };
+                                    tmp.grids.Add(temp);
+                                }
                             }
                         }
                     }
@@ -301,6 +309,7 @@ namespace GenerateToolbox.NewPage
                 tmp.grids.Add(temp1);
             }
             grids.Add(tmp);
+            return grids;
         }
         List<MySidebar> sider;
         private void Add_Page()
@@ -394,7 +403,7 @@ namespace GenerateToolbox.NewPage
 
         private void Reset_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            grids = new List<Grids>();
+            vm.result = new List<Grids>();
             grid.Children.Clear();
             cot = 0;
             t = 0;

@@ -50,14 +50,14 @@ namespace GenerateToolbox.Models
             grid.Children.Add(sp);
         }
 
-        public void CreateProperties(string filename)
+        public void CreateProperties(string controlname, string filename)
         {
             var fullname = GetFiles.FirstOrDefault(x => x.Contains(filename));
             FileStream file = new FileStream(fullname, FileMode.Open);
             StreamReader reader = new StreamReader(file);
             var txt = reader.ReadToEnd();
 
-            var m = Regex.Matches(txt, @"[\{[a-zA-Z\u4e00-\u9fa5]*\}]*");
+            var m = Regex.Matches(txt, @"[\[[a-zA-Z\u4e00-\u9fa5]*\]]*");
             var vs = new List<String>();
             foreach (Match c in m)
             {
@@ -67,7 +67,8 @@ namespace GenerateToolbox.Models
             file.Dispose();
             reader.Close();
             reader.Dispose();
-
+            //括号转义
+            txt = txt.Replace("{", "{{").Replace("}", "}}");
             //添加按钮
             var stackpanel2 = new StackPanel();
             //if(!NewPage.NewPage.PropertiesDic.ContainsKey(filename))
@@ -75,7 +76,7 @@ namespace GenerateToolbox.Models
             foreach (var ds in vs)
             {
                 
-                var name = ds.Replace("{", "").Replace("}", "");
+                var name = ds.Replace("[", "").Replace("]", "");
                 var stackpanel = new StackPanel();
                 stackpanel.Orientation = Orientation.Horizontal;
                 stackpanel.Margin = new Thickness(5);
@@ -89,14 +90,14 @@ namespace GenerateToolbox.Models
                 textbox.Height = 25;
                 stackpanel.VerticalAlignment = VerticalAlignment.Center;
                 stackpanel.HorizontalAlignment = HorizontalAlignment.Center;
-                if (NewPage.NewPage.PropertiesDic.ContainsKey(filename))
+                if (NewPage.NewPage.PropertiesDic.ContainsKey(controlname))
                 {
-                    textbox.Text = NewPage.NewPage.PropertiesDic[filename][vs.IndexOf(ds)];
+                    textbox.Text = NewPage.NewPage.PropertiesDic[controlname][vs.IndexOf(ds)];
                 }
                 stackpanel.Children.Add(textblock);
                 stackpanel.Children.Add(textbox);
                 stackpanel2.Children.Add(stackpanel);
-                txt = txt.Replace(name, vs.IndexOf(ds) + "");
+                txt = txt.Replace(ds, $"{{{vs.IndexOf(ds)}}}");
             }
 
 
@@ -104,11 +105,9 @@ namespace GenerateToolbox.Models
             button.Content = "保存";
             button.Click += (x, y)=> 
             { 
-                NewPage.NewPage.CCDic[filename] = txt;
-                NewPage.NewPage.PropertiesDic[filename] = new List<string>();
-                int t = 0;
-                GetTextBoxValue(NewPage.NewPage.customSetting.csgrid.Children, NewPage.NewPage.PropertiesDic[filename]);
-                
+                NewPage.NewPage.CCDic[controlname] = txt;
+                NewPage.NewPage.PropertiesDic[controlname] = new List<string>();
+                GetTextBoxValue(NewPage.NewPage.customSetting.csgrid.Children, NewPage.NewPage.PropertiesDic[controlname]);
             };
             button.Width = 100;
             button.Height = 30;
@@ -127,13 +126,13 @@ namespace GenerateToolbox.Models
                 return;
             foreach(var ds in collection)
             {
-                if(ds is StackPanel)
+                if(ds is StackPanel panel)
                 {
-                    GetTextBoxValue(((StackPanel)ds).Children, vs);
+                    GetTextBoxValue(panel.Children, vs);
                 }
-                if(ds is TextBox)
+                if(ds is TextBox box)
                 {
-                    vs.Add(((TextBox)ds).Text);
+                    vs.Add(box.Text);
                 }
             }
         }
@@ -141,7 +140,7 @@ namespace GenerateToolbox.Models
         private List<string> getFiles()
         {
             var url = System.IO.Path.GetDirectoryName(typeof(Project.G.MainWindow).Assembly.Location);
-            var info = new DirectoryInfo(url + "/Components");
+            var info = new DirectoryInfo(url + "\\Components");
             var dirs = info.GetFileSystemInfos();
             var vs = new List<string>();
             foreach(var ds in dirs)

@@ -6,9 +6,9 @@
              xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:local="clr-namespace:GenerateToolbox"
              mc:Ignorable="d" >
-    <Grid  x:Name="ccgrid">
+    <Grid  x:Name="btn">
         <WrapPanel>
-            <Border Width="100" Background="White"  Height="60" BorderThickness="1" BorderBrush="LightGray">
+            <Border Width="180" Background="White"  Height="30" BorderThickness="1" BorderBrush="LightGray">
                 <TextBlock Name="tblock"  Text="自定义控件" FontFamily="微软雅黑 Light" VerticalAlignment="Center" HorizontalAlignment="Center" />
             </Border>
         </WrapPanel>

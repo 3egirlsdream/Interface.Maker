@@ -409,6 +409,12 @@ namespace GenerateToolbox.ViewModel
                         dynamic res = MyControls.AddFooter();
                         tmp += res;
                     }
+                    else if(rs.CONTROL_NAME == "CustomControl")
+                    {
+                        var control = NewPage.NewPage.CCDic[rs.NAME];
+                        var list = NewPage.NewPage.PropertiesDic[rs.NAME];
+                        tmp += Strings.formatString(control, list);
+                    }
                     else
                     {
                         dynamic res = MyControls.CreateContents_new(ds.grids, j);

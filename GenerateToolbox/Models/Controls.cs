@@ -1,4 +1,5 @@
-﻿using Model.Helper;
+﻿using GenerateToolbox.NewPage;
+using Model.Helper;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -65,6 +66,7 @@ namespace Project.G.Models
                 {
                     s += CreateTextBlock(Contents[j].CODE);
                 }
+                //为了实现在一个布局模块添加多种控件
                 switch (Contents[j].CONTROL_NAME)
                 {
                     case "TextBox": s += CreateTextBox(Contents[j].CODE); break;
@@ -76,6 +78,13 @@ namespace Project.G.Models
                     case "只读TextBox": s += ReadonlyTextbox(Contents[j].CODE); break;
                     case "SearchBox":s += CreateSearchBox(Contents[j].CODE); break;
                     case "btn": s += Buttons.CreateButton_Custom(Contents[j].NAME, Contents[j].CODE); break;
+                    case "CustomControl":
+                        {
+                            var rs = Contents[j];
+                            var control = NewPage.CCDic[rs.NAME];
+                            var list = NewPage.PropertiesDic[rs.NAME];
+                            s += Strings.formatString(control, list);
+                        };break;
                     default: break;
                 }
                 s += "</WrapPanel>\r\n";
