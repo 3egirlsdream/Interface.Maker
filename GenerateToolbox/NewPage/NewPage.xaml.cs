@@ -1,4 +1,7 @@
 ﻿using GenerateToolbox;
+using GenerateToolbox.DragInterfaceCreater;
+using GenerateToolbox.DragInterfaceCreater.Setting;
+using GenerateToolbox.Models;
 using GenerateToolbox.ViewModel;
 using Project.G;
 using Project.G.Models;
@@ -31,12 +34,37 @@ namespace GenerateToolbox.NewPage
         NewPageVM vm;
         Point pos;
         bool IsGenerate = false;
+        public static CustomSetting customSetting { get; set; } = new CustomSetting();
+        public static Dictionary<string, string> CCDic { get; set; } = new Dictionary<string, string>();
+        public static Dictionary<string, List<string>> PropertiesDic { get; set; } = new Dictionary<string, List<string>>();
         public NewPage()
         {
             InitializeComponent();
             pos = new Point();
             vm = new NewPageVM();
             this.DataContext = vm;
+            UserControls.Control().GetFiles.ForEach(z =>
+            {
+                var name = z.Substring(z.LastIndexOf(@"\") + 1).Replace(".txt", "");
+                UserControls.Control().CreateBtn(wrappanel, name, (x, y) =>
+                {
+                    CustomControl myControl = new CustomControl();
+                    myControl.Name = GetControlsName("myControl");
+                    myControl.MouseDoubleClick += (m, n)=>
+                    {
+                        UserControls.Control().CreateProperties(name);
+                        //var obj = m as FrameworkElement;
+                        //DataGridSetting dataGridSetting = new DataGridSetting(obj);
+                        //dataGridSetting.ParentWindow = this;
+                        cc.Content = new Frame { Content = customSetting };
+                        ccp.Visibility = Visibility;
+                        cc.Visibility = Visibility.Visible;
+                    };
+                    myControl.ccgrid.Margin = new Thickness(15, 20, 5, 5);
+                    grid.Children.Add(myControl);
+                });
+            });
+            
         }
         public MainWindow ParentWindow { get; set; }
 
@@ -160,7 +188,7 @@ namespace GenerateToolbox.NewPage
                 vm.IsEnabled = false;
                 //create.IsEnabled = true;
                 vm.result = grids;
-                vm.Genetate();
+                vm.Genetate(vm.result);
 
                 Warning warning = new Warning("生成成功");
                 warning.ShowDialog();
@@ -381,5 +409,6 @@ namespace GenerateToolbox.NewPage
             footer.btn.Margin = new Thickness(20, 20, 5, 5);
             grid.Children.Add(footer);
         }
+
     }
 }

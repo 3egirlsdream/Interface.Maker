@@ -25,7 +25,6 @@ namespace GenerateToolbox.Loading
         public Loading()
         {
             InitializeComponent();
-            //close();
             if(timer == null)
             {
                 timer = new System.Timers.Timer();
@@ -55,8 +54,6 @@ namespace GenerateToolbox.Loading
         {
             InitializeComponent();
             Text = text;
-            //TextChange(Text);
-            //close();
         }
 
         /// <summary>
@@ -66,50 +63,12 @@ namespace GenerateToolbox.Loading
         {
             await Task.Run(() =>
             {
-                //Thread.Sleep(2000);
                 Application.Current.Dispatcher.Invoke(() =>
                 {
                     Framework = new Loading();
                     Framework.Show();
                 });
             }).ConfigureAwait(true);
-            //await Task.Run(() =>
-            //{
-            //    Application.Current.Dispatcher.Invoke(() =>
-            //    {
-            //        while (true)
-            //        {
-            //            Thread.Sleep(500);
-            //            if (Framework.tb.Text.Length > 3)
-            //            {
-            //                Framework.tb.Text = "加载中";
-            //            }
-            //            Framework.tb.Text += "·";
-            //        }
-            //    });
-            //});
-        }
-
-
-
-        private async void TextChange(string text)
-        {
-            await Task.Run(() =>
-            {
-                Application.Current.Dispatcher.Invoke(() =>
-                {
-                    while (true) 
-                    {
-                        Thread.Sleep(1000);
-                        text += "·";
-                        if(text.ToCharArray().Count(c=>c == '·') > 3)
-                        {
-                            text = text.Replace("·", "");
-                        }
-                        this.tb.Text = text;
-                    }
-                });
-            });
         }
 
         /// <summary>

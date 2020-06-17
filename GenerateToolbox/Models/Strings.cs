@@ -1499,14 +1499,14 @@ namespace Project.G.Models
             }
             foreach(var ds in vs)
             {
-                s += "\t" + Controls.AddCommand(model.GetCmd(ds), projName) + "\r\n";
+                s += "\t" + MyControls.AddCommand(model.GetCmd(ds), projName) + "\r\n";
             }
 
             foreach (var ds in grids.grids)
             {
                 if(ds.CONTROL_NAME == "TextBox带弹出框")
                 {
-                    s += "\t" + Controls.AddCommand_new(model.GetCmd(Buttons.command(ds.CODE, "")), projName, ds.CODE) + "\r\n";
+                    s += "\t" + MyControls.AddCommand_new(model.GetCmd(Buttons.command(ds.CODE, "")), projName, ds.CODE) + "\r\n";
                 }
             }
             

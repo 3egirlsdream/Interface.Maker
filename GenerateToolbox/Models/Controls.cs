@@ -8,7 +8,7 @@ using Xu.Common;
 
 namespace Project.G.Models
 {
-    public static class Controls
+    public static class MyControls
     {
         /// <summary>
         /// 生成查询条件xaml代码

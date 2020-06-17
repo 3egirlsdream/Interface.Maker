@@ -11,11 +11,17 @@ namespace GenerateToolbox.Models
 {
     public class Excel2Sql
     {
-        public static string Excel2Oracle(XSSFSheet sheet, string tableName, int cot, ref string comment)
+        private static Excel2Sql sql = new Excel2Sql();
+        public static  Excel2Sql SQL()
+        {
+            return sql;
+        }
+
+        public string Excel2Oracle(XSSFSheet sheet, string tableName, int cot, ref string comment)
         {
             var str = "";
             var primarykey = "";
-            for (int i = 0; i < cot; i++)
+            for (int i = 0; i <= cot; i++)
             {
                 excel sFC = new excel();
                 sFC.name = sheet.GetRow(i).GetCell(1) == null ? "" : sheet.GetRow(i).GetCell(1).ToString();
@@ -56,6 +62,51 @@ namespace GenerateToolbox.Models
                 comment += $"COMMENT ON COLUMN {tableName}.{sFC.name} IS '{sFC.desc}';\r\n";
             }
             str += $"CONSTRAINT {primarykey} PRIMARY KEY ( id ) ENABLE\n";
+            return str;
+        }
+
+        public string Excel2MysqlMssql(XSSFSheet sheet, int cot, int dbType)
+        {
+            var str = "";
+            for (int i = 1; i <= cot; i++)
+            {
+
+                excel sFC = new excel();
+                sFC.name = sheet.GetRow(i).GetCell(0) == null ? "" : sheet.GetRow(i).GetCell(0).ToString();
+                if (sFC.name.Length == 0 || sFC.name == "" || sFC.name == null)
+                {
+
+                    cot -= 1;
+                    str = str.Remove(str.Length - 3, 2);
+
+                    continue;
+                }
+                str += (sFC.name + " ");
+                sFC.desc = sheet.GetRow(i).GetCell(1) == null ? "" : sheet.GetRow(i).GetCell(1).ToString();
+                sFC.type = sheet.GetRow(i).GetCell(2) == null ? "" : sheet.GetRow(i).GetCell(2).ToString();
+                str += (sFC.type + " ");
+                sFC.isNull = sheet.GetRow(i).GetCell(3) == null ? "" : sheet.GetRow(i).GetCell(3).ToString();
+
+                sFC.defaultContext = sheet.GetRow(i).GetCell(4) == null ? "" : sheet.GetRow(i).GetCell(4).ToString();
+                if (sFC.isNull.Length != 0)
+                {
+                    str += ("NOT NULL ");
+                }
+                else
+                {
+                    str += (" NULL ");
+                }
+                if (sFC.defaultContext.Length != 0)
+                {
+                    str += ("DEFAULT " + sFC.defaultContext + " ");
+                }
+                if (sFC.name == "ID")
+                    str += "primary key ";
+                if (dbType != 2)
+                    str += ("COMMENT '" + sFC.desc + "' ");
+                if (i != cot) str += " ,\n";
+
+            }
             return str;
         }
     }

@@ -14,12 +14,13 @@ using Xu.Common;
 using System.Threading.Tasks;
 using GenerateToolbox.Loading;
 using GenerateToolbox.Models;
+using ControlzEx.Native;
 
 namespace Project.G.ViewModel
 {
     class MainView : ValidationBase
     {
-
+        #region construct
         public MainView()
         {
             //Domain = Strings.LoadJson("a.txt");
@@ -27,6 +28,7 @@ namespace Project.G.ViewModel
             ShareModel = Common.SetConfig("ShareModel");
             BoxNumber = 0;
         }
+        #endregion
 
         #region Model Part Words
         public List<Key_Value> ListButton { get; set; }
@@ -260,7 +262,9 @@ namespace Project.G.ViewModel
                     case 3: AddNotify_Click(); break;
                     case 4: FormatJson(); break;
                     case 5: AddCommand(); break;
-                    default: GenerateModel(); break;
+                    case 6: GenerateModel();break;
+                    case 7: SqlText = Guid.NewGuid().ToString("N").ToUpper();break;
+                    default: break;
                 }
             }
         };
@@ -297,49 +301,11 @@ namespace Project.G.ViewModel
                 int cot = sheet.LastRowNum;
                 if (Constraint.label == "Oracle")
                 {
-                    str += Excel2Sql.Excel2Oracle(sheet, name[0].Replace(".xlsx", ""), cot, ref comment);
+                    str += Excel2Sql.SQL().Excel2Oracle(sheet, name[0].Replace(".xlsx", ""), cot, ref comment);
                 }
                 else
                 {
-                    for (int i = 1; i <= cot; i++)
-                    {
-
-                        excel sFC = new excel();
-                        sFC.name = sheet.GetRow(i).GetCell(0) == null ? "" : sheet.GetRow(i).GetCell(0).ToString();
-                        if (sFC.name.Length == 0 || sFC.name == "" || sFC.name == null)
-                        {
-
-                            cot -= 1;
-                            str = str.Remove(str.Length - 3, 2);
-
-                            continue;
-                        }
-                        str += (sFC.name + " ");
-                        sFC.desc = sheet.GetRow(i).GetCell(1) == null ? "" : sheet.GetRow(i).GetCell(1).ToString();
-                        sFC.type = sheet.GetRow(i).GetCell(2) == null ? "" : sheet.GetRow(i).GetCell(2).ToString();
-                        str += (sFC.type + " ");
-                        sFC.isNull = sheet.GetRow(i).GetCell(3) == null ? "" : sheet.GetRow(i).GetCell(3).ToString();
-
-                        sFC.defaultContext = sheet.GetRow(i).GetCell(4) == null ? "" : sheet.GetRow(i).GetCell(4).ToString();
-                        if (sFC.isNull.Length != 0)
-                        {
-                            str += ("NOT NULL ");
-                        }
-                        else
-                        {
-                            str += (" NULL ");
-                        }
-                        if (sFC.defaultContext.Length != 0)
-                        {
-                            str += ("DEFAULT " + sFC.defaultContext + " ");
-                        }
-                        if (sFC.name == "ID")
-                            str += "primary key ";
-                        if (Constraint.value != 2)
-                            str += ("COMMENT '" + sFC.desc + "' ");
-                        if (i != cot) str += " ,\n";
-
-                    }
+                    str += Excel2Sql.SQL().Excel2MysqlMssql(sheet, cot, Constraint.value);
                 }
                 str += ");\r\n";
                 str += comment;
@@ -530,16 +496,13 @@ namespace Project.G.ViewModel
                 if (!string.IsNullOrEmpty(DBName))
                 {
                     ModelHelper model = new ModelHelper();
-                    //DbType type = DbType.SqlServer;
                     SqlSugar.DbType ty = SqlSugar.DbType.SqlServer;
                     switch (Constraint.value)
                     {
                         case 3:
-                            //type = DbType.MySql;
                             ty = SqlSugar.DbType.MySql;
                             break;
                         case 4:
-                            //type = DbType.MySql;
                             ty = SqlSugar.DbType.Oracle;
                             break;
                     }
@@ -556,27 +519,19 @@ namespace Project.G.ViewModel
         }
 
 
-        private /*async*/ void GenerateModel()
+        private void GenerateModel()
         {
-            //
+            
             try
             {
                 Loading.Framework.ShowLoading();
-
                 ModelRun();
-                
             }
             catch (Exception ex)
             {
                 Warning warning = new Warning(ex.Message);
                 warning.ShowDialog();
             }
-
-            //App.Current.Dispatcher.Invoke(() =>
-            //{
-            //    loading.Close();
-            //});
-
         }
 
         private string GenerateModel(string DBName)
@@ -618,14 +573,9 @@ namespace Project.G.ViewModel
         private void LoadCombox()
         {
             DBName = Common.SetConfig("DBName");
+            var actions = new List<string> { "生成SQL", "打开MODEL", "导出", "添加监视", "格式化JSON", "添加Command", "生成模型", "GUID" };
             ListButton = new List<Key_Value>();
-            ListButton.Add(new Key_Value { label = "生成SQL", value = 0 });
-            ListButton.Add(new Key_Value { label = "打开MODEL", value = 1 });
-            ListButton.Add(new Key_Value { label = "导出", value = 2 });
-            ListButton.Add(new Key_Value { label = "添加监视", value = 3 });
-            ListButton.Add(new Key_Value { label = "格式化JSON", value = 4 });
-            ListButton.Add(new Key_Value { label = "添加Command", value = 5 });
-            ListButton.Add(new Key_Value { label = "生成模型", value = 6 });
+            actions.ForEach(x => ListButton.Add(new Key_Value { label = x, value = actions.IndexOf(x) }));
             Filter = ListButton[3];
 
             ////
@@ -796,11 +746,9 @@ namespace Project.G.ViewModel
         {
             ExecuteDelegate = x =>
             {
-                //Loading loading = new Loading();
                 try
                 {
                     OpenExcel(BoxNumber);
-                    //loading.Show();
                     if (CreateProj(ProjectName, "还没写"))
                     {
                         Warning warning = new Warning("生成成功！");
@@ -811,15 +759,12 @@ namespace Project.G.ViewModel
                         Warning warning = new Warning("生成失败！");
                         warning.ShowDialog();
                     }
-                    //Json = Strings.LoadJson("a.txt");
-                    //Json = Strings.GetCsproj("a", "b");
                 }
                 catch (Exception ex)
                 {
                     Warning warning = new Warning(ex.Message);
                     warning.ShowDialog();
                 }
-                //loading.Close();
             }
         };
 
@@ -855,9 +800,9 @@ namespace Project.G.ViewModel
                 //Write(Strings.resx, dir + "\\" + csproj + "\\Properties\\Resources.resx");
                 Strings.Write(CreateClass.LoadModel(IndexBodies, ProjectName), dir + "\\" + csproj + "\\Models\\Model.cs");
                 Strings.Write(CreateClass.LoadModel(ProjectName), dir + "\\" + csproj + "\\Models\\ComboxModel.cs");
-                Strings.Write(Strings.GetIndexPage(csproj, Buttons.CreateButton(Buttones), Controls.CreateContents(IndexContents), Controls.CreateDataGrid(IndexBodies)), dir + "\\" + csproj + "\\Views\\IndexPage.xaml");//indexpage.xaml
+                Strings.Write(Strings.GetIndexPage(csproj, Buttons.CreateButton(Buttones), MyControls.CreateContents(IndexContents), MyControls.CreateDataGrid(IndexBodies)), dir + "\\" + csproj + "\\Views\\IndexPage.xaml");//indexpage.xaml
                 Strings.Write(Strings.GetIndexXamlCs(csproj), dir + "\\" + csproj + "\\Views\\IndexPage.xaml.cs");//xaml.cs
-                Strings.Write(Strings.GetIndexVM(csproj, Controls.CreateWord(IndexContents) + CreateCommand(IndexContents, Buttones, boxes), Strings.CreateLoadData(IndexContents)), dir + "\\" + csproj + "\\ViewModels\\IndexPageVM.cs");//indexVM
+                Strings.Write(Strings.GetIndexVM(csproj, MyControls.CreateWord(IndexContents) + CreateCommand(IndexContents, Buttones, boxes), Strings.CreateLoadData(IndexContents)), dir + "\\" + csproj + "\\ViewModels\\IndexPageVM.cs");//indexVM
 
                 string res = Strings.CreateGetallUrl(csproj, IndexContents, 1) + Strings.CreateDeleteUrl(csproj) + Strings.CreateUpdateUrl(csproj);
                 string Include = "";
@@ -865,9 +810,9 @@ namespace Project.G.ViewModel
                 //Add
                 if (AddChecked)
                 {
-                    Strings.Write(Strings.GetAddPageXaml(csproj, Controls.CreateAddContents(AddContents), "auto"), dir + "\\" + csproj + "\\Views\\Add.xaml");//Add.xaml
+                    Strings.Write(Strings.GetAddPageXaml(csproj, MyControls.CreateAddContents(AddContents), "auto"), dir + "\\" + csproj + "\\Views\\Add.xaml");//Add.xaml
                     Strings.Write(Strings.GetAddPageXamlCs(csproj), dir + "\\" + csproj + "\\Views\\Add.xaml.cs");//xaml.cs
-                    Strings.Write(Strings.GetAddVM(csproj, Controls.CreateWord(AddContents) + CreateCommand(AddContents, new List<MyModel>() { }), Strings.PostData(AddContents), Strings.IsLegal(AddContents)), dir + "\\" + csproj + "\\ViewModels\\AddVM.cs");//AddVM
+                    Strings.Write(Strings.GetAddVM(csproj, MyControls.CreateWord(AddContents) + CreateCommand(AddContents, new List<MyModel>() { }), Strings.PostData(AddContents), Strings.IsLegal(AddContents)), dir + "\\" + csproj + "\\ViewModels\\AddVM.cs");//AddVM
                     res += Strings.CreateAddUrl(csproj);
                     Include += GetAddInclude;
                     Complie += GetAddComplie;
@@ -875,9 +820,9 @@ namespace Project.G.ViewModel
 
                 if (EditChecked)
                 {
-                    Strings.Write(Strings.GetEditPageXaml(csproj, Controls.CreateAddContents(AddContents), "auto"), dir + "\\" + csproj + "\\Views\\Edit.xaml");//Edit.xaml
+                    Strings.Write(Strings.GetEditPageXaml(csproj, MyControls.CreateAddContents(AddContents), "auto"), dir + "\\" + csproj + "\\Views\\Edit.xaml");//Edit.xaml
                     Strings.Write(Strings.GetEditPageXamlCs(csproj), dir + "\\" + csproj + "\\Views\\Edit.xaml.cs");//xaml.cs
-                    Strings.Write(Strings.GetEditVM(csproj, Controls.CreateWord(AddContents) + CreateCommand(AddContents, new List<MyModel>() { }), Strings.PostData(AddContents), Strings.IsLegal(AddContents), Strings.CreateEditLoadData(AddContents)), dir + "\\" + csproj + "\\ViewModels\\EditVM.cs");//AddVM
+                    Strings.Write(Strings.GetEditVM(csproj, MyControls.CreateWord(AddContents) + CreateCommand(AddContents, new List<MyModel>() { }), Strings.PostData(AddContents), Strings.IsLegal(AddContents), Strings.CreateEditLoadData(AddContents)), dir + "\\" + csproj + "\\ViewModels\\EditVM.cs");//AddVM
                     res += Strings.CreateEditUrl(csproj);
                     Include += GetEditInclude;
                     Complie += GetEditComplie;
@@ -886,7 +831,7 @@ namespace Project.G.ViewModel
                 //Import
                 if (ImportChecked)
                 {
-                    Strings.Write(Strings.GetImportXaml(csproj, Controls.CreateDataGrid(ImportBidies)), dir + "\\" + csproj + "\\Views\\ImportPage.xaml");//Import.xaml
+                    Strings.Write(Strings.GetImportXaml(csproj, MyControls.CreateDataGrid(ImportBidies)), dir + "\\" + csproj + "\\Views\\ImportPage.xaml");//Import.xaml
                     Strings.Write(Strings.GetImportXamlCs(csproj), dir + "\\" + csproj + "\\Views\\ImportPage.xaml.cs");//xaml.cs
                     Strings.Write(Strings.GetImprotVM(csproj, ImportBidies, Import.CreateXss(ImportBidies), Import.CreateNull(ImportBidies), Import.CreateRepeat(ImportBidies), Import.CreateRepeatFunction(ImportBidies), Import.CheckImportData(ImportBidies)), dir + "\\" + csproj + "\\ViewModels\\ImportPageVM.cs");//ImportVM
                     res += Import.CreateImportUrl(csproj, ImportBidies);
@@ -898,9 +843,9 @@ namespace Project.G.ViewModel
                 {
                     foreach (var ds in boxes)
                     {
-                        Strings.Write(Strings.GetBoxesXaml(csproj, ds.BOX_CODE, Controls.CreateDataGrid(ds.Body), ds.SEARCH_CODE), dir + "\\" + csproj + "\\Views\\" + ds.BOX_CODE + ".xaml");//Add.xaml
+                        Strings.Write(Strings.GetBoxesXaml(csproj, ds.BOX_CODE, MyControls.CreateDataGrid(ds.Body), ds.SEARCH_CODE), dir + "\\" + csproj + "\\Views\\" + ds.BOX_CODE + ".xaml");//Add.xaml
                         Strings.Write(Strings.GetBoxesXamlCs(csproj, ds.BOX_CODE), dir + "\\" + csproj + "\\Views\\" + ds.BOX_CODE + ".xaml.cs");//xaml.cs
-                        Strings.Write(Strings.GetBoxesVM(csproj, ds.BOX_CODE, Controls.CreateWord(ds.Body), Strings.CreateBoxUrl(csproj, ds.BOX_CODE, ds.SEARCH_CODE)), dir + "\\" + csproj + "\\ViewModels\\" + ds.BOX_CODE + "VM.cs");//AddVM
+                        Strings.Write(Strings.GetBoxesVM(csproj, ds.BOX_CODE, MyControls.CreateWord(ds.Body), Strings.CreateBoxUrl(csproj, ds.BOX_CODE, ds.SEARCH_CODE)), dir + "\\" + csproj + "\\ViewModels\\" + ds.BOX_CODE + "VM.cs");//AddVM
                     }
                     Include += GetInclude(boxes);
                     Complie += GetComplie(boxes);
@@ -1119,15 +1064,15 @@ namespace Project.G.ViewModel
                 if (Contents[i].CONTROL_CODE == "TextBox带弹出框")
                 {
                     if (models.Count > 0 && i < models.Count)
-                        s += "\t" + Controls.AddCommand(model.GetCmd(Contents[i].SEARCH_CODE), ProjectName, models[t++], Contents[i]) + "\r\n";
+                        s += "\t" + MyControls.AddCommand(model.GetCmd(Contents[i].SEARCH_CODE), ProjectName, models[t++], Contents[i]) + "\r\n";
                     else
-                        s += "\t" + Controls.AddCommand(model.GetCmd(Contents[i].SEARCH_CODE), ProjectName, null, Contents[i]) + "\r\n";
+                        s += "\t" + MyControls.AddCommand(model.GetCmd(Contents[i].SEARCH_CODE), ProjectName, null, Contents[i]) + "\r\n";
                 }
             }
 
             foreach (var ds in btn)
             {
-                s += "\t" + Controls.AddCommand(model.GetCmd(Buttons.command(ds, "")), ProjectName) + "\r\n";
+                s += "\t" + MyControls.AddCommand(model.GetCmd(Buttons.command(ds, "")), ProjectName) + "\r\n";
             }
             return s + "#endregion\r\n";
         }
@@ -1146,9 +1091,9 @@ namespace Project.G.ViewModel
                 if (Contents[i].CONTROL_CODE == "TextBox带弹出框")
                 {
                     if (models.Count > 0)
-                        s += "\t" + Controls.AddCommand(model.GetCmd(Contents[i].SEARCH_CODE), ProjectName, models[t++], Contents[i]) + "\r\n";
+                        s += "\t" + MyControls.AddCommand(model.GetCmd(Contents[i].SEARCH_CODE), ProjectName, models[t++], Contents[i]) + "\r\n";
                     else
-                        s += "\t" + Controls.AddCommand(model.GetCmd(Contents[i].SEARCH_CODE), ProjectName, null, Contents[i]) + "\r\n";
+                        s += "\t" + MyControls.AddCommand(model.GetCmd(Contents[i].SEARCH_CODE), ProjectName, null, Contents[i]) + "\r\n";
                 }
             }
 
@@ -1298,6 +1243,7 @@ namespace Project.G.ViewModel
 
         #endregion
 
+        #region 生成没有的模型
         /// <summary>
         /// 生成没有的模型
         /// </summary>
@@ -1315,5 +1261,6 @@ namespace Project.G.ViewModel
                 }
             }
         }
+        #endregion
     }
 }
