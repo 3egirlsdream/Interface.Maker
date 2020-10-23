@@ -17,7 +17,7 @@ namespace GenerateToolbox.Models
             return sql;
         }
 
-        public string Excel2Oracle(XSSFSheet sheet, string tableName, int cot, ref string comment)
+        public string Excel2Oracle(XSSFSheet sheet, string tableName, int cot, ref string comment, ref string primaryKey)
         {
             var str = "";
             var primarykey = "";
@@ -37,11 +37,12 @@ namespace GenerateToolbox.Models
                 str += sFC.type;
 
                 sFC.isNull = sheet.GetRow(i).GetCell(5) == null ? "" : sheet.GetRow(i).GetCell(5).ToString();
-                var length = sheet.GetRow(i).GetCell(4) == null ? "0" : sheet.GetRow(i).GetCell(4).ToString();
-                sFC.length = Convert.ToInt32(length);
+                var length = sheet.GetRow(i).GetCell(4) == null ? null : sheet.GetRow(i).GetCell(4).ToString();
+                
                 sFC.defaultContext = sheet.GetRow(i).GetCell(6) == null ? "" : sheet.GetRow(i).GetCell(6).ToString();
-                if(sFC.type.ToLower() != "date")
+                if(sFC.type.ToLower() != "date" && !string.IsNullOrEmpty(length)) 
                 {
+                    sFC.length = Convert.ToInt32(length);
                     str += $"({sFC.length}) ";
                 }
 
@@ -52,16 +53,17 @@ namespace GenerateToolbox.Models
                 if (sFC.name == "ID")
                 {
                     primarykey = sheet.GetRow(i).GetCell(7) == null ? "" : sheet.GetRow(i).GetCell(7).ToString();
+                    primaryKey = primarykey;
                 }
 
                 if (sFC.isNull.Length != 0)
                 {
                     str += (" NOT NULL ");
                 }
-                str += " ,\n";
+                if(i != cot) str += " ,\n";
                 comment += $"COMMENT ON COLUMN {tableName}.{sFC.name} IS '{sFC.desc}';\r\n";
             }
-            str += $"CONSTRAINT {primarykey} PRIMARY KEY ( id ) ENABLE\n";
+            //str += $"CONSTRAINT {primarykey} PRIMARY KEY ( id ) ENABLE\n";
             return str;
         }
 

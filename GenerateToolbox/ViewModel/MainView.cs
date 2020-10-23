@@ -296,19 +296,22 @@ namespace Project.G.ViewModel
                 
                 string[] url = open.FileName.Split('\\');
                 string comment = "";
+                string pk = "";
                 string[] name = url.Last().Split(' ');
                 string str = "CREATE TABLE " + name[0].Replace(".xlsx", "") + "(\r\n";
                 int cot = sheet.LastRowNum;
                 if (Constraint.label == "Oracle")
                 {
-                    str += Excel2Sql.SQL().Excel2Oracle(sheet, name[0].Replace(".xlsx", ""), cot, ref comment);
+                    str += Excel2Sql.SQL().Excel2Oracle(sheet, name[0].Replace(".xlsx", ""), cot, ref comment, ref pk);
                 }
                 else
                 {
                     str += Excel2Sql.SQL().Excel2MysqlMssql(sheet, cot, Constraint.value);
                 }
-                str += ");\r\n";
+                str += "\r\n) TABLESPACE MESPROD;\r\n";
                 str += comment;
+                str += $"\r\nALTER TABLE {name[0].Replace(".xlsx", "")} ADD CONSTRAINT {pk} PRIMARY KEY(ID) USING INDEX TABLESPACE MESPROX;\r\n";
+                str += $"GRANT SELECT ON {name[0].Replace(".xlsx", "")} TO MESPROREAD;";
                 return str.Replace("  ", " ").Replace(" ,", ",");
             }
             catch (Exception ex)

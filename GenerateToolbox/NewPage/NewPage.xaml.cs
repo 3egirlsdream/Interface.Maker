@@ -50,12 +50,11 @@ namespace GenerateToolbox.NewPage
                 {
                     CustomControl myControl = new CustomControl();
                     myControl.Name = GetControlsName("myControl");
+                    //myControl.Foreground = MainWindow.GetColor("#1e1e1e");
+                    //myControl.Background = MainWindow.GetColor("#1e1e1e");
                     myControl.MouseDoubleClick += (m, n)=>
                     {
                         UserControls.Control().CreateProperties(myControl.Name, name);
-                        //var obj = m as FrameworkElement;
-                        //DataGridSetting dataGridSetting = new DataGridSetting(obj);
-                        //dataGridSetting.ParentWindow = this;
                         cc.Content = new Frame { Content = customSetting };
                         ccp.Visibility = Visibility;
                         cc.Visibility = Visibility.Visible;
@@ -202,14 +201,17 @@ namespace GenerateToolbox.NewPage
             }
         }
 
-        //public 
+
+        public List<Grids> grids { get; set; } = new List<Grids>();
         public List<Grids> GetData(List<MySidebar> sider)
         {
-            List<Grids> grids = new List<Grids>();
-            Grids tmp = new Grids();
-            tmp.Identity = vm.FilterPageType.Value.Key;
-            tmp.PageCode = vm.FilterPageType.Value.Value;
-            tmp.PageName = vm.FilterPageType.Value.Key == "普通弹出框" ? vm.BoxName : vm.FilterPageType.Value.Value;
+
+            Grids tmp = new Grids
+            {
+                Identity = vm.FilterPageType.Value.Key,
+                PageCode = vm.FilterPageType.Value.Value,
+                PageName = vm.FilterPageType.Value.Key == "普通弹出框" ? vm.BoxName : vm.FilterPageType.Value.Value
+            };
             foreach (var ds in sider)
             {
                 //var borderMargin = getMargin(ds.RenderSize.Width, ds.RenderSize.Height, ds.ActualWidth, ds.ActualHeight);

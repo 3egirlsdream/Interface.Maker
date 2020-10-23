@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Project.G;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -45,11 +46,17 @@ namespace GenerateToolbox.Models
             tlb.Margin = new Thickness(10, 0, 0, 0);
             tlb.VerticalAlignment = VerticalAlignment.Center;
             tlb.HorizontalAlignment = HorizontalAlignment.Center;
+            tlb.Foreground = MainWindow.GetColor("#1e1e1e");
             sp.Children.Add(tlb);
             sp.MouseLeftButtonDown += handler;
             grid.Children.Add(sp);
         }
 
+        /// <summary>
+        /// 生成属性界面
+        /// </summary>
+        /// <param name="controlname"></param>
+        /// <param name="filename"></param>
         public void CreateProperties(string controlname, string filename)
         {
             var fullname = GetFiles.FirstOrDefault(x => x.Contains(filename));
@@ -82,14 +89,15 @@ namespace GenerateToolbox.Models
                 stackpanel.Margin = new Thickness(5);
                 var textblock = new TextBlock();
                 textblock.Text = name;
-                textblock.Width = 70;
+                textblock.MinWidth = 100;
+                //textblock.Width = 70;
                 textblock.Margin = new Thickness(5);
                 var textbox = new TextBox();
                 textbox.Name = name;
                 textbox.Width = 100;
                 textbox.Height = 25;
                 stackpanel.VerticalAlignment = VerticalAlignment.Center;
-                stackpanel.HorizontalAlignment = HorizontalAlignment.Center;
+                stackpanel.HorizontalAlignment = HorizontalAlignment.Left;
                 if (NewPage.NewPage.PropertiesDic.ContainsKey(controlname))
                 {
                     textbox.Text = NewPage.NewPage.PropertiesDic[controlname][vs.IndexOf(ds)];

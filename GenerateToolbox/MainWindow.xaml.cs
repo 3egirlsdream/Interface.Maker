@@ -127,7 +127,7 @@ namespace Project.G
             bd2.Background = GetColor("#DD335D");
         }
 
-        private SolidColorBrush GetColor(string str)
+        public static SolidColorBrush GetColor(string str)
         {
             return new SolidColorBrush((Color)ColorConverter.ConvertFromString(str));
         }

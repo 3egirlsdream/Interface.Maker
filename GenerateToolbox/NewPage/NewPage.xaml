@@ -5,12 +5,22 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:GenerateToolbox.NewPage"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="clr-namespace:GenerateToolbox.Controlsz"
     Title="NewPage"
     FontFamily="微软等线"
     d:DesignHeight="450"
     d:DesignWidth="800"
+    Foreground="Black"
     mc:Ignorable="d">
-    <Border Background="#fafafa" BorderThickness="1" BorderBrush="#fafafa">
+    <Page.Resources>
+        <Style TargetType="{x:Type TextElement }">
+            <Setter Property="FontFamily" Value="Comic Sans MS"/>
+        </Style>
+        <Style TargetType="{x:Type TextBlock }">
+            <Setter Property="Foreground" Value="Black"/>
+        </Style>
+    </Page.Resources>
+    <Border  BorderThickness="1" BorderBrush="#EAEAEA" Background="#dddddd">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="0" />
@@ -60,7 +70,7 @@
                                     BorderThickness="0"
                                     FontSize="13"
                                     Foreground="White" />
-                
+
             </WrapPanel>
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
@@ -69,12 +79,12 @@
                     <ColumnDefinition Width="205"/>
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Column="0">
-                    <Border BorderThickness="0" BorderBrush="LightGray" Background="#fafafa">
+                    <Border BorderThickness="0" BorderBrush="LightGray" Background="#f2f2f2">
                         <Border.Effect>
                             <DropShadowEffect BlurRadius="30" Opacity="0.5" ShadowDepth="100" />
                         </Border.Effect>
                         <WrapPanel x:Name="wrappanel">
-                            <TextBlock Margin="10,0,0,0" Width="150" Text="页面属性" FontSize="14" FontFamily="微软雅黑 Light" VerticalAlignment="Center"/>
+                            <TextBlock Margin="10,0,0,0" Width="150" Text="页面属性" FontSize="14" FontFamily="微软雅黑 Light" VerticalAlignment="Center" Foreground="Black"/>
                             <ComboBox MinWidth="100" Margin="10,5,0,0" 
                                        Background="Transparent"
                               ItemsSource="{Binding PageType, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
@@ -122,7 +132,7 @@
                                 <TextBlock Text="footer" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                             </StackPanel>
 
-                            
+
                             <TextBlock Margin="10,5,0,0" Width="200" Text="其他设置" FontSize="14" FontFamily="微软雅黑 Light" VerticalAlignment="Center"/>
                             <StackPanel Width="100"  Background="Transparent" Orientation="Horizontal" Margin="10,5,0,0" MouseLeftButtonDown="StackPanel_MouseLeftButtonDown_4" >
                                 <Border Width="25">
@@ -130,7 +140,7 @@
                                 </Border>
                                 <TextBlock Text="全局配置" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                             </StackPanel>
-                            
+
                             <TextBlock Margin="10,5,0,0" Width="200" Text="操作说明" FontSize="14" FontFamily="微软雅黑 Light" VerticalAlignment="Center"/>
                             <StackPanel Width="100" Orientation="Horizontal" Margin="10,5,0,0" >
                                 <Border Width="30">
@@ -159,36 +169,38 @@
                         <ColumnDefinition Width="2*"/>
                         <ColumnDefinition Width="*" MaxWidth="350"/>
                     </Grid.ColumnDefinitions>
-                    <Border  Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Background="#f0f1f2">
-                        <Border.Effect>
-                            <DropShadowEffect BlurRadius="30" Opacity="1" ShadowDepth="100" />
-                        </Border.Effect>
-                        <WrapPanel HorizontalAlignment="Right" Width="250">
-                            <StackPanel HorizontalAlignment="Right" Width="80" Orientation="Horizontal" MouseLeftButtonDown="Reset_MouseLeftButtonDown" IsEnabled="{Binding IsEnabled, Mode=TwoWay}" Background="Transparent">
+                    <Border  Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Background="#f0f1f2" Visibility="Visible">
+                        
+                        <StackPanel  Orientation="Horizontal" HorizontalAlignment="Right">
+                            <StackPanel HorizontalAlignment="Right" Width="auto" Orientation="Horizontal" Margin="10,5,5,5" MouseLeftButtonDown="Reset_MouseLeftButtonDown" IsEnabled="{Binding IsEnabled, Mode=TwoWay}" Background="Transparent">
                                 <Border Width="25">
                                     <Image Source="..\img\重置.png"/>
                                 </Border>
-                                <TextBlock Text="重置" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                <TextBlock Text="重置" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                             </StackPanel>
-                            <StackPanel HorizontalAlignment="Right" Width="80" Orientation="Horizontal" MouseLeftButtonDown="AddPage_MouseLeftButtonDown" IsEnabled="{Binding IsEnabled, Mode=TwoWay}" Background="Transparent">
+                            <StackPanel HorizontalAlignment="Right" Width="auto" Orientation="Horizontal" Margin="10,5,5,5" MouseLeftButtonDown="AddPage_MouseLeftButtonDown" IsEnabled="{Binding IsEnabled, Mode=TwoWay}" Background="Transparent">
                                 <Border Width="25">
                                     <Image Source="..\img\页面.png"/>
                                 </Border>
-                                <TextBlock Text="添加页" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                <TextBlock Text="添加页" Margin="5,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" />
                             </StackPanel>
 
-                            <StackPanel HorizontalAlignment="Right" Width="70" Orientation="Horizontal" Margin="10,5,0,2" MouseLeftButtonDown="Create_MouseLeftButtonDown" IsEnabled="{Binding IsEnabled, Mode=TwoWay}" Background="Transparent">
+                            <StackPanel HorizontalAlignment="Right" Width="auto" Orientation="Horizontal" Margin="10,5,5,5" MouseLeftButtonDown="Create_MouseLeftButtonDown" IsEnabled="{Binding IsEnabled, Mode=TwoWay}" Background="Transparent">
                                 <Border Width="30">
                                     <Image Source="..\img\代码生成.png"/>
                                 </Border>
-                                <TextBlock Text="生成" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                <TextBlock Text="生成" Margin="5,0,5,0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                             </StackPanel>
-                        </WrapPanel>
+                        </StackPanel>
                     </Border>
-                    <Border  Height="0" BorderThickness="2" BorderBrush="LightGray" Width="2500" Grid.Row="1" Grid.ColumnSpan="2"/>
-                    <Canvas x:Name="grid" Grid.Row="2" Grid.Column="0" Background="#fafafa">
+                    <TabControl Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" BorderThickness="0" Margin="0" Visibility="Visible">
+                        <controls:TabItemClose Header="画布" Height="30" BorderThickness="0" MinWidth="100">
+                            <Canvas x:Name="grid"  Background="#fafafa">
 
-                    </Canvas>
+                            </Canvas>
+                        </controls:TabItemClose>
+                    </TabControl>
+                    
                     <Grid x:Name="ccp" Grid.Row="2" Grid.Column="1" Background="#fafafa">
                         <Border  Padding="2" Background="#fafafa">
                             <ContentControl x:Name="cc"></ContentControl>
@@ -196,7 +208,7 @@
 
                     </Grid>
                 </Grid>
-                
+
                 <Grid 
                     x:Name="xmlbox"
                     Grid.Column="1"
@@ -251,7 +263,8 @@
                     </StackPanel>
                 </Grid>
             </Grid>
-            
+
         </Grid>
+
     </Border>
 </Page>
