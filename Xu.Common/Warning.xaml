@@ -18,6 +18,6 @@
         <Border Background="White" CornerRadius="3" Opacity="1" Grid.RowSpan="3"/>
         <Border x:Name="CLOSE" ToolTip="关闭" HorizontalAlignment="Left" Margin="10,5,0,0" Width="13" Height="13" Background="#FFB8B8B8" CornerRadius="13" MouseDown="CLOSE_MouseDown" VerticalAlignment="Top"/>
         <TextBox Name="tb1" Grid.Row="1" VerticalAlignment="Top" HorizontalAlignment="Center" FontFamily="幼圆" FontSize="13" Width="170" Height="100" TextWrapping="Wrap" Margin="0,0,0,0" BorderThickness="0" IsReadOnly="True"/>
-        <Button Grid.Row="2" Width="100" Height="25" Margin="0,5,0,5" BorderThickness="0" Background="#FFB8B8B8" Content="确   定" Click="Button_Click" FontFamily="幼圆" />
+        <Button x:Name="surtbtn" Grid.Row="2" Width="100" Height="25" Margin="0,5,0,5" BorderThickness="0" Background="#FFB8B8B8" Content="确   定(3)" Click="Button_Click" FontFamily="幼圆" />
     </Grid>
 </Window>

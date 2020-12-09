@@ -1,0 +1,142 @@
+﻿<Page
+    x:Class="GenerateToolbox.MakeData.MakeData"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:GenerateToolbox.MakeData"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="clr-namespace:GenerateToolbox.Controlsz"
+    Title="MakeData"
+    FontFamily="微软等线"
+    d:DesignHeight="450"
+    d:DesignWidth="800"
+    Foreground="Black"
+    mc:Ignorable="d">
+    <Page.Resources>
+        <Style TargetType="{x:Type TextElement }">
+            <Setter Property="FontFamily" Value="Comic Sans MS"/>
+        </Style>
+        <Style TargetType="{x:Type TextBlock }">
+            <Setter Property="Foreground" Value="Black"/>
+        </Style>
+    </Page.Resources>
+    <Border  BorderThickness="1" BorderBrush="#EAEAEA" Background="#dddddd">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0" />
+                <RowDefinition Height="10*" />
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="230"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <Grid Background="#f2f2f2">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+                        <StackPanel Grid.Row="0">
+                            <TextBox x:Name="searchbox" Margin="2"></TextBox>
+                            <Button x:Name="yesbtn" Content="打开" Style="{DynamicResource SquareButtonStyle}" Margin="2"/>
+                            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="2">
+                                <TextBlock Text="Number：" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                <TextBox x:Name="count" Width="80"/>
+                                <Button Margin="10,0,0,0" Width="65" x:Name="insert" Content="插入" Style="{DynamicResource SquareButtonStyle}" HorizontalAlignment="Right"/>
+                            </StackPanel>
+                        </StackPanel>
+                        <ScrollViewer Grid.Row="1">
+                            <StackPanel x:Name="wrappanel">
+                                
+                                
+                            </StackPanel>
+                        </ScrollViewer>
+                    </Grid>
+
+                </Grid>
+
+                <Grid Grid.Column="1" Grid.ColumnSpan="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TabControl Grid.Row="0" Grid.RowSpan="3" BorderThickness="0" Margin="0" Visibility="Visible">
+                        <controls:TabItemClose Header="画布" Height="30" BorderThickness="0" MinWidth="100">
+                            <Grid Height="auto">
+                                <DataGrid x:Name="grid" Background="#fafafa" ItemsSource="{Binding DataSource, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False">
+                                    <DataGrid.Columns>
+                                        <DataGridTemplateColumn>
+                                            <DataGridTemplateColumn.Header>
+                                                <TextBlock Text="START_TIME"/>
+                                            </DataGridTemplateColumn.Header>
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <DatePicker SelectedDate="{Binding START_TIME}" IsEnabled="{Binding IsEnabled, Mode=TwoWay}"/>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                        <DataGridTemplateColumn>
+                                            <DataGridTemplateColumn.Header>
+                                                <TextBlock Text="END_TIME"/>
+                                            </DataGridTemplateColumn.Header>
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <DatePicker SelectedDate="{Binding END_TIME}" IsEnabled="{Binding IsEnabled, Mode=TwoWay}"/>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                        <DataGridTemplateColumn Width="auto">
+                                            <DataGridTemplateColumn.Header>
+                                                <TextBlock Text="NOW"/>
+                                            </DataGridTemplateColumn.Header>
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <ComboBox Width="100" ItemsSource="{Binding ComboBoxSource, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                        <DataGridTemplateColumn Visibility="{Binding Visibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                            <DataGridTemplateColumn.Header>
+                                                <TextBlock Text="CONST_STRING"/>
+                                            </DataGridTemplateColumn.Header>
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBox Width="100" Text="{Binding CONST_STRING, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn>
+                                        <DataGridTemplateColumn>
+                                            <DataGridTemplateColumn.Header>
+                                                <TextBlock Text="COLUMN_NAME"/>
+                                            </DataGridTemplateColumn.Header>
+                                            <DataGridTemplateColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <TextBlock Text="{Binding COLUMN_NAME}"/>
+                                                </DataTemplate>
+                                            </DataGridTemplateColumn.CellTemplate>
+                                        </DataGridTemplateColumn> 
+                                        <DataGridTextColumn Header="OWNER" Binding="{Binding OWNER}"/>
+                                        <DataGridTextColumn Header="TABLE_NAME" Binding="{Binding TABLE_NAME}"/>
+                                        
+                                        <DataGridTextColumn Header="COMMENTS" Binding="{Binding COMMENTS}" MaxWidth="300"/>
+                                        <DataGridTextColumn Header="DATA_TYPE" Binding="{Binding DATA_TYPE}"/>
+                                       
+                                    </DataGrid.Columns>
+
+                                </DataGrid>
+                            </Grid>
+                            
+                        </controls:TabItemClose>
+                    </TabControl>
+                    
+                </Grid>
+
+               
+            </Grid>
+
+        </Grid>
+
+    </Border>
+</Page>

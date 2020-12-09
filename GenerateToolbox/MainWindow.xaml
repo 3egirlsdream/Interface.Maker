@@ -365,19 +365,9 @@
                         </Grid>
                     </controls:MetroTabItem>
 
-                    <controls:MetroTabItem GotFocus="Domain_GotFocus" Header="Domain" Visibility="Collapsed">
-                        <Grid>
-                            <TextBox
-                                Grid.Row="1"
-                                AcceptsReturn="True"
-                                Background="Transparent"
-                                BorderThickness="0"
-                                FontFamily="Consolas"
-                                FontSize="14"
-                                IsReadOnly="True"
-                                Text="{Binding Domain}"
-                                TextWrapping="Wrap"
-                                VerticalScrollBarVisibility="Visible" />
+                    <controls:MetroTabItem GotFocus="MetroTabItem_GotFocus" Header="Data">
+                        <Grid Margin="0,-3,0,0">
+                            <ContentControl Name="MakeData"/>
                         </Grid>
                     </controls:MetroTabItem>
                     

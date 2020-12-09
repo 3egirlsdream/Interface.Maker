@@ -13,7 +13,7 @@ namespace Xu.Common
 
         public string this[string columnName] => throw new NotImplementedException();
 
-        public string Error => throw new NotImplementedException();
+        public string Error => "";
 
         public event PropertyChangedEventHandler PropertyChanged;
         protected virtual void NotifyPropertyChanged(string propertyName)

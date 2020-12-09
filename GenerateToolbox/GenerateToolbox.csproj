@@ -58,7 +58,7 @@
     </Win32Resource>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>bitbug_favicon.ico</ApplicationIcon>
+    <ApplicationIcon>ico.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ControlzEx, Version=3.0.2.4, Culture=neutral, processorArchitecture=MSIL">
@@ -77,7 +77,9 @@
     <Reference Include="MySql.Data, Version=8.0.13.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
       <HintPath>E:\MyData\jiangxj.CN\source\repos\XuTooKit\packages\MySql.Data.8.0.13\lib\net452\MySql.Data.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL" />
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="NPOI">
       <HintPath>plugins\NPOI.dll</HintPath>
     </Reference>
@@ -190,7 +192,11 @@
     <Compile Include="Models\Import.cs" />
     <Compile Include="Models\Resources.cs" />
     <Compile Include="Models\Strings.cs" />
+    <Compile Include="Models\TABLE_COLUMNS.cs" />
     <Compile Include="Models\UserControls.cs" />
+    <Compile Include="MakeData\MakeData.xaml.cs">
+      <DependentUpon>MakeData.xaml</DependentUpon>
+    </Compile>
     <Compile Include="NewPage\NewPage.xaml.cs">
       <DependentUpon>NewPage.xaml</DependentUpon>
     </Compile>
@@ -205,6 +211,7 @@
     <Compile Include="JiHuo.xaml.cs">
       <DependentUpon>JiHuo.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\MakeDataVM.cs" />
     <Compile Include="ViewModel\MainView.cs" />
     <Compile Include="ViewModel\NewPageVM.cs" />
     <Compile Include="ViewModel\RightPageVM.cs" />
@@ -272,6 +279,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="LeftPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="MakeData\MakeData.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -346,9 +357,6 @@
     <Resource Include="Tookit\Update.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="img\bitbug_favicon.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
@@ -389,9 +397,6 @@
     <Resource Include="img\重置.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="bitbug_favicon.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="NotifyBox\20150210104951657.gif" />
   </ItemGroup>
   <ItemGroup>
@@ -419,6 +424,9 @@
     <None Include="Components\按钮.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="ico.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

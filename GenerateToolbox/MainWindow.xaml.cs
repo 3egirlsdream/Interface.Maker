@@ -29,6 +29,7 @@ namespace Project.G
         RightPage page = new RightPage();
         LeftPage left = new LeftPage();
         NewPage newPage = new NewPage();
+        GenerateToolbox.MakeData.MakeData makeData = new GenerateToolbox.MakeData.MakeData();
         MainView vm = new MainView();
         public MainWindow()
         {
@@ -38,13 +39,13 @@ namespace Project.G
             /*
              * 不启用激活校验
              */
-            if (Common.Key() != Common.SetConfig("Password"))
-            {
-                JiHuo ji = new JiHuo();
-                ji.ShowDialog();
-                if (Common.Key() != Common.SetConfig("Password"))
-                    this.Close();
-            }
+            //if (Common.Key() != Common.SetConfig("Password"))
+            //{
+            //    JiHuo ji = new JiHuo();
+            //    ji.ShowDialog();
+            //    if (Common.Key() != Common.SetConfig("Password"))
+            //        this.Close();
+            //}
 
             //if (Common.SetConfig("Date") == "0")
             //{
@@ -63,6 +64,7 @@ namespace Project.G
             LoadMode();
             right.Content = new Frame() { Content = page };
             right.Visibility = Visibility.Visible;
+            MakeData.Content = new Frame() { Content = makeData };
             //打开更新日志界面
             if (Common.SetConfig("Update") == "0")
             {
@@ -209,6 +211,13 @@ namespace Project.G
                         });
                 }
             }).ConfigureAwait(true);
+        }
+
+        private void MetroTabItem_GotFocus(object sender, RoutedEventArgs e)
+        {
+            
+            
+            
         }
     }
 }
