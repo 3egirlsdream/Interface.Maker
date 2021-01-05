@@ -20,7 +20,7 @@
             <Setter Property="Foreground" Value="Black"/>
         </Style>
     </Page.Resources>
-    <Border  BorderThickness="1" BorderBrush="#EAEAEA" Background="#dddddd">
+    <Border  BorderThickness="1" BorderBrush="#EAEAEA" Background="#f3f3f3">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="0" />
@@ -57,83 +57,81 @@
                 </Grid>
 
                 <Grid Grid.Column="1" Grid.ColumnSpan="2">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="30"/>
-                        <RowDefinition Height="auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <TabControl Grid.Row="0" Grid.RowSpan="3" BorderThickness="0" Margin="0" Visibility="Visible">
-                        <controls:TabItemClose Header="画布" Height="30" BorderThickness="0" MinWidth="100">
-                            <Grid Height="auto">
-                                <DataGrid x:Name="grid" Background="#fafafa" ItemsSource="{Binding DataSource, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False">
-                                    <DataGrid.Columns>
-                                        <DataGridTemplateColumn>
-                                            <DataGridTemplateColumn.Header>
-                                                <TextBlock Text="START_TIME"/>
-                                            </DataGridTemplateColumn.Header>
-                                            <DataGridTemplateColumn.CellTemplate>
-                                                <DataTemplate>
-                                                    <DatePicker SelectedDate="{Binding START_TIME}" IsEnabled="{Binding IsEnabled, Mode=TwoWay}"/>
-                                                </DataTemplate>
-                                            </DataGridTemplateColumn.CellTemplate>
-                                        </DataGridTemplateColumn>
-                                        <DataGridTemplateColumn>
-                                            <DataGridTemplateColumn.Header>
-                                                <TextBlock Text="END_TIME"/>
-                                            </DataGridTemplateColumn.Header>
-                                            <DataGridTemplateColumn.CellTemplate>
-                                                <DataTemplate>
-                                                    <DatePicker SelectedDate="{Binding END_TIME}" IsEnabled="{Binding IsEnabled, Mode=TwoWay}"/>
-                                                </DataTemplate>
-                                            </DataGridTemplateColumn.CellTemplate>
-                                        </DataGridTemplateColumn>
-                                        <DataGridTemplateColumn Width="auto">
-                                            <DataGridTemplateColumn.Header>
-                                                <TextBlock Text="NOW"/>
-                                            </DataGridTemplateColumn.Header>
-                                            <DataGridTemplateColumn.CellTemplate>
-                                                <DataTemplate>
-                                                    <ComboBox Width="100" ItemsSource="{Binding ComboBoxSource, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                                                </DataTemplate>
-                                            </DataGridTemplateColumn.CellTemplate>
-                                        </DataGridTemplateColumn>
-                                        <DataGridTemplateColumn Visibility="{Binding Visibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
-                                            <DataGridTemplateColumn.Header>
-                                                <TextBlock Text="CONST_STRING"/>
-                                            </DataGridTemplateColumn.Header>
-                                            <DataGridTemplateColumn.CellTemplate>
-                                                <DataTemplate>
-                                                    <TextBox Width="100" Text="{Binding CONST_STRING, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                                </DataTemplate>
-                                            </DataGridTemplateColumn.CellTemplate>
-                                        </DataGridTemplateColumn>
-                                        <DataGridTemplateColumn>
-                                            <DataGridTemplateColumn.Header>
-                                                <TextBlock Text="COLUMN_NAME"/>
-                                            </DataGridTemplateColumn.Header>
-                                            <DataGridTemplateColumn.CellTemplate>
-                                                <DataTemplate>
-                                                    <TextBlock Text="{Binding COLUMN_NAME}"/>
-                                                </DataTemplate>
-                                            </DataGridTemplateColumn.CellTemplate>
-                                        </DataGridTemplateColumn> 
-                                        <DataGridTextColumn Header="OWNER" Binding="{Binding OWNER}"/>
-                                        <DataGridTextColumn Header="TABLE_NAME" Binding="{Binding TABLE_NAME}"/>
-                                        
-                                        <DataGridTextColumn Header="COMMENTS" Binding="{Binding COMMENTS}" MaxWidth="300"/>
-                                        <DataGridTextColumn Header="DATA_TYPE" Binding="{Binding DATA_TYPE}"/>
-                                       
-                                    </DataGrid.Columns>
 
-                                </DataGrid>
-                            </Grid>
-                            
-                        </controls:TabItemClose>
-                    </TabControl>
-                    
+                    <DataGrid x:Name="grid" Background="#fafafa" ItemsSource="{Binding DataSource, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" AutoGenerateColumns="False">
+                        <DataGrid.Columns>
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.Header>
+                                    <TextBlock Text="START_TIME"/>
+                                </DataGridTemplateColumn.Header>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <DatePicker SelectedDate="{Binding START_TIME}" IsEnabled="{Binding IsEnabled, Mode=TwoWay}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.Header>
+                                    <TextBlock Text="END_TIME"/>
+                                </DataGridTemplateColumn.Header>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <DatePicker SelectedDate="{Binding END_TIME}" IsEnabled="{Binding IsEnabled, Mode=TwoWay}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Width="auto">
+                                <DataGridTemplateColumn.Header>
+                                    <TextBlock Text="NOW"/>
+                                </DataGridTemplateColumn.Header>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <ComboBox Width="100" ItemsSource="{Binding ComboBoxSource, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedItem, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn Visibility="{Binding Visibility, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
+                                <DataGridTemplateColumn.Header>
+                                    <TextBlock Text="CONST_STRING"/>
+                                </DataGridTemplateColumn.Header>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBox Width="100" Text="{Binding CONST_STRING, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.Header>
+                                    <TextBlock Text="COLUMN_NAME"/>
+                                </DataGridTemplateColumn.Header>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding COLUMN_NAME}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+                            <DataGridTemplateColumn>
+                                <DataGridTemplateColumn.Header>
+                                    <TextBlock Text="DATA_TYPE"/>
+                                </DataGridTemplateColumn.Header>
+                                <DataGridTemplateColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding DATA_TYPE}"/>
+                                    </DataTemplate>
+                                </DataGridTemplateColumn.CellTemplate>
+                            </DataGridTemplateColumn>
+
+                            <DataGridTextColumn Header="COMMENTS" Binding="{Binding COMMENTS}" MaxWidth="300"/>
+
+                            <DataGridTextColumn Header="TABLE_NAME" Binding="{Binding TABLE_NAME}"/>
+                            <DataGridTextColumn Header="OWNER" Binding="{Binding OWNER}"/>
+                        </DataGrid.Columns>
+
+                    </DataGrid>
+
                 </Grid>
 
-               
+
             </Grid>
 
         </Grid>

@@ -48,6 +48,7 @@ namespace GenerateToolbox
         /// </summary>
         private List<string> _ComboBoxSource = new List<string>
         {
+            "",
             "GUID",
             "DateTime.Now",
             "CONST"

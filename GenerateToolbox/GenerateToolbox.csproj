@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{467370DC-4B81-4615-B647-DF823AE7C080}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>GenerateToolbox</RootNamespace>
+    <RootNamespace>SqlManager</RootNamespace>
     <AssemblyName>ToolKit</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -350,10 +350,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="img\setting.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="img\关闭.png" />
+    <Resource Include="img\关闭.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Tookit\Update.txt" />
   </ItemGroup>
   <ItemGroup>
@@ -427,6 +426,22 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="ico.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\file_light.png" />
+    <Resource Include="img\file_dark.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\data_dark.png" />
+    <Resource Include="img\data_light.png" />
+    <Resource Include="img\model_dark.png" />
+    <Resource Include="img\model_light.png" />
+    <Resource Include="img\service_dark.png" />
+    <Resource Include="img\service_light.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\setting_dark.png" />
+    <Resource Include="img\setting_light.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

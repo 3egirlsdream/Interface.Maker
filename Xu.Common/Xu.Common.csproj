@@ -18,7 +18,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\GenerateToolbox\plugins\</OutputPath>
+    <OutputPath>..\..\..\source\repos\interface-creater\GenerateToolbox\plugins\</OutputPath>
     <DefineConstants>
     </DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -49,7 +49,7 @@
     <Reference Include="PresentationFramework" />
     <Reference Include="SqlSugar, Version=4.9.7.2, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>.\SqlSugar.dll</HintPath>
+      <HintPath>..\..\..\source\repos\SqlManager\packages\sqlSugar.4.9.7.2\lib\SqlSugar.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel" />
@@ -80,14 +80,36 @@
     <Compile Include="models\models.cs" />
     <Compile Include="models\warn.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\ButtonEx.cs" />
+    <Compile Include="Resources\TabItemClose.cs" />
     <Compile Include="SimpleCommand.cs" />
+    <Compile Include="SqlHelper.cs" />
     <Compile Include="SugarContext.cs" />
     <Compile Include="Validation.cs" />
+    <Compile Include="OpenSaveDialog.xaml.cs">
+      <DependentUpon>OpenSaveDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Warning.xaml.cs">
       <DependentUpon>Warning.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="OpenSaveDialog.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Button.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\Style.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Resources\TabStyle.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Warning.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -96,6 +118,159 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\1562985956%281%29.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\20150210104951657.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\data_dark.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\data_light.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\database.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\excute.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\file.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\file_dark.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\file_light.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\Folder_32x32.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\format_document.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\format_selection.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\logo.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\model_dark.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\model_light.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\OpenFolder_32x32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\service_dark.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\service_light.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\setting_dark.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\setting_light.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\SQL.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\按钮.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\表格.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\布局.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\插头.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\代码生成.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\底部.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\勾选.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\勾选1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\关闭.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\连接.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\连接1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\美化.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\其他设置.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\删除.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\删除1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\数据库.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\说明.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\文本框.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\页面.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\右翻页.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\执行.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\执行1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\重置.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="img\组件.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\最小化.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\最小化1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="img\左翻页.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

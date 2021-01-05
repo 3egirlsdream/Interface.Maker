@@ -216,6 +216,30 @@ namespace Xu.Common
             }
         }
 
+        public static string Export(string fileName, string text, string filter = "(*.txt)|*.txt|" + "(*.*)|*.*")
+        {
+            System.Windows.Forms.SaveFileDialog objSave = new System.Windows.Forms.SaveFileDialog();
+            objSave.Filter = filter;
+
+            objSave.FileName = fileName;
+            if (objSave.ShowDialog() == DialogResult.OK)
+            {
+                FileStream FileWriter = new FileStream(objSave.FileName, FileMode.Create); //写文件
+                var bts = System.Text.Encoding.Default.GetBytes(text);
+                FileWriter.Write(bts, 0, bts.Length);//将字符串写入
+                FileWriter.Close(); //关闭StreamWriter对象
+            }
+            return objSave.FileName;
+        }
+
+        public static void SaveFile(string path, string text)
+        {
+            FileStream FileWriter = new FileStream(path, FileMode.Create); //写文件
+            var bts = System.Text.Encoding.Default.GetBytes(text);
+            FileWriter.Write(bts, 0, bts.Length);//将字符串写入
+            FileWriter.Close(); //关闭StreamWriter对象
+        }
+
 
         /////////
         /// <summary>
@@ -258,6 +282,13 @@ namespace Xu.Common
         {
             MD5 Md5 = new MD5CryptoServiceProvider();
             return System.Web.Security.FormsAuthentication.HashPasswordForStoringInConfigFile(UUID().Replace("-", "") + "CATLNMSL", "MD5");
+        }
+
+
+
+        public static T Copy<T>(T model)
+        {
+            return Newtonsoft.Json.JsonConvert.DeserializeObject<T>(Newtonsoft.Json.JsonConvert.SerializeObject(model));
         }
 
     }

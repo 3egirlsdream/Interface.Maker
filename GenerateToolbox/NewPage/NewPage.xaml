@@ -20,7 +20,7 @@
             <Setter Property="Foreground" Value="Black"/>
         </Style>
     </Page.Resources>
-    <Border  BorderThickness="1" BorderBrush="#EAEAEA" Background="#dddddd">
+    <Border  BorderThickness="1" BorderBrush="#EAEAEA" Background="#f3f3f3">
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="0" />
@@ -96,9 +96,9 @@
                              Width="{Binding Width}" Margin="10,5,0,0" />
 
                             <TextBlock Margin="10,5,0,0" Width="150" Text="布局控件" FontSize="14" FontFamily="微软雅黑 Light" VerticalAlignment="Center"/>
-                            <StackPanel Width="100"  Background="Transparent" Orientation="Horizontal" Margin="10,5,0,0" MouseLeftButtonDown="StackPanel_MouseLeftButtonDown_3" IsEnabled="{Binding IsEnabled, Mode=TwoWay}">
+                            <StackPanel Height="30" Width="100"  Background="Transparent" Orientation="Horizontal" Margin="10,5,0,0" MouseLeftButtonDown="StackPanel_MouseLeftButtonDown_3" IsEnabled="{Binding IsEnabled, Mode=TwoWay}">
                                 <Border Width="30">
-                                    <Image Source="..\img\布局.png" />
+                                    <Image Width="20" Source="..\img\布局.png" />
                                 </Border>
                                 <TextBlock Text="布局" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                             </StackPanel>
@@ -119,8 +119,8 @@
                             </StackPanel>
 
                             <StackPanel Width="100"  Background="Transparent" Orientation="Horizontal" Margin="10,5,0,0" MouseLeftButtonDown="StackPanel_MouseLeftButtonDown_2" IsEnabled="{Binding IsEnabled, Mode=TwoWay}">
-                                <Border Width="30">
-                                    <Image Source="..\img\表格.png"/>
+                                <Border Width="30" Height="30">
+                                    <Image Width="20" Source="..\img\表格.png"/>
                                 </Border>
                                 <TextBlock Text="表格" Margin="10,0,0,0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                             </StackPanel>
@@ -195,7 +195,7 @@
                     </Border>
                     <TabControl Grid.Row="0" Grid.Column="0" Grid.RowSpan="3" BorderThickness="0" Margin="0" Visibility="Visible">
                         <controls:TabItemClose Header="画布" Height="30" BorderThickness="0" MinWidth="100">
-                            <Canvas x:Name="grid"  Background="#fafafa">
+                            <Canvas x:Name="grid"  Background="#fafafa" Margin="-2,-2,-2,-2">
 
                             </Canvas>
                         </controls:TabItemClose>

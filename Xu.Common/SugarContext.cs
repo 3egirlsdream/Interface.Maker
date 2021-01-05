@@ -40,6 +40,42 @@ namespace Xu.Common
                 return db;
             }
         }
+
+        public static SqlSugarClient GetContext(string connectionString, SqlSugar.DbType type)
+        {
+            if (string.IsNullOrEmpty(connectionString))
+            {
+                throw new Exception("请配置连接字符串！");
+            }
+            SqlSugarClient db = new SqlSugarClient(new ConnectionConfig()
+            {
+                ConnectionString = connectionString,
+                DbType = type,
+                IsAutoCloseConnection = true,
+                InitKeyType = InitKeyType.Attribute
+            });
+
+            return db;
+
+        }
+
+        public static SqlSugarClient OracleContextParams(string connectionString)
+        {
+            if (string.IsNullOrEmpty(connectionString))
+            {
+                throw new Exception("请配置连接字符串！");
+            }
+            SqlSugarClient db = new SqlSugarClient(new ConnectionConfig()
+            {
+                ConnectionString = connectionString,
+                DbType = SqlSugar.DbType.Oracle,
+                IsAutoCloseConnection = true,
+                InitKeyType = InitKeyType.Attribute
+            });
+
+            return db;
+
+        } 
         public static SqlSugarClient MSSqlContext
         {
             get

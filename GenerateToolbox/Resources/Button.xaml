@@ -48,26 +48,157 @@
         </Setter>
     </Style>
 
-    <Style x:Key="BtnImgTxtStyle1" TargetType="Button">
+    <Style x:Key="FileBtnStyle" TargetType="Button">
         <Setter Property="Foreground" Value="#555"/>
+        <Setter Property="Height" Value="30"/>
+        <Setter Property="Width" Value="30"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Border>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                            <Image Source="/Images/search.png" Stretch="None"/>
+                            <Image x:Name="img_light" Source="..\img\file_light.png" Stretch="None" Height="{TemplateBinding Height}" Width="{TemplateBinding Width}"/>
+                            <Image x:Name="img_dark" Source="..\img\file_dark.png" Stretch="None" Height="{TemplateBinding Height}" Width="{TemplateBinding Width}"/>
                             <TextBlock x:Name="Txt" Text="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                         </StackPanel>
                     </Border>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
+                        <Trigger Property="IsMouseOver" Value="False">
                             <Setter Property="Foreground" Value="#333333" TargetName="Txt"/>
+                            <Setter Property="Visibility" Value="Visible" TargetName="img_light"/>
+                            <Setter Property="Visibility" Value="Collapsed" TargetName="img_dark"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Visibility" Value="Visible" TargetName="img_dark"/>
+                            <Setter Property="Visibility" Value="Collapsed" TargetName="img_light"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
+
+    <Style x:Key="ServiceBtnStyle" TargetType="Button">
+        <Setter Property="Foreground" Value="#555"/>
+        <Setter Property="Height" Value="30"/>
+        <Setter Property="Width" Value="30"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Image x:Name="service_light" Source="..\img\service_light.png" Stretch="None" Height="{TemplateBinding Height}" Width="{TemplateBinding Width}"/>
+                            <Image x:Name="service_dark" Source="..\img\service_dark.png" Stretch="None" Height="{TemplateBinding Height}" Width="{TemplateBinding Width}"/>
+                            <TextBlock x:Name="Txt" Text="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="False">
+                            <Setter Property="Visibility" Value="Visible" TargetName="service_light"/>
+                            <Setter Property="Visibility" Value="Collapsed" TargetName="service_dark"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Visibility" Value="Visible" TargetName="service_dark"/>
+                            <Setter Property="Visibility" Value="Collapsed" TargetName="service_light"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="ModelBtnStyle" TargetType="Button">
+        <Setter Property="Foreground" Value="#555"/>
+        <Setter Property="Height" Value="30"/>
+        <Setter Property="Width" Value="30"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Image x:Name="model_light" Source="..\img\model_light.png" Stretch="None" Height="{TemplateBinding Height}" Width="{TemplateBinding Width}"/>
+                            <Image x:Name="model_dark" Source="..\img\model_dark.png" Stretch="None" Height="{TemplateBinding Height}" Width="{TemplateBinding Width}"/>
+                            <TextBlock x:Name="Txt" Text="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="False">
+                            <Setter Property="Foreground" Value="#333333" TargetName="Txt"/>
+                            <Setter Property="Visibility" Value="Visible" TargetName="model_light"/>
+                            <Setter Property="Visibility" Value="Collapsed" TargetName="model_dark"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Visibility" Value="Visible" TargetName="model_dark"/>
+                            <Setter Property="Visibility" Value="Collapsed" TargetName="model_light"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <Style x:Key="DataBtnStyle" TargetType="Button">
+        <Setter Property="Foreground" Value="#555"/>
+        <Setter Property="Height" Value="30"/>
+        <Setter Property="Width" Value="30"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Image x:Name="data_light" Source="..\img\data_light.png" Stretch="None" Height="{TemplateBinding Height}" Width="{TemplateBinding Width}"/>
+                            <Image x:Name="data_dark" Source="..\img\data_dark.png" Stretch="None" Height="{TemplateBinding Height}" Width="{TemplateBinding Width}"/>
+                            <TextBlock x:Name="Txt" Text="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="False">
+                            <Setter Property="Foreground" Value="#333333" TargetName="Txt"/>
+                            <Setter Property="Visibility" Value="Visible" TargetName="data_light"/>
+                            <Setter Property="Visibility" Value="Collapsed" TargetName="data_dark"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Visibility" Value="Visible" TargetName="data_dark"/>
+                            <Setter Property="Visibility" Value="Collapsed" TargetName="data_light"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+
+    <Style x:Key="settingBtnStyle" TargetType="Button">
+        <Setter Property="Foreground" Value="#555"/>
+        <Setter Property="Height" Value="15"/>
+        <Setter Property="Width" Value="15"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border>
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                            <Image x:Name="setting_light" Source="..\img\setting_light.png" Stretch="None" Height="{TemplateBinding Height}" Width="{TemplateBinding Width}"/>
+                            <Image x:Name="setting_dark" Source="..\img\setting_dark.png" Stretch="None" Height="{TemplateBinding Height}" Width="{TemplateBinding Width}"/>
+                            <TextBlock x:Name="Txt" Text="{TemplateBinding Content}" Foreground="{TemplateBinding Foreground}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </StackPanel>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Foreground" Value="#333333" TargetName="Txt"/>
+                            <Setter Property="Visibility" Value="Visible" TargetName="setting_light"/>
+                            <Setter Property="Visibility" Value="Collapsed" TargetName="setting_dark"/>
+                        </Trigger>
+                        <Trigger Property="IsMouseOver" Value="False">
+                            <Setter Property="Visibility" Value="Visible" TargetName="setting_dark"/>
+                            <Setter Property="Visibility" Value="Collapsed" TargetName="setting_light"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
 
     <Style TargetType="{x:Type controls:ButtonEx}">
         <Style.Triggers>

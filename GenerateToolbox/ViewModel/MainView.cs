@@ -15,12 +15,24 @@ using System.Threading.Tasks;
 using GenerateToolbox.Loading;
 using GenerateToolbox.Models;
 using ControlzEx.Native;
+using GenerateToolbox.Controlsz;
+using System.Windows.Controls;
 
 namespace Project.G.ViewModel
 {
     class MainView : ValidationBase
     {
         #region construct
+        MainWindow plugin;
+        public MainView(MainWindow IPlugin)
+        {
+            plugin = IPlugin;
+            //Domain = Strings.LoadJson("a.txt");
+            LoadCombox();
+            ShareModel = Common.SetConfig("ShareModel");
+            BoxNumber = 0;
+        }
+
         public MainView()
         {
             //Domain = Strings.LoadJson("a.txt");
@@ -246,6 +258,9 @@ namespace Project.G.ViewModel
                 NotifyPropertyChanged("MySql");
             }
         }
+
+
+
         #endregion
 
         #region Model Command

@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:controls="http://metro.mahapps.com/winfx/xaml/controls"
+    xmlns:controlsz="clr-namespace:GenerateToolbox.Controlsz"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:Project.G"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
@@ -32,15 +33,34 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="30" />
-                <RowDefinition Height="53" />
+                <RowDefinition Height="30" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="50"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <StackPanel 
+                Grid.Row="1" Grid.Column="0" Grid.RowSpan="2"
+                Background="#dddddd">
+
+                <Button Style="{StaticResource FileBtnStyle}" Width="30" Height="30" Margin="5" Click="FileClick"/>
+                <Button Style="{StaticResource ServiceBtnStyle}" Width="30" Height="30" Margin="5" Click="ServiceClick"/>
+                <Button Style="{StaticResource ModelBtnStyle}" Width="30" Height="30" Margin="5" Click="ModelClick"/>
+                <Button Style="{StaticResource DataBtnStyle}" Width="30" Height="30" Margin="5" Click="DataClick"/>
+
+
+            </StackPanel>
+            <Border Grid.Row="0" Grid.Column="0" Background="#dddddd">
+                <Image Source="ico.ico" Margin="5"/>
+            </Border>
+            
 
             <Border
                 MouseRightButtonDown="bodyDoubleClick"
                 MouseLeftButtonDown="MoveWindow"
                 Name="bd2"
-                Grid.Row="0"
+                Grid.Row="0" Grid.Column="1"
                 Background="#dddddd"
                 BorderThickness="0">
                 <Grid>
@@ -64,7 +84,7 @@
                         Click="CloseWindow"
                         ToolTip="关闭" />
                     <Button
-                        Style="{StaticResource BorderStyle}"
+                        Style="{StaticResource CloseBorderStyle}"
                         x:Name="MINN"
                         Margin="0,10,55,0"
                         HorizontalAlignment="Right"
@@ -81,40 +101,33 @@
                         Background="#FF00D00F"
                         Click="MaxWindow"
                         ToolTip="最大化" />
-                    <Border
-                        x:Name="setting"
-                        VerticalAlignment="Top"
-                        Height="20"
-                        Margin="0,6,75,0"
-                        HorizontalAlignment="Right"
-                        MouseDown="Setting">
-                        <Image Source=".\img\setting.png" />
-                    </Border>
+                    <Button x:Name="setting" Style="{StaticResource settingBtnStyle}" Margin="0,9,75,0" HorizontalAlignment="Right" VerticalAlignment="Top" Click="settingClick"/>
                 </Grid>
             </Border>
-            <ContentControl Name="zz" Grid.Row="1" Grid.RowSpan="2" />
+            <ContentControl Name="zz" Grid.Row="1" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
             <Border
                 MouseLeftButtonDown="MoveWindow"
                 Name="bd1"
                 Grid.Row="1"
-                Margin="0,-3,0,0"
-                Background="#dddddd"
+                Grid.Column="1"
+                Margin="0,0,0,0"
+                Background="#ececec"
                 BorderThickness="0" />
-            <Grid Grid.Row="2" Grid.RowSpan="2">
+            <Grid Grid.Row="2" Grid.RowSpan="2" Grid.Column="1">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="2*"/>
                     <ColumnDefinition Width="7*"/>
                 </Grid.ColumnDefinitions>
-                <controls:MetroTabControl
+                <TabControl
                     x:Name="tabcontol"
-                    Margin="0,-35,0,0"
+                    Margin="0,-30,0,0"
                     Background="Transparent" Grid.ColumnSpan="2">
-                    <controls:MetroTabItem GotFocus="Preview_GotFocus" Header="Creater">
-                        <Grid Margin="0,-3,0,0">
-                            <ContentControl Name="Preview" Grid.Row="6" />
+                    <controlsz:TabItemClose x:Name="Preview_item" GotFocus="Preview_GotFocus" Header="Creater" Height="30" BorderThickness="0" MinWidth="100">
+                        <Grid Margin="-3">
+                            <ContentControl Name="Preview" />
                         </Grid>
-                    </controls:MetroTabItem>
-                    <controls:MetroTabItem GotFocus="Service_GotFocus" Header="Service">
+                    </controlsz:TabItemClose>
+                    <controlsz:TabItemClose x:Name="Service_item" GotFocus="Service_GotFocus" Header="Service" Height="30" BorderThickness="0" MinWidth="100" Foreground="Black">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="220" />
@@ -282,8 +295,8 @@
                             </WrapPanel>-->
 
                         </Grid>
-                    </controls:MetroTabItem>
-                    <controls:MetroTabItem GotFocus="Model_GotFocus" Header="Model">
+                    </controlsz:TabItemClose>
+                    <controlsz:TabItemClose x:Name="Model_item" GotFocus="Model_GotFocus" Header="Model" Height="30" BorderThickness="0" MinWidth="100" Foreground="Black">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="auto" />
@@ -363,18 +376,18 @@
                                 TextWrapping="Wrap"
                                 VerticalScrollBarVisibility="Visible" />
                         </Grid>
-                    </controls:MetroTabItem>
+                    </controlsz:TabItemClose>
 
-                    <controls:MetroTabItem GotFocus="MetroTabItem_GotFocus" Header="Data">
-                        <Grid Margin="0,-3,0,0">
+                    <controlsz:TabItemClose x:Name="MakeData_item" GotFocus="MetroTabItem_GotFocus" Header="Data" Height="30" BorderThickness="0" MinWidth="100">
+                        <Grid Margin="-3">
                             <ContentControl Name="MakeData"/>
                         </Grid>
-                    </controls:MetroTabItem>
+                    </controlsz:TabItemClose>
                     
-                </controls:MetroTabControl>
+                </TabControl>
             </Grid>
 
-            <Grid Grid.Row="2">
+            <Grid Grid.Row="2" Grid.Column="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="2*" />
                     <ColumnDefinition Width="300" />

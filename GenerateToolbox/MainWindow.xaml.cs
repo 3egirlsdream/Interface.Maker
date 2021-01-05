@@ -1,4 +1,5 @@
-﻿using GenerateToolbox.NewPage;
+﻿using GenerateToolbox.Controlsz;
+using GenerateToolbox.NewPage;
 using GenerateToolbox.NotifyBox;
 using Project.G.ViewModel;
 using System;
@@ -26,14 +27,30 @@ namespace Project.G
     /// </summary>
     public partial class MainWindow : Window
     {
+
+        static TabItemClose PreviewItem = new TabItemClose();
+        static TabItemClose ModelItem = new TabItemClose();
+        static TabItemClose ServiceItem = new TabItemClose();
+        static TabItemClose MakeDataItem = new TabItemClose();
+
         RightPage page = new RightPage();
         LeftPage left = new LeftPage();
         NewPage newPage = new NewPage();
         GenerateToolbox.MakeData.MakeData makeData = new GenerateToolbox.MakeData.MakeData();
-        MainView vm = new MainView();
+        MainView vm;
         public MainWindow()
         {
             InitializeComponent();
+
+            PreviewItem = this.Preview_item;
+            ModelItem = Model_item;
+            ServiceItem = Service_item;
+            MakeDataItem = MakeData_item;
+
+            foreach(TabItemClose item in tabcontol.Items)
+            {
+                item.Visibility = Visibility.Collapsed;
+            }
 
             #region 激活校验
             /*
@@ -77,7 +94,7 @@ namespace Project.G
             ProjName1.ToolTip = "项目名必须包含Plugin,否则不会生成服务端代码";
             //tb3.Text = " <— 在这里输入表名(要换行),服务端可以自动链接模型！";//\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n <— 勾选后不存在的模型不会链接。";
             cm.ToolTip = "勾选后会生成在右侧文本框输入的表的模型";
-            vm = new MainView();
+            vm = new MainView(this);
             this.DataContext = vm;
 
             //RunNotifyBox();
@@ -104,10 +121,7 @@ namespace Project.G
             System.Environment.Exit(0);
         }
 
-        private void Setting(object sender, MouseButtonEventArgs e)
-        {
-            page.Visibility = page.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
-        }
+        
 
         private void MinWindow(object sender, RoutedEventArgs e)
         {
@@ -125,8 +139,8 @@ namespace Project.G
 
         private void Service_GotFocus(object sender, RoutedEventArgs e)
         {
-            bd1.Background = GetColor("#DD335D");
-            bd2.Background = GetColor("#DD335D");
+            //bd1.Background = GetColor("#DD335D");
+            //bd2.Background = GetColor("#DD335D");
         }
 
         public static SolidColorBrush GetColor(string str)
@@ -136,20 +150,20 @@ namespace Project.G
 
         private void Model_GotFocus(object sender, RoutedEventArgs e)
         {
-            bd1.Background = GetColor("#404671");
-            bd2.Background = GetColor("#404671");
+            //bd1.Background = GetColor("#404671");
+            //bd2.Background = GetColor("#404671");
         }
 
         private void Domain_GotFocus(object sender, RoutedEventArgs e)
         {
-            bd1.Background = GetColor("#242225");
-            bd2.Background = GetColor("#242225");
+            //bd1.Background = GetColor("#242225");
+            //bd2.Background = GetColor("#242225");
         }
 
         private void Preview_GotFocus(object sender, RoutedEventArgs e)
         {
-            bd1.Background = GetColor("#dddddd");
-            bd2.Background = GetColor("#dddddd");
+            //bd1.Background = GetColor("#dddddd");
+            //bd2.Background = GetColor("#dddddd");
         }
 
         private void CLOSE_MouseEnter(object sender, MouseEventArgs e)
@@ -218,6 +232,40 @@ namespace Project.G
             
             
             
+        }
+
+        private void FileClick(object sender, RoutedEventArgs e)
+        {
+            if (PreviewItem.Parent == null) tabcontol.Items.Add(PreviewItem);
+            PreviewItem.Visibility = Visibility;
+            PreviewItem.Focus();
+        }
+
+        private void ServiceClick(object sender, RoutedEventArgs e)
+        {
+            if (ServiceItem.Parent == null) tabcontol.Items.Add(ServiceItem);
+            ServiceItem.Visibility = Visibility;
+            ServiceItem.Focus();
+        }
+
+        private void ModelClick(object sender, RoutedEventArgs e)
+        {
+            if (ModelItem.Parent == null) tabcontol.Items.Add(ModelItem);
+            ModelItem.Visibility = Visibility;
+            ModelItem.Focus();
+        }
+
+        private void DataClick(object sender, RoutedEventArgs e)
+        {
+            if (MakeDataItem.Parent == null) tabcontol.Items.Add(MakeDataItem);
+            MakeDataItem.Visibility = Visibility;
+            MakeDataItem.Focus();
+        }
+
+
+        private void settingClick(object sender, RoutedEventArgs e)
+        {
+            page.Visibility = page.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
         }
     }
 }
